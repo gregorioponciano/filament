@@ -6,9 +6,15 @@
 @source '../**/*.js';
 
 @theme {
+    
     --color-primary: var(--primary-color);
     --color-secondary: var(--secondary-color);
     --color-text: var(--text-color);
     --color-bg: var(--bg-color);
+    --color-border: var(--border-color);
+    --color-link: var(--link-color);
+    --color-hover: var(--hover-color);
+    --color-footer: var(--footer-color);
+    --color-footer-text: var(--footer-text-color);
     --font-sans: var(--font-sans);
 }

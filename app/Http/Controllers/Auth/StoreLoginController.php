@@ -16,7 +16,7 @@ class StoreLoginController extends Controller
         ]);
         if (Auth::attempt($credenciais)) {
             $request->session()->regenerate();
-            return redirect()->intended('/user');
+            return redirect()->intended('/user')->with('sucesso', 'Login realizado com sucesso!');
         } 
             return back()->withErrors([
                 'email' => 'The provided credentials do not match our records.',

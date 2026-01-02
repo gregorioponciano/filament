@@ -14,6 +14,11 @@ return new class extends Migration
             $table->string('secondary_color')->default('#6c757');
             $table->string('text_color')->default('#2563eb');
             $table->string('bg_color')->default('#ffffff');
+            $table->string('border_color')->default('#000000');
+            $table->string('link_color')->default('#2563eb');
+            $table->string('hover_color')->default('#2563eb');
+            $table->string('footer_color')->default('#000000');
+            $table->string('footer_text_color')->default('#ffffff');
             $table->string('font_family')->default('Inter');
             $table->timestamps();
         });

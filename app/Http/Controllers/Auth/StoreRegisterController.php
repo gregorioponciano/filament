@@ -28,7 +28,7 @@ public function storeRegister(Request $request)
 
     $request->session()->regenerate();
 
-    return redirect('/user')->with('sucesso', 'Cadastro realizado com sucesso!' );
+    return redirect('/login')->with('sucesso', 'Cadastro realizado com sucesso!' );
 }
 
 }

@@ -23,6 +23,16 @@ class SiteSettingsTable
                     ->searchable(),
                 TextColumn::make('bg_color')
                     ->searchable(),
+                TextColumn::make('border_color')
+                    ->searchable(),
+                TextColumn::make('link_color')
+                    ->searchable(),
+                TextColumn::make('hover_color')
+                    ->searchable(),
+                TextColumn::make('footer_color')
+                    ->searchable(),
+                TextColumn::make('footer_text_color')
+                    ->searchable(),
                 TextColumn::make('font_family')
                     ->searchable(),
                 TextColumn::make('created_at')

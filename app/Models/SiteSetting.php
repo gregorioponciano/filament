@@ -11,6 +11,11 @@ class SiteSetting extends Model
         'secondary_color',
         'text_color',
         'bg_color',
+        'border_color',
+        'link_color',
+        'hover_color',
+        'footer_color',
+        'footer_text_color',
         'font_family',
     ];
 }

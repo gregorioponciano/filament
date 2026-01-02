@@ -23,6 +23,21 @@ class SiteSettingForm
                 TextInput::make('bg_color')
                     ->required()
                     ->default('#ffffff'),
+                TextInput::make('border_color')
+                    ->required()
+                    ->default('#000000'),
+                TextInput::make('link_color')
+                    ->required()
+                    ->default('#2563eb'),
+                TextInput::make('hover_color')
+                    ->required()
+                    ->default('#2563eb'),
+                TextInput::make('footer_color')
+                    ->required()
+                    ->default('#000000'),
+                TextInput::make('footer_text_color')
+                    ->required()
+                    ->default('#ffffff'),
                 TextInput::make('font_family')
                     ->required()
                     ->default('Inter'),

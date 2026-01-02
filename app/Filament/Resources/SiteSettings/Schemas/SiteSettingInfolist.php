@@ -15,6 +15,11 @@ class SiteSettingInfolist
                 TextEntry::make('secondary_color'),
                 TextEntry::make('text_color'),
                 TextEntry::make('bg_color'),
+                TextEntry::make('border_color'),
+                TextEntry::make('link_color'),
+                TextEntry::make('hover_color'),
+                TextEntry::make('footer_color'),
+                TextEntry::make('footer_text_color'),
                 TextEntry::make('font_family'),
                 TextEntry::make('created_at')
                     ->dateTime()
