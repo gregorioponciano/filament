@@ -17,6 +17,12 @@ class SiteSettingsTable
             ->columns([
                 TextColumn::make('primary_color')
                     ->searchable(),
+                TextColumn::make('secondary_color')
+                    ->searchable(),
+                TextColumn::make('text_color')
+                    ->searchable(),
+                TextColumn::make('bg_color')
+                    ->searchable(),
                 TextColumn::make('font_family')
                     ->searchable(),
                 TextColumn::make('created_at')

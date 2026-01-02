@@ -12,6 +12,9 @@ class SiteSettingInfolist
         return $schema
             ->components([
                 TextEntry::make('primary_color'),
+                TextEntry::make('secondary_color'),
+                TextEntry::make('text_color'),
+                TextEntry::make('bg_color'),
                 TextEntry::make('font_family'),
                 TextEntry::make('created_at')
                     ->dateTime()

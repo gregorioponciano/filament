@@ -7,5 +7,8 @@
 
 @theme {
     --color-primary: var(--primary-color);
+    --color-secondary: var(--secondary-color);
+    --color-text: var(--text-color);
+    --color-bg: var(--bg-color);
     --font-sans: var(--font-sans);
 }

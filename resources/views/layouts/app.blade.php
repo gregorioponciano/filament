@@ -1,31 +1,31 @@
-@php
-    use App\Models\SiteSetting;
-    $siteSetting = SiteSetting::first();
-@endphp
-
+        @php
+            use App\Models\SiteSetting;
+            $siteSetting = SiteSetting::first();
+        @endphp
 <!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="utf-8">
+<html lang="pt-br">
+    <head>
+        <meta charset="utf-8">
+        
+        @vite(['resources/css/app.css'])
 
-    {{-- Fonte dinâmica --}}
-    <link
-        href="https://fonts.googleapis.com/css2?family={{ str_replace(' ', '+', $siteSetting->font_family ?? 'Inter') }}&display=swap"
-        rel="stylesheet"
-    >
 
-    {{-- Variáveis globais --}}
+
     <style>
         :root {
-            --primary-color: {{ $siteSetting->primary_color ?? '#2563eb' }};
+            
+            --primary-color: {{ $siteSetting->primary_color ?? '#3b82f6' }};
+            --secondary-color: {{ $siteSetting->secondary_color ?? '#64748b' }};
+            --text-color: {{ $siteSetting->text_color ?? '#212529' }};
+            --bg-color: {{ $siteSetting->bg_color ?? '#f9fafb' }};
             --font-sans: '{{ $siteSetting->font_family ?? 'Inter' }}', sans-serif;
         }
     </style>
-
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-</head>
-
-<body class="font-sans">
-    @yield('content')
-</body>
-</html>
+    
+    </head>
+    
+    <body class="font-sans">
+        @yield('content')
+        </body>
+        </html>
+        
