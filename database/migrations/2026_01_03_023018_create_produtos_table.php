@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('nome');
             $table->text('descricao');
-            $table->string('slug')->unique();
+            $table->string('slug');
             $table->decimal('preco', 10, 2);
             $table->string('imagem');
             $table->integer('estoque')->default(0);

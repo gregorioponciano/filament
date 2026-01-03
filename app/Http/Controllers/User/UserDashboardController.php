@@ -11,8 +11,7 @@ use Illuminate\Support\Facades\Auth;
 class UserDashboardController extends Controller
 {
     public function dashboard() {
-        $categorias = Categoria::all();
-        $produtos = Produto::paginate(3);
-        return view('user.dashboard', compact('categorias', 'produtos'));
+
+        return view('user.dashboard');
     }
 }

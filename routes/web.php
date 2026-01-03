@@ -5,12 +5,15 @@ use App\Http\Controllers\Auth\ShowLoginController;
 use App\Http\Controllers\Auth\ShowRegisterController;
 use App\Http\Controllers\Auth\StoreLoginController;
 use App\Http\Controllers\Auth\StoreRegisterController;
-
+use App\Http\Controllers\DetalhesController;
+use App\Http\Controllers\ProdutoController;
 use App\Http\Controllers\User\UserDashboardController;
 use App\Http\Controllers\User\ShowProfileController;
 use App\Http\Middleware\AdminMiddleware;
-use Filament\Http\Middleware\Authenticate;
+use App\Http\Middleware\Authenticate;
 use Illuminate\Support\Facades\Route;
+
+
 
 Route::get('/login', [ShowLoginController::class, 'showLogin'])->name('show.login');
 Route::post('/login', [StoreLoginController::class, 'storeLogin'])->name('store.login');
@@ -24,6 +27,8 @@ Route::post('/logout', [LogoutController::class, 'storeLogout'])->name('store.lo
    
 Route::get('/user', [UserDashboardController::class, 'dashboard'])->name('user.dashboard')->middleware([Authenticate::class]);
 Route::get('/user/profile', [ShowProfileController::class, 'showProfile'])->name('show.profile')->middleware([Authenticate::class]);
+Route::get('/produtos', [ProdutoController::class, 'showProdutos'])->name('show.produtos')->middleware([Authenticate::class, AdminMiddleware::class]);
+Route::get('/produto/{slug}', [DetalhesController::class, 'showDetalhes'])->name('show.detalhes')->middleware([Authenticate::class]);
 
 
     // Rotas para administradores

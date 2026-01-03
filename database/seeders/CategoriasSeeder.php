@@ -11,11 +11,10 @@ class CategoriasSeeder extends Seeder
     {
         $categorias = [
             ['nome' => 'Camisetas', 'slug' => 'camisetas'],
-            ['nome' => 'Calças', 'slug' => 'calcas'],
-            ['nome' => 'Vestidos', 'slug' => 'vestidos'],
+            ['nome' => 'Blusas', 'slug' => 'blusas'],
+            ['nome' => 'Bone', 'slug' => 'bone'],
             ['nome' => 'Casacos', 'slug' => 'casacos'],
             ['nome' => 'Shorts', 'slug' => 'shorts'],
-            ['nome' => 'Blusas', 'slug' => 'blusas'],
         ];
 
         foreach ($categorias as $categoria) {

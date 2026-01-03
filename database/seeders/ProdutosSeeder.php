@@ -12,44 +12,80 @@ class ProdutosSeeder extends Seeder
     {
         // Primeiro, garanta que as categorias existam
         $camisetas = Categoria::where('slug', 'camisetas')->first();
-        $calcas = Categoria::where('slug', 'calcas')->first();
-        $vestidos = Categoria::where('slug', 'vestidos')->first();
+        $blusas = Categoria::where('slug', 'blusas')->first();
+        $bone = Categoria::where('slug', 'bone')->first();
 
         // Se não existirem categorias, execute o seeder
-        if (!$camisetas || !$calcas || !$vestidos) {
+        if (!$camisetas || !$blusas || !$bone) {
             $this->call(CategoriasSeeder::class);
             $camisetas = Categoria::where('slug', 'camisetas')->first();
-            $calcas = Categoria::where('slug', 'calcas')->first();
-            $vestidos = Categoria::where('slug', 'vestidos')->first();
+            $blusas = Categoria::where('slug', 'blusas')->first();
+            $bone = Categoria::where('slug', 'bone')->first();
         }
 
         $produtos = [
             [
                 'nome' => 'Camiseta Básica Preta',
                 'descricao' => 'Camiseta de algodão 100%, confortável e durável',
-                'slug' => 'camiseta-basica-preta',
+                'slug' => 'slug',
                 'preco' => 49.90,
-                'imagem' => 'camiseta-preta.jpg',
+                'imagem' => 'image/camisa/camisa1.webp',
                 'estoque' => 50,
                 'categoria_id' => $camisetas->id,
             ],
             [
                 'nome' => 'Camiseta Branca Listrada',
                 'descricao' => 'Camiseta com listras finas, ideal para o dia a dia',
-                'slug' => 'camiseta-branca-listrada',
+                'slug' => 'slug',
                 'preco' => 59.90,
-                'imagem' => 'camiseta-listrada.jpg',
+                'imagem' => 'image/camisa/camisa2.webp',
                 'estoque' => 30,
                 'categoria_id' => $camisetas->id,
             ],
+                        [
+                'nome' => 'Camiseta Oversized Cinza',
+                'descricao' => 'Camiseta oversized em tecido de algodão, cor cinza',
+                'slug' => 'image/camisa/camisa3.webp',
+                'preco' => 69.90,
+                'imagem' => 'image/camisa/camisa3.webp',
+                'estoque' => 35,
+                'categoria_id' => $camisetas->id,
+            ],
+             [
+                'nome' => 'Camiseta Básica Preta',
+                'descricao' => 'Camiseta de algodão 100%, confortável e durável',
+                'slug' => 'slug',
+                'preco' => 49.90,
+                'imagem' => 'image/camisa/camisa1.webp',
+                'estoque' => 50,
+                'categoria_id' => $camisetas->id,
+            ],
             [
-                'nome' => 'Jeans Skinny Azul',
+                'nome' => 'Camiseta Branca Listrada',
+                'descricao' => 'Camiseta com listras finas, ideal para o dia a dia',
+                'slug' => 'slug',
+                'preco' => 59.90,
+                'imagem' => 'image/camisa/camisa2.webp',
+                'estoque' => 30,
+                'categoria_id' => $camisetas->id,
+            ],
+                        [
+                'nome' => 'Camiseta Oversized Cinza',
+                'descricao' => 'Camiseta oversized em tecido de algodão, cor cinza',
+                'slug' => 'image/camisa/camisa3.webp',
+                'preco' => 69.90,
+                'imagem' => 'image/camisa/camisa3.webp',
+                'estoque' => 35,
+                'categoria_id' => $camisetas->id,
+            ],
+            [
+                'nome' => 'BLUSA DE MOLETOM EXCLUSIVA CODIGO 43',
                 'descricao' => 'Calça jeans modelo skinny, cor azul claro',
-                'slug' => 'jeans-skinny-azul',
-                'preco' => 129.90,
-                'imagem' => 'jeans-azul.jpg',
+                'slug' => 'slug',
+                'preco' => 250.00,
+                'imagem' => 'image/blusa/blusa1.webp',
                 'estoque' => 25,
-                'categoria_id' => $calcas->id,
+                'categoria_id' => $blusas->id,
             ],
             [
                 'nome' => 'Vestido Floral Midi',
@@ -58,7 +94,7 @@ class ProdutosSeeder extends Seeder
                 'preco' => 159.90,
                 'imagem' => 'vestido-floral.jpg',
                 'estoque' => 15,
-                'categoria_id' => $vestidos->id,
+                'categoria_id' => $bone->id,
             ],
             [
                 'nome' => 'Calça de Moletom',
@@ -67,16 +103,7 @@ class ProdutosSeeder extends Seeder
                 'preco' => 89.90,
                 'imagem' => 'calca-moletom.jpg',
                 'estoque' => 40,
-                'categoria_id' => $calcas->id,
-            ],
-            [
-                'nome' => 'Camiseta Oversized Cinza',
-                'descricao' => 'Camiseta oversized em tecido de algodão, cor cinza',
-                'slug' => 'camiseta-oversized-cinza',
-                'preco' => 69.90,
-                'imagem' => 'camiseta-cinza.jpg',
-                'estoque' => 35,
-                'categoria_id' => $camisetas->id,
+                'categoria_id' => $blusas->id,
             ],
         ];
 
