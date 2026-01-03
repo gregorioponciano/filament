@@ -10,14 +10,14 @@ return new class extends Migration
     {
         Schema::create('site_settings', function (Blueprint $table) {
             $table->id();
-            $table->string('primary_color')->default('#2563eb'); // azul
-            $table->string('secondary_color')->default('#6c757');
+            $table->string('primary_color')->default('#3294cd'); // azul
+            $table->string('secondary_color')->default('#ef8d32');
             $table->string('text_color')->default('#2563eb');
             $table->string('bg_color')->default('#ffffff');
             $table->string('border_color')->default('#000000');
-            $table->string('link_color')->default('#2563eb');
-            $table->string('hover_color')->default('#2563eb');
-            $table->string('footer_color')->default('#000000');
+            $table->string('link_color')->default('#4f38f6');
+            $table->string('hover_color')->default('#000000');
+            $table->string('footer_color')->default('#111111');
             $table->string('footer_text_color')->default('#ffffff');
             $table->string('font_family')->default('Inter');
             $table->timestamps();

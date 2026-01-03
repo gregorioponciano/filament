@@ -1,1 +1,5 @@
-<h1>perfil</h1>
+@extends('layouts.app')
+@section('title', 'Perfil')
+@section('content')
+
+@endsection
