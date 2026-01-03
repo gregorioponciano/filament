@@ -22,6 +22,7 @@ public function storeRegister(Request $request)
         'name' => $credenciais['name'],
         'email' => $credenciais['email'],
         'password' => Hash::make($credenciais['password']),
+        'role' => 'user',
     ]);
 
     Auth::login($user);

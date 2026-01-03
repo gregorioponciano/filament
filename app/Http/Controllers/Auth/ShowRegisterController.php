@@ -10,6 +10,9 @@ class ShowRegisterController extends Controller
 {
     public function showRegister() {
         if (Auth::check()) {
+            if (Auth::user()->role === 'admin') {
+                return redirect('/admin');
+            }
             return redirect('/user');
         }
         return view('auth.register');

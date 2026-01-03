@@ -10,6 +10,9 @@ class ShowLoginController extends Controller
 {
     public function showLogin() {
         if (Auth::check()) {
+            if (Auth::user()->role === 'admin') {
+                return redirect('/admin');
+            }
             return redirect('/user');
         }
         return view('auth.login');

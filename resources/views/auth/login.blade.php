@@ -3,7 +3,7 @@
 @section('title', 'Login')
 
 @section('content')
-<section class="min-h-screen flex items-center justify-center bg-gray-100">
+<section class="min-h-screen flex items-center justify-center bg-bg">
     <div class="w-full max-w-md bg-white rounded-2xl shadow-lg p-8">
 
             @if ($mensagem = Session::get('sucesso'))

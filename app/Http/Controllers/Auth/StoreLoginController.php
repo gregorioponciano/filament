@@ -16,6 +16,11 @@ class StoreLoginController extends Controller
         ]);
         if (Auth::attempt($credenciais)) {
             $request->session()->regenerate();
+
+            if (Auth::user()->role === 'admin') {
+                return redirect()->intended('/admin');
+            }
+
             return redirect()->intended('/user')->with('sucesso', 'Login realizado com sucesso!');
         } 
             return back()->withErrors([

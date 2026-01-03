@@ -44,11 +44,11 @@
                         </div>
 
                         <div class="py-2">
-                            <a href="#" class="block px-4 py-2 text-sm hover:bg-gray-100">
+                            <a href="{{ route('show.profile') }}" class="block px-4 py-2 text-sm hover:bg-gray-100">
                                 Perfil
                             </a>
                             <a href="#" class="block px-4 py-2 text-sm hover:bg-gray-100">
-                                Configurações
+                                Suporte
                             </a>
                         </div>
 
