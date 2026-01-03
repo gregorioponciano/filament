@@ -31,7 +31,7 @@ class ViewServiceProvider extends ServiceProvider
             $view->with('categorias', Categoria::all());
         });
                 View::composer('*', function ($view) {
-            $view->with('produtos', Produto::paginate(6));
+            $view->with('produtos', Produto::paginate(9));
         });
 
 

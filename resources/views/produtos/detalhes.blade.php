@@ -1,4 +1,5 @@
-
+@extends('layouts.app')
+@section('title', 'Detalhes')
 
 <button onclick="window.history.go(-1)"><i class="material-icons">arrow_back</i></button>
 <div class="">
