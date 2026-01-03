@@ -12,7 +12,7 @@ use App\Http\Middleware\AdminMiddleware;
 use Filament\Http\Middleware\Authenticate;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/login', [ShowLoginController::class, 'showLogin'])->name('login');
+Route::get('/login', [ShowLoginController::class, 'showLogin'])->name('show.login');
 Route::post('/login', [StoreLoginController::class, 'storeLogin'])->name('store.login');
 Route::get('/register', [ShowRegisterController::class, 'showRegister'])->name('show.register');
 Route::post('/register', [StoreRegisterController::class, 'storeRegister'])->name('store.register');
