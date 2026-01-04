@@ -2,8 +2,13 @@
 
 namespace App\Filament\Resources\SiteSettings\Schemas;
 
-use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\ColorPicker;
 use Filament\Schemas\Schema;
+use Filament\Forms\Components\TextInput;
+
+
+
+
 
 class SiteSettingForm
 {
@@ -11,36 +16,37 @@ class SiteSettingForm
     {
         return $schema
             ->components([
-                TextInput::make('primary_color')
+                 ColorPicker::make('primary_color')
                     ->required()
                     ->default('#2563eb'),
-                TextInput::make('secondary_color')
+                ColorPicker::make('secondary_color')
                     ->required()
                     ->default('#6c757'),
-                TextInput::make('text_color')
+                ColorPicker::make('text_color')
                     ->required()
                     ->default('#2563eb'),
-                TextInput::make('bg_color')
+                ColorPicker::make('bg_color')
                     ->required()
                     ->default('#ffffff'),
-                TextInput::make('border_color')
+                ColorPicker::make('border_color')
                     ->required()
                     ->default('#000000'),
-                TextInput::make('link_color')
+                ColorPicker::make('link_color')
                     ->required()
                     ->default('#2563eb'),
-                TextInput::make('hover_color')
+                ColorPicker::make('hover_color')
                     ->required()
                     ->default('#2563eb'),
-                TextInput::make('footer_color')
+                ColorPicker::make('footer_color')
                     ->required()
                     ->default('#000000'),
-                TextInput::make('footer_text_color')
+                ColorPicker::make('footer_text_color')
                     ->required()
                     ->default('#ffffff'),
-                TextInput::make('font_family')
+                 TextInput::make('font_family')
                     ->required()
                     ->default('Inter'),
             ]);
     }
 }
+

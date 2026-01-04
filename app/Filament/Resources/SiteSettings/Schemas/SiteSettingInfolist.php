@@ -5,6 +5,7 @@ namespace App\Filament\Resources\SiteSettings\Schemas;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Schemas\Schema;
 
+
 class SiteSettingInfolist
 {
     public static function configure(Schema $schema): Schema

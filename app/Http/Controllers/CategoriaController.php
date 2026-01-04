@@ -8,10 +8,10 @@ use Illuminate\Http\Request;
 
 class CategoriaController extends Controller
 {
-    public function showCategorias($id)
+    public function showCategorias($slug)
     {
-        $categoria = Categoria::findOrFail($id);
-        $produtos = Produto::where('categoria_id', $id)->paginate(4);
+        $categoria = Categoria::where('slug', $slug)->firstOrFail();
+        $produtos = Produto::where('categoria_id', $categoria->id)->paginate(4);
 
 
         return view('produtos.categorias', compact('produtos', 'categoria'));
