@@ -23,17 +23,18 @@ class ViewServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        // Otimização: Agrupa o compartilhamento de dados globais (Menu, Configurações).
+
         View::composer('*', function ($view) {
             $view->with('siteSetting', SiteSetting::first());
-        });
-                // Compartilha a variável $categoriasMenu com TODAS as views
-        View::composer('*', function ($view) {
             $view->with('categorias', Categoria::all());
+          
         });
-                View::composer('*', function ($view) {
+
+        // Correção: Injeta produtos apenas no dashboard do usuário.
+        // Isso resolve o erro da página user.dashboard sem quebrar a listagem de categorias.
+        View::composer('user.dashboard', function ($view) {
             $view->with('produtos', Produto::paginate(9));
         });
-
-
     }
 }

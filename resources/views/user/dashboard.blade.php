@@ -28,7 +28,7 @@
                                 <a href="{{ Route('user.dashboard') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-hover hover:text-text hover:scale-75 transition">Inicio</a>
                                 <hr>
                                 @foreach ($categorias as $categoria)
-                                    <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-hover hover:text-text hover:scale-75 transition"> {{ $categoria->nome }}</a>
+                                    <a href="{{ route('show.categorias', $categoria->id) }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-hover hover:text-text hover:scale-75 transition"> {{ $categoria->nome }}</a>
                                 @endforeach
                             </div>
                         </div>

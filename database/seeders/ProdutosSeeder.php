@@ -11,104 +11,133 @@ class ProdutosSeeder extends Seeder
 {
     public function run()
     {
-        // Primeiro, garanta que as categorias existam
+        // Categorias existentes (SEM mudar lógica)
         $camisetas = Categoria::where('slug', 'camisetas')->first();
-        $blusas = Categoria::where('slug', 'blusas')->first();
-        $bone = Categoria::where('slug', 'bone')->first();
+        $blusas    = Categoria::where('slug', 'blusas')->first();
+        $bone      = Categoria::where('slug', 'bone')->first();
+        $casacos   = Categoria::where('slug', 'casacos')->first();
+        $shorts    = Categoria::where('slug', 'shorts')->first();
 
-        // Se não existirem categorias, execute o seeder
-        if (!$camisetas || !$blusas || !$bone) {
+        if (!$camisetas || !$blusas || !$bone || !$casacos || !$shorts) {
             $this->call(CategoriasSeeder::class);
+
             $camisetas = Categoria::where('slug', 'camisetas')->first();
-            $blusas = Categoria::where('slug', 'blusas')->first();
-            $bone = Categoria::where('slug', 'bone')->first();
+            $blusas    = Categoria::where('slug', 'blusas')->first();
+            $bone      = Categoria::where('slug', 'bone')->first();
+            $casacos   = Categoria::where('slug', 'casacos')->first();
+            $shorts    = Categoria::where('slug', 'shorts')->first();
         }
 
         $produtos = [
+
+            /* ================= CAMISETAS ================= */
             [
                 'nome' => 'Camiseta Básica Preta Essential',
-                'descricao' => 'Camiseta de algodão 100%, corte moderno, confortável e durável para o dia a dia.',
+                'descricao' => 'Camiseta de algodão 100%, confortável e durável.',
                 'preco' => 49.90,
                 'imagem' => 'image/camisa/camisa1.webp',
                 'estoque' => 50,
                 'categoria_id' => $camisetas->id,
             ],
             [
-                'nome' => 'Camiseta Branca Listrada Navy',
-                'descricao' => 'Camiseta com listras finas estilo náutico, ideal para compor looks casuais.',
-                'preco' => 59.90,
+                'nome' => 'Camiseta Branca Minimal',
+                'descricao' => 'Visual clean para qualquer ocasião.',
+                'preco' => 54.90,
                 'imagem' => 'image/camisa/camisa2.webp',
-                'estoque' => 30,
+                'estoque' => 40,
                 'categoria_id' => $camisetas->id,
             ],
             [
-                'nome' => 'Camiseta Oversized Cinza Street',
-                'descricao' => 'Modelagem oversized ampla em tecido de algodão premium, cor cinza chumbo.',
+                'nome' => 'Camiseta Oversized Street',
+                'descricao' => 'Modelagem oversized moderna.',
                 'preco' => 69.90,
                 'imagem' => 'image/camisa/camisa3.webp',
                 'estoque' => 35,
                 'categoria_id' => $camisetas->id,
             ],
             [
-                'nome' => 'Camiseta Preta Gola V',
-                'descricao' => 'Camiseta preta clássica com gola V, tecido leve e respirável.',
-                'preco' => 54.90,
-                'imagem' => 'image/camisa/camisa4.webp',
-                'estoque' => 50,
-                'categoria_id' => $camisetas->id,
-            ],
-            [
-                'nome' => 'Camiseta Listrada Urban',
-                'descricao' => 'Estilo urbano com listras marcantes, perfeita para combinações com jeans.',
-                'preco' => 64.90,
-                'imagem' => 'image/camisa/camisa5.webp',
-                'estoque' => 30,
-                'categoria_id' => $camisetas->id,
-            ],
-            [
-                'nome' => 'Camiseta Cinza Mescla Sport',
-                'descricao' => 'Tecido mescla confortável, ideal para atividades físicas ou lazer.',
-                'preco' => 59.90,
-                'imagem' => 'image/camisa/camisa6.webp',
-                'estoque' => 35,
-                'categoria_id' => $camisetas->id,
-            ],
-            [
                 'nome' => 'Camiseta Preta Slim Fit',
-                'descricao' => 'Modelagem mais ajustada ao corpo, realçando a silhueta.',
+                'descricao' => 'Caimento ajustado e tecido respirável.',
                 'preco' => 55.90,
-                'imagem' => 'image/camisa/camisa7.webp',
-                'estoque' => 50,
+                'imagem' => 'image/camisa/camisa4.webp',
+                'estoque' => 45,
                 'categoria_id' => $camisetas->id,
             ],
+
+            /* ================= BLUSAS ================= */
             [
-                'nome' => 'BLUSA DE MOLETOM EXCLUSIVA CODIGO 43',
-                'descricao' => 'Moletom de alta qualidade com estampa exclusiva e forro térmico.',
-                'preco' => 250.00,
+                'nome' => 'Blusa de Moletom Premium',
+                'descricao' => 'Moletom flanelado de alta qualidade.',
+                'preco' => 199.90,
                 'imagem' => 'image/blusa/blusa1.webp',
                 'estoque' => 25,
                 'categoria_id' => $blusas->id,
             ],
             [
-                'nome' => 'Vestido Floral Midi',
-                'descricao' => 'Vestido floral com comprimento midi, tecido leve e caimento fluido.',
-                'preco' => 159.90,
-                'imagem' => 'vestido-floral.jpg',
-                'estoque' => 15,
+                'nome' => 'Blusa Canguru Street',
+                'descricao' => 'Blusa com capuz e bolso frontal.',
+                'preco' => 179.90,
+                'imagem' => 'image/blusa/blusa2.webp',
+                'estoque' => 30,
+                'categoria_id' => $blusas->id,
+            ],
+
+            /* ================= BONÉS ================= */
+            [
+                'nome' => 'Boné Snapback Preto',
+                'descricao' => 'Boné ajustável com design urbano.',
+                'preco' => 79.90,
+                'imagem' => 'image/bone/bone1.webp',
+                'estoque' => 35,
                 'categoria_id' => $bone->id,
             ],
             [
-                'nome' => 'Calça de Moletom Confort',
-                'descricao' => 'Calça de moletom confortável com elástico na cintura, ideal para casa.',
-                'preco' => 89.90,
-                'imagem' => 'calca-moletom.jpg',
+                'nome' => 'Boné Dad Hat Bege',
+                'descricao' => 'Estilo casual com aba curva.',
+                'preco' => 69.90,
+                'imagem' => 'image/bone/bone2.webp',
                 'estoque' => 40,
-                'categoria_id' => $blusas->id,
+                'categoria_id' => $bone->id,
+            ],
+
+            /* ================= CASACOS ================= */
+            [
+                'nome' => 'Casaco Jeans Slim',
+                'descricao' => 'Casaco jeans com lavagem premium.',
+                'preco' => 249.90,
+                'imagem' => 'image/casaco/casaco1.webp',
+                'estoque' => 20,
+                'categoria_id' => $casacos->id,
+            ],
+            [
+                'nome' => 'Casaco Puffer Inverno',
+                'descricao' => 'Casaco térmico ideal para dias frios.',
+                'preco' => 329.90,
+                'imagem' => 'image/casaco/casaco2.webp',
+                'estoque' => 15,
+                'categoria_id' => $casacos->id,
+            ],
+
+            /* ================= SHORTS ================= */
+            [
+                'nome' => 'Shorts Moletom Confort',
+                'descricao' => 'Shorts confortável para o dia a dia.',
+                'preco' => 89.90,
+                'imagem' => 'image/shorts/short1.webp',
+                'estoque' => 45,
+                'categoria_id' => $shorts->id,
+            ],
+            [
+                'nome' => 'Shorts Jeans Destroyed',
+                'descricao' => 'Visual moderno com lavagem estonada.',
+                'preco' => 119.90,
+                'imagem' => 'image/shorts/short2.webp',
+                'estoque' => 30,
+                'categoria_id' => $shorts->id,
             ],
         ];
 
         foreach ($produtos as $produto) {
-            // Gera o slug automaticamente baseado no nome único
             $produto['slug'] = Str::slug($produto['nome']);
             Produto::create($produto);
         }

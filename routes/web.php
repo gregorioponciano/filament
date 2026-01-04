@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\ShowLoginController;
 use App\Http\Controllers\Auth\ShowRegisterController;
 use App\Http\Controllers\Auth\StoreLoginController;
 use App\Http\Controllers\Auth\StoreRegisterController;
+use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\DetalhesController;
 use App\Http\Controllers\ProdutoController;
 use App\Http\Controllers\User\DestroyProfileController;
@@ -34,10 +35,7 @@ Route::delete('/user/profile/{id}', [DestroyProfileController::class, 'destroyPr
 
 Route::get('/produtos', [ProdutoController::class, 'showProdutos'])->name('show.produtos')->middleware([Authenticate::class, AdminMiddleware::class]);
 Route::get('/produto/{slug}', [DetalhesController::class, 'showDetalhes'])->name('show.detalhes')->middleware([Authenticate::class]);
-
+Route::get('/categorias/{id}', [CategoriaController::class, 'showCategorias'])->name('show.categorias')->middleware([Authenticate::class]);
 
 
     // Rotas para administradores
-
-
-
