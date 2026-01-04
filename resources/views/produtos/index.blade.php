@@ -1,16 +1,3 @@
-@extends('layouts.app')
-
-@section('title', 'Produtos')
-
-
-<div class="flex">
-  @foreach ($categorias as $categoria)
-    <p class="p-5 bg-orange-400 w-full">
-        {{ $categoria->nome }}
-    </p>
-  @endforeach
-</div>
-
 <div class="p-6">
   <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
 
@@ -19,7 +6,7 @@
       <div class="p-5 m-1 bg-blue-50">
 
         <img
-          class="h-48 w-full object-cover"
+          class="h-48 w-full object-cover hover:scale-105 transition"
           src="{{ $produto->imagem }}"
           alt="{{ $produto->nome }}"
         >
@@ -41,9 +28,7 @@
           R$ {{ number_format($produto->preco, 2, ',', '.') }}
         </p>
 
-        <button class="mt-4 w-full rounded-lg bg-green-500 py-2.5 text-sm font-medium text-white hover:bg-slate-800 transition-colors">
-          <a href="{{ route('show.detalhes', $produto->slug) }}">Detalhes</a>
-        </button>
+        <a href="{{ route('show.detalhes', $produto->slug) }}" class="mt-4 block w-full rounded-lg bg-green-500 py-2.5 text-center text-sm font-medium text-white hover:bg-slate-800 transition-colors">Detalhes</a>
 
         <button class="mt-2 w-full rounded-lg bg-blue-500 py-2.5 text-sm font-medium text-white hover:bg-slate-800 transition-colors">
           Comprar
@@ -59,5 +44,3 @@
 <div class="flex justify-center">
     {{ $produtos->links() }}
 </div>
-
-
