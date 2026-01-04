@@ -18,6 +18,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'auth' => Authenticate::class,
            
             'role' => AdminMiddleware::class,
+            
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
