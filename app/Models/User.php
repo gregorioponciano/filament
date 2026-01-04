@@ -38,6 +38,10 @@ class User extends Authenticatable
         return $this->isAdmin();
     }
 
+    public function enderecos() {
+        return $this->hasMany(Endereco::class);
+    }
+
     /**
      * The attributes that should be hidden for serialization.
      *

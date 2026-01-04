@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\Categoria;
+use App\Models\Endereco;
 use App\Models\Produto;
 use App\Models\SiteSetting;
 use Illuminate\Support\Facades\View;
@@ -35,6 +36,10 @@ class ViewServiceProvider extends ServiceProvider
         // Isso resolve o erro da página user.dashboard sem quebrar a listagem de categorias.
         View::composer('user.dashboard', function ($view) {
             $view->with('produtos', Produto::paginate(9));
+        });
+
+        view::composer('*', function ($view) {
+            $view->with('enderecos', Endereco::all());
         });
     }
 }

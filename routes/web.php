@@ -33,7 +33,7 @@ Route::get('/user', [UserDashboardController::class, 'dashboard'])->name('user.d
 Route::get('/user/profile', [ShowProfileController::class, 'showProfile'])->name('show.profile')->middleware([Authenticate::class]);
 Route::put('/user/profile', [StoreProfileController::class, 'storeProfile'])->name('store.profile')->middleware([Authenticate::class]);
 Route::delete('/user/profile/{id}', [DestroyProfileController::class, 'destroyProfile'])->name('destroy.profile')->middleware([Authenticate::class]);
- Route::resource('enderecos', EnderecoController::class);
+Route::resource('/user/enderecos', EnderecoController::class)->names('enderecos')->middleware([Authenticate::class]);
 
 Route::get('/produtos', [ProdutoController::class, 'showProdutos'])->name('show.produtos')->middleware([Authenticate::class, AdminMiddleware::class]);
 Route::get('/produto/{slug}', [DetalhesController::class, 'showDetalhes'])->name('show.detalhes')->middleware([Authenticate::class]);

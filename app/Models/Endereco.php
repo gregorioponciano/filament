@@ -15,6 +15,7 @@ class Endereco extends Model
         'user_id',
         'rua',
         'numero',
+        'complemento',
         'bairro',
         'cidade',
         'estado',

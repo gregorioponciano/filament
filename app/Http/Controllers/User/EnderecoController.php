@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\User;
 
+use App\Http\Controllers\Controller;
 use App\Models\Endereco;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -10,8 +11,9 @@ class EnderecoController extends Controller
 {
     public function index()
     {
-        $enderecos = Auth::user()->enderecos;
-        return view('enderecos.index', compact('enderecos'));
+        $user = Auth::user();
+        $enderecos = $user->enderecos;
+        return view('user.profile', compact('user', 'enderecos'));
     }
 
     public function create()
@@ -27,12 +29,18 @@ class EnderecoController extends Controller
             'bairro' => 'required|string|max:255',
             'cidade' => 'required|string|max:255',
             'estado' => 'required|string|max:100',
-            'cep' => 'required|string|max:20'
+            'cep' => ['required', 'string', 'regex:/^\d{5}-\d{3}$/']
+        ], [
+            'cep.regex' => 'O CEP deve seguir o formato XXXXX-XXX.'
         ]);
+
+        if (Auth::user()->enderecos()->count() >= 5) {
+            return back()->with('error', 'Você atingiu o limite máximo de 5 endereços.');
+        }
 
         Auth::user()->enderecos()->create($request->all());
 
-        return redirect()->route('enderecos.index')->with('success', 'Endereço cadastrado com sucesso!');
+        return back()->with('success', 'Endereço cadastrado com sucesso!');
     }
 
     public function edit($id)
@@ -51,12 +59,14 @@ class EnderecoController extends Controller
             'bairro' => 'required|string|max:255',
             'cidade' => 'required|string|max:255',
             'estado' => 'required|string|max:100',
-            'cep' => 'required|string|max:20'
+            'cep' => ['required', 'string', 'regex:/^\d{5}-\d{3}$/']
+        ], [
+            'cep.regex' => 'O CEP deve seguir o formato XXXXX-XXX.'
         ]);
 
         $endereco->update($request->all());
 
-        return redirect()->route('enderecos.index')->with('success', 'Endereço atualizado com sucesso!');
+        return back()->with('success', 'Endereço atualizado com sucesso!');
     }
 
     public function destroy($id)
@@ -64,6 +74,6 @@ class EnderecoController extends Controller
         $endereco = Auth::user()->enderecos()->findOrFail($id);
         $endereco->delete();
 
-        return back()->with('success', 'Endereço removido com sucesso!');
+        return back()->with('error', 'Endereço removido com sucesso!');
     }
 }
