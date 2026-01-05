@@ -55,4 +55,8 @@ class CategoriaResource extends Resource
             'edit' => EditCategoria::route('/{record}/edit'),
         ];
     }
+            public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::count();
+    }
 }
