@@ -23,16 +23,7 @@ class EnderecoController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'rua' => 'required|string|max:255',
-            'numero' => 'required|string|max:10',
-            'bairro' => 'required|string|max:255',
-            'cidade' => 'required|string|max:255',
-            'estado' => 'required|string|max:100',
-            'cep' => ['required', 'string', 'regex:/^\d{5}-\d{3}$/']
-        ], [
-            'cep.regex' => 'O CEP deve seguir o formato XXXXX-XXX.'
-        ]);
+        $this->validateEndereco($request);
 
         if (Auth::user()->enderecos()->count() >= 5) {
             return back()->with('error', 'Você atingiu o limite máximo de 5 endereços.');
@@ -53,16 +44,7 @@ class EnderecoController extends Controller
     {
         $endereco = Auth::user()->enderecos()->findOrFail($id);
 
-        $request->validate([
-            'rua' => 'required|string|max:255',
-            'numero' => 'required|string|max:10',
-            'bairro' => 'required|string|max:255',
-            'cidade' => 'required|string|max:255',
-            'estado' => 'required|string|max:100',
-            'cep' => ['required', 'string', 'regex:/^\d{5}-\d{3}$/']
-        ], [
-            'cep.regex' => 'O CEP deve seguir o formato XXXXX-XXX.'
-        ]);
+        $this->validateEndereco($request);
 
         $endereco->update($request->all());
 
@@ -75,5 +57,19 @@ class EnderecoController extends Controller
         $endereco->delete();
 
         return back()->with('error', 'Endereço removido com sucesso!');
+    }
+
+    private function validateEndereco(Request $request)
+    {
+        return $request->validate([
+            'rua' => 'required|string|max:255',
+            'numero' => 'required|string|max:10',
+            'bairro' => 'required|string|max:255',
+            'cidade' => 'required|string|max:255',
+            'estado' => 'required|string|max:100',
+            'cep' => ['required', 'string', 'regex:/^\d{5}-\d{3}$/']
+        ], [
+            'cep.regex' => 'O CEP deve seguir o formato 00000-000.'
+        ]);
     }
 }

@@ -40,31 +40,32 @@
             @method('PUT')
 
             <div>
-                <label class="block text-sm font-medium text-gray-700">Nome</label>
+                <label class="block text-sm font-medium leading-6 text-gray-900 mb-1">Nome Completo</label>
                 <input
                     type="text"
                     name="name"
                     value="{{ $user->name }}"
                     required
-                    class="input"
+                    class="input-professional"
                 >
             </div>
 
             <div>
-                <label class="block text-sm font-medium text-gray-700">Email</label>
+                <label class="block text-sm font-medium leading-6 text-gray-900 mb-1">Endereço de Email</label>
                 <input
                     type="email"
                     name="email"
                     value="{{ $user->email }}"
                     required
-                    class="input"
+                    class="input-professional bg-gray-50 text-gray-500 cursor-not-allowed"
+                    readonly
                 >
             </div>
 
             <div class="flex flex-col sm:flex-row gap-3 justify-between pt-4">
                 <button
                     type="submit"
-                    class="btn-primary bg-blue-600 text-white hover:bg-blue-700 transition p-2.5 rounded-lg w-full sm:w-auto "
+                    class="btn-primary w-full sm:w-auto shadow-sm"
                 >
                     Atualizar Perfil
                 </button>
@@ -72,7 +73,7 @@
                 <button
                     type="button"
                     onclick="confirmarExclusaoConta()"
-                    class="btn-danger"
+                    class="btn-danger w-full sm:w-auto shadow-sm"
                 >
                     Excluir Conta
                 </button>
@@ -115,7 +116,7 @@
                         <a
                             href="javascript:void(0)"
                             onclick="abrirModalEndereco('edit', {{ json_encode($endereco) }})"
-                            class="px-4 py-2 text-sm rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition"
+                            class="px-4 py-2 text-sm font-medium rounded-lg bg-indigo-50 text-indigo-700 hover:bg-indigo-100 transition border border-indigo-200"
                         >
                             Editar
                         </a>
@@ -123,7 +124,7 @@
                         <button
                             type="button"
                             onclick="confirmarExclusaoEndereco({{ $endereco->id }})"
-                            class="px-4 py-2 text-sm rounded-lg bg-red-600 text-white hover:bg-red-700 transition"
+                            class="px-4 py-2 text-sm font-medium rounded-lg bg-white text-red-600 hover:bg-red-50 transition border border-gray-200 hover:border-red-200"
                         >
                             Excluir
                         </button>
@@ -150,7 +151,7 @@
         @if ($user->enderecos->count() < 5)
             <button 
                 onclick="abrirModalEndereco('create')"
-                class="w-full py-3 rounded-xl border-2 border-dashed border-gray-300 text-gray-500 hover:border-primary hover:text-primary transition flex items-center justify-center gap-2 font-medium"
+                class="w-full py-4 rounded-xl border-2 border-dashed border-gray-300 text-gray-500 hover:border-indigo-500 hover:text-indigo-600 hover:bg-indigo-50 transition flex items-center justify-center gap-2 font-medium group"
             >
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                     <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" />
@@ -185,49 +186,43 @@
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div class="sm:col-span-2">
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Rua</label>
-                            <input name="rua" id="input-rua" required class="input" value="{{ old('rua') }}" placeholder="Ex: Av. Paulista">
-                            @error('rua') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
+                            <label class="block text-sm font-medium leading-6 text-gray-900 mb-1">Rua / Logradouro</label>
+                            <input name="rua" id="rua" required class="input-professional" value="{{ old('rua') }}" placeholder="Ex: Av. Paulista">
                         </div>
 
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Número</label>
-                            <input name="numero" id="input-numero" required class="input" value="{{ old('numero') }}" placeholder="123">
-                            @error('numero') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
+                            <label class="block text-sm font-medium leading-6 text-gray-900 mb-1">Número</label>
+                            <input name="numero" id="numero" required class="input-professional" value="{{ old('numero') }}" placeholder="123">
                         </div>
 
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Complemento</label>
-                            <input name="complemento" id="input-complemento" class="input" value="{{ old('complemento') }}" placeholder="Apto 101">
+                            <label class="block text-sm font-medium leading-6 text-gray-900 mb-1">Complemento <span class="text-gray-400 font-normal">(Opcional)</span></label>
+                            <input name="complemento" id="complemento" class="input-professional" value="{{ old('complemento') }}" placeholder="Apto 101">
                         </div>
 
                         <div class="sm:col-span-2">
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Bairro</label>
-                            <input name="bairro" id="input-bairro" required class="input" value="{{ old('bairro') }}" placeholder="Centro">
-                            @error('bairro') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
+                            <label class="block text-sm font-medium leading-6 text-gray-900 mb-1">Bairro</label>
+                            <input name="bairro" id="bairro" required class="input-professional" value="{{ old('bairro') }}" placeholder="Centro">
                         </div>
 
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Cidade</label>
-                            <input name="cidade" id="input-cidade" required class="input" value="{{ old('cidade') }}" placeholder="São Paulo">
-                            @error('cidade') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
+                            <label class="block text-sm font-medium leading-6 text-gray-900 mb-1">Cidade</label>
+                            <input name="cidade" id="cidade" required class="input-professional" value="{{ old('cidade') }}" placeholder="São Paulo">
                         </div>
 
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Estado</label>
-                            <input name="estado" id="input-estado" required class="input" value="{{ old('estado') }}" placeholder="SP">
-                            @error('estado') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
+                            <label class="block text-sm font-medium leading-6 text-gray-900 mb-1">Estado (UF)</label>
+                            <input name="estado" id="estado" required class="input-professional" value="{{ old('estado') }}" placeholder="SP">
                         </div>
 
                         <div class="sm:col-span-2">
-                            <label class="block text-sm font-medium text-gray-700 mb-1">CEP</label>
-                            <input name="cep" id="input-cep" required class="input" value="{{ old('cep') }}" placeholder="00000-000" maxlength="9">
-                            @error('cep') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
+                            <label class="block text-sm font-medium leading-6 text-gray-900 mb-1">CEP</label>
+                            <input name="cep" id="cep" required class="input-professional" value="{{ old('cep') }}" placeholder="00000-000" maxlength="9">
                         </div>
                     </div>
 
                     <div class="mt-5 sm:mt-6 sm:grid sm:grid-flow-row-dense sm:grid-cols-2 sm:gap-3">
-                        <button type="submit" class="btn-primary w-full sm:col-start-2">Salvar</button>
+                        <button type="submit" class="btn-primary w-full sm:col-start-2 shadow-sm">Salvar Endereço</button>
                         <button type="button" onclick="fecharModalEndereco()" class="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:col-start-1 sm:mt-0">Cancelar</button>
                     </div>
                 </form>
@@ -293,6 +288,7 @@ function abrirModalEndereco(mode, data = null) {
     if (mode === 'create') {
         modalTitle.innerText = 'Adicionar Novo Endereço';
         form.action = "{{ route('enderecos.store') }}";
+        if(document.getElementById('cep')) document.getElementById('cep').dataset.valid = 'false';
     } else if (mode === 'edit' && data) {
         modalTitle.innerText = 'Editar Endereço';
         
@@ -304,13 +300,14 @@ function abrirModalEndereco(mode, data = null) {
         methodSpoof.innerHTML = '<input type="hidden" name="_method" value="PUT">';
         
         // Preenche os campos
-        document.getElementById('input-rua').value = data.rua;
-        document.getElementById('input-numero').value = data.numero;
-        document.getElementById('input-complemento').value = data.complemento || '';
-        document.getElementById('input-bairro').value = data.bairro;
-        document.getElementById('input-cidade').value = data.cidade;
-        document.getElementById('input-estado').value = data.estado;
-        document.getElementById('input-cep').value = data.cep;
+        document.getElementById('rua').value = data.rua;
+        document.getElementById('numero').value = data.numero;
+        document.getElementById('complemento').value = data.complemento || '';
+        document.getElementById('bairro').value = data.bairro;
+        document.getElementById('cidade').value = data.cidade;
+        document.getElementById('estado').value = data.estado;
+        document.getElementById('cep').value = data.cep;
+        if(document.getElementById('cep')) document.getElementById('cep').dataset.valid = 'true';
     }
 }
 
@@ -319,7 +316,7 @@ function fecharModalEndereco() {
 }
 
 // Máscara de CEP
-const cepInput = document.getElementById('input-cep');
+const cepInput = document.getElementById('cep');
 if(cepInput) {
     cepInput.addEventListener('input', function(e) {
         let value = e.target.value.replace(/\D/g, ''); // Remove tudo que não é dígito
@@ -336,6 +333,18 @@ if(cepInput) {
 form.addEventListener('submit', function(e) {
     e.preventDefault(); // Impede o envio imediato
 
+    // Validação do CEP
+    const cepInput = document.getElementById('cep');
+    if (cepInput && cepInput.dataset.valid === 'false') {
+        Swal.fire({
+            title: 'CEP Inválido',
+            text: 'Por favor, informe um CEP válido e aguarde a busca automática.',
+            icon: 'warning',
+            confirmButtonColor: '#4f46e5'
+        });
+        return;
+    }
+
     // Verifica se é edição ou criação para mudar o texto
     const isEdit = methodSpoof.innerHTML.includes('PUT');
     const actionText = isEdit ? 'Atualizar' : 'Cadastrar';
@@ -345,7 +354,7 @@ form.addEventListener('submit', function(e) {
         text: "Verifique se os dados estão corretos.",
         icon: 'question',
         showCancelButton: true,
-        confirmButtonColor: '#2563eb', // blue-600
+        confirmButtonColor: '#4f46e5', // indigo-600
         cancelButtonColor: '#9ca3af', // gray-400
         confirmButtonText: `Sim, ${actionText}`,
         cancelButtonText: 'Cancelar',
@@ -374,16 +383,17 @@ form.addEventListener('submit', function(e) {
 </script>
 
 <style>
-.input {
-    @apply w-full rounded-lg border-0 py-2.5 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6 transition-all duration-200;
+/* Estilo profissional para inputs */
+.input-professional {
+    @apply block w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-gray-900 placeholder-gray-400 focus:bg-white focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 hover:bg-white hover:border-gray-300 transition-all duration-200 ease-in-out shadow-sm sm:text-sm sm:leading-6;
 }
 
 .btn-primary {
-    @apply inline-flex justify-center items-center rounded-lg bg-primary px-6 py-2.5 text-white font-semibold hover:opacity-90 transition;
+    @apply inline-flex justify-center items-center rounded-lg bg-indigo-600 px-6 py-2.5 text-white font-semibold hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 transition duration-200;
 }
 
 .btn-danger {
-    @apply inline-flex justify-center items-center rounded-lg bg-red-600 px-6 py-2.5 text-white font-semibold hover:bg-red-700 transition;
+    @apply inline-flex justify-center items-center rounded-lg bg-red-600 px-6 py-2.5 text-white font-semibold hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600 transition duration-200;
 }
 </style>
 @endsection

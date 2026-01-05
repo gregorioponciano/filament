@@ -16,7 +16,7 @@
                 <div class="flex flex-1 items-center gap-4 max-w-2xl">
                     {{-- Category Dropdown --}}
                     <div class="relative">
-                        <button id="categoryBtn" class="hidden md:flex items-center gap-2 rounded-xl bg-gray-100 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-secondary whitespace-nowrap">
+                        <button id="categoryBtn" class="hidden md:flex items-center gap-2 rounded-xl bg-white border border-gray-200 shadow-sm px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-900 transition-all whitespace-nowrap">
                             Categorias
                             <svg class="size-4 text-gray-500" viewBox="0 0 20 20" fill="currentColor">
                                 <path fill-rule="evenodd" d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd"/>
@@ -41,13 +41,13 @@
                                 <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 1 1 1.06 1.06l-3.329-3.328A7 7 0 012 9z" clip-rule="evenodd" />
                             </svg>
                         </div>
-                        <input type="text" placeholder="Buscar produtos..." class="block w-full rounded-xl border-0 bg-gray-100 py-2 pl-10 pr-3 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6">
+                        <input type="text" placeholder="Buscar produtos..." class="block w-full rounded-xl border border-gray-200 bg-gray-50 py-2.5 pl-10 pr-3 text-gray-900 shadow-sm placeholder:text-gray-400 focus:bg-white focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 hover:bg-white hover:border-gray-300 transition-all duration-200 sm:text-sm sm:leading-6">
                     </div>
                 </div>
 
                 {{-- User Dropdown --}}
                 <div class="relative shrink-0">
-                    <button id="userBtn" class="flex items-center gap-2 rounded-full bg-gray-100 px-3 py-2 text-sm font-medium text-gray-700 hover:bg-secondary">
+                    <button id="userBtn" class="flex items-center gap-2 rounded-full bg-white border border-gray-200 px-3 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 hover:border-gray-300 hover:text-gray-900 transition-all">
                         <svg class="h-5 w-5 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                         </svg>
@@ -170,6 +170,58 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         
     });
+
+    // Busca automática de CEP via API (ViaCEP)
+    const cepInput = document.getElementById('cep');
+    if (cepInput) {
+        cepInput.addEventListener('blur', function() {
+            const cep = this.value.replace(/\D/g, '');
+            if (cep.length === 8) {
+                // Feedback visual de carregamento
+                document.body.style.cursor = 'wait';
+                this.readOnly = true;
+                const originalPlaceholder = this.placeholder;
+                this.placeholder = 'Buscando...';
+
+                fetch(`https://viacep.com.br/ws/${cep}/json/`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (!data.erro) {
+                            if(document.getElementById('rua')) document.getElementById('rua').value = data.logradouro;
+                            if(document.getElementById('bairro')) document.getElementById('bairro').value = data.bairro;
+                            if(document.getElementById('cidade')) document.getElementById('cidade').value = data.localidade;
+                            if(document.getElementById('estado')) document.getElementById('estado').value = data.uf;
+                            if(document.getElementById('numero')) document.getElementById('numero').focus();
+                            
+                            this.dataset.valid = 'true';
+                            this.classList.remove('border-red-500', 'focus:border-red-500', 'focus:ring-red-500');
+                            this.classList.add('border-green-500', 'focus:border-green-500', 'focus:ring-green-500');
+                        } else {
+                            if (typeof Swal !== 'undefined') {
+                                Swal.fire({ icon: 'error', title: 'CEP não encontrado', text: 'Verifique o número digitado.', confirmButtonColor: '#4f46e5' });
+                            } else {
+                                alert('CEP não encontrado.');
+                            }
+                            this.dataset.valid = 'false';
+                            this.classList.add('border-red-500', 'focus:border-red-500', 'focus:ring-red-500');
+                            this.classList.remove('border-green-500', 'focus:border-green-500', 'focus:ring-green-500');
+                            
+                            // Limpar campos se não encontrado
+                            if(document.getElementById('rua')) document.getElementById('rua').value = '';
+                            if(document.getElementById('bairro')) document.getElementById('bairro').value = '';
+                            if(document.getElementById('cidade')) document.getElementById('cidade').value = '';
+                            if(document.getElementById('estado')) document.getElementById('estado').value = '';
+                        }
+                    })
+                    .catch(error => { console.error('Erro ao buscar CEP:', error); this.dataset.valid = 'false'; })
+                    .finally(() => {
+                        document.body.style.cursor = 'default';
+                        this.readOnly = false;
+                        this.placeholder = originalPlaceholder;
+                    });
+            }
+        });
+    }
 });
 </script>
 @endsection
