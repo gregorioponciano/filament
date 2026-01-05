@@ -46,7 +46,7 @@
                     name="name"
                     value="{{ $user->name }}"
                     required
-                    class="input-professional"
+                    class="border-black border-2 p-2 invalid:border-pink-500 invalid:text-pink-600 focus:border-sky-500 focus:outline focus:outline-sky-500 focus:invalid:border-pink-500 focus:invalid:outline-pink-500 disabled:border-gray-200 disabled:bg-gray-50 disabled:text-gray-500 disabled:shadow-none dark:disabled:border-gray-700 dark:disabled:bg-gray-800/20"
                 >
             </div>
 
@@ -57,15 +57,14 @@
                     name="email"
                     value="{{ $user->email }}"
                     required
-                    class="input-professional bg-gray-50 text-gray-500 cursor-not-allowed"
-                    readonly
+                    class=" border-black border-2 p-2 invalid:border-pink-500 invalid:text-pink-600 focus:border-sky-500 focus:outline focus:outline-sky-500 focus:invalid:border-pink-500 focus:invalid:outline-pink-500 disabled:border-gray-200 disabled:bg-gray-50 disabled:text-gray-500 disabled:shadow-none dark:disabled:border-gray-700 dark:disabled:bg-gray-800/20 "  
                 >
             </div>
 
             <div class="flex flex-col sm:flex-row gap-3 justify-between pt-4">
                 <button
                     type="submit"
-                    class="btn-primary w-full sm:w-auto shadow-sm"
+                    class="bg-blue-500 p-3 text-white rounded-lg hover:bg-blue-600 "
                 >
                     Atualizar Perfil
                 </button>
@@ -73,7 +72,7 @@
                 <button
                     type="button"
                     onclick="confirmarExclusaoConta()"
-                    class="btn-danger w-full sm:w-auto shadow-sm"
+                    class="bg-red-500 p-3 text-white rounded-lg hover:bg-red-600 transition"
                 >
                     Excluir Conta
                 </button>
@@ -181,49 +180,49 @@
 
                 <form id="form-endereco" action="{{ route('enderecos.store') }}" method="POST" class="space-y-5">
                     @csrf
-                    {{-- Método Spoofing para Edit (será injetado via JS se necessário) --}}
-                    <div id="method-spoof"></div>
+                    {{-- Método Spoofing para Edit --}}
+                    <input type="hidden" name="_method" id="method-input" value="POST">
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div class="sm:col-span-2">
                             <label class="block text-sm font-medium leading-6 text-gray-900 mb-1">Rua / Logradouro</label>
-                            <input name="rua" id="rua" required class="input-professional" value="{{ old('rua') }}" placeholder="Ex: Av. Paulista">
+                            <input name="rua" id="rua" required class="border invalid:border-pink-500  focus:border-sky-500  focus:outline-sky-500 w-full rounded-lg border-gray-300 px-4 py-2" value="{{ old('rua') }}" placeholder="Ex: Av. Paulista">
                         </div>
 
                         <div>
                             <label class="block text-sm font-medium leading-6 text-gray-900 mb-1">Número</label>
-                            <input name="numero" id="numero" required class="input-professional" value="{{ old('numero') }}" placeholder="123">
+                            <input name="numero" id="numero" required class="border invalid:border-pink-500 focus:border-sky-500  focus:outline-sky-500 w-full rounded-lg border-gray-300 px-4 py-2" value="{{ old('numero') }}" placeholder="123">
                         </div>
 
                         <div>
                             <label class="block text-sm font-medium leading-6 text-gray-900 mb-1">Complemento <span class="text-gray-400 font-normal">(Opcional)</span></label>
-                            <input name="complemento" id="complemento" class="input-professional" value="{{ old('complemento') }}" placeholder="Apto 101">
+                            <input name="complemento" id="complemento" class="border invalid:border-pink-500  focus:border-sky-500  focus:outline-sky-500 w-full rounded-lg border-gray-300 px-4 py-2" value="{{ old('complemento') }}" placeholder="Apto 101">
                         </div>
 
                         <div class="sm:col-span-2">
                             <label class="block text-sm font-medium leading-6 text-gray-900 mb-1">Bairro</label>
-                            <input name="bairro" id="bairro" required class="input-professional" value="{{ old('bairro') }}" placeholder="Centro">
+                            <input name="bairro" id="bairro" required class="border invalid:border-pink-500  focus:border-sky-500  focus:outline-sky-500  w-full rounded-lg border-gray-300 px-4 py-2" value="{{ old('bairro') }}" placeholder="Centro">
                         </div>
 
                         <div>
                             <label class="block text-sm font-medium leading-6 text-gray-900 mb-1">Cidade</label>
-                            <input name="cidade" id="cidade" required class="input-professional" value="{{ old('cidade') }}" placeholder="São Paulo">
+                            <input name="cidade" id="cidade" required class="border invalid:border-pink-500  focus:border-sky-500  focus:outline-sky-500  w-full rounded-lg border-gray-300 px-4 py-2" value="{{ old('cidade') }}" placeholder="São Paulo">
                         </div>
 
                         <div>
                             <label class="block text-sm font-medium leading-6 text-gray-900 mb-1">Estado (UF)</label>
-                            <input name="estado" id="estado" required class="input-professional" value="{{ old('estado') }}" placeholder="SP">
+                            <input name="estado" id="estado" required class="border invalid:border-pink-500  focus:border-sky-500  focus:outline-sky-500  w-full rounded-lg border-gray-300 px-4 py-2" value="{{ old('estado') }}" placeholder="SP">
                         </div>
 
                         <div class="sm:col-span-2">
                             <label class="block text-sm font-medium leading-6 text-gray-900 mb-1">CEP</label>
-                            <input name="cep" id="cep" required class="input-professional" value="{{ old('cep') }}" placeholder="00000-000" maxlength="9">
+                            <input name="cep" id="cep" required class=" border invalid:border-b-stone-600-500  focus:border-sky-500  focus:outline-sky-500 mt-1 w-full rounded-lg border-gray-300 px-4 py-2 " value="{{ old('cep') }}" placeholder="00000-000" maxlength="9">
                         </div>
                     </div>
 
                     <div class="mt-5 sm:mt-6 sm:grid sm:grid-flow-row-dense sm:grid-cols-2 sm:gap-3">
-                        <button type="submit" class="btn-primary w-full sm:col-start-2 shadow-sm">Salvar Endereço</button>
-                        <button type="button" onclick="fecharModalEndereco()" class="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:col-start-1 sm:mt-0">Cancelar</button>
+                        <button type="submit" class="bg-blue-500 mt-1 w-full rounded-lg  px-4 py-2">Salvar Endereço</button>
+                        <button type="button" onclick="fecharModalEndereco()" class="bg-red-500 mt-1 w-full rounded-lg  px-4 py-2">Cancelar</button>
                     </div>
                 </form>
             </div>
@@ -272,7 +271,7 @@ function confirmarExclusaoEndereco(id) {
 // Lógica do Modal de Endereço
 const modal = document.getElementById('modal-endereco');
 const form = document.getElementById('form-endereco');
-const methodSpoof = document.getElementById('method-spoof');
+const methodInput = document.getElementById('method-input');
 const modalTitle = document.getElementById('modal-title');
 
 function abrirModalEndereco(mode, data = null) {
@@ -280,7 +279,6 @@ function abrirModalEndereco(mode, data = null) {
     
     // Limpar campos
     form.reset();
-    methodSpoof.innerHTML = '';
     
     // Remover erros de validação antigos visualmente (opcional)
     document.querySelectorAll('.text-red-500').forEach(el => el.remove());
@@ -288,6 +286,7 @@ function abrirModalEndereco(mode, data = null) {
     if (mode === 'create') {
         modalTitle.innerText = 'Adicionar Novo Endereço';
         form.action = "{{ route('enderecos.store') }}";
+        methodInput.value = 'POST';
         if(document.getElementById('cep')) document.getElementById('cep').dataset.valid = 'false';
     } else if (mode === 'edit' && data) {
         modalTitle.innerText = 'Editar Endereço';
@@ -296,8 +295,8 @@ function abrirModalEndereco(mode, data = null) {
         let updateUrl = "{{ route('enderecos.update', ':id') }}";
         form.action = updateUrl.replace(':id', data.id);
         
-        // Adiciona o campo hidden @method('PUT')
-        methodSpoof.innerHTML = '<input type="hidden" name="_method" value="PUT">';
+        // Define o método como PUT
+        methodInput.value = 'PUT';
         
         // Preenche os campos
         document.getElementById('rua').value = data.rua;
@@ -333,6 +332,12 @@ if(cepInput) {
 form.addEventListener('submit', function(e) {
     e.preventDefault(); // Impede o envio imediato
 
+    // Validação HTML5 manual para garantir que campos obrigatórios estão preenchidos
+    if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+    }
+
     // Validação do CEP
     const cepInput = document.getElementById('cep');
     if (cepInput && cepInput.dataset.valid === 'false') {
@@ -346,7 +351,7 @@ form.addEventListener('submit', function(e) {
     }
 
     // Verifica se é edição ou criação para mudar o texto
-    const isEdit = methodSpoof.innerHTML.includes('PUT');
+    const isEdit = methodInput.value === 'PUT';
     const actionText = isEdit ? 'Atualizar' : 'Cadastrar';
 
     Swal.fire({
@@ -382,18 +387,4 @@ form.addEventListener('submit', function(e) {
 @endif
 </script>
 
-<style>
-/* Estilo profissional para inputs */
-.input-professional {
-    @apply block w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-gray-900 placeholder-gray-400 focus:bg-white focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 hover:bg-white hover:border-gray-300 transition-all duration-200 ease-in-out shadow-sm sm:text-sm sm:leading-6;
-}
-
-.btn-primary {
-    @apply inline-flex justify-center items-center rounded-lg bg-indigo-600 px-6 py-2.5 text-white font-semibold hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 transition duration-200;
-}
-
-.btn-danger {
-    @apply inline-flex justify-center items-center rounded-lg bg-red-600 px-6 py-2.5 text-white font-semibold hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600 transition duration-200;
-}
-</style>
 @endsection

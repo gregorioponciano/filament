@@ -3,6 +3,7 @@
 @section('title', 'Categorias')
 
 @section('dashboard')
+@include('user.dashboard-content')
 <div class="p-6">
   <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
 

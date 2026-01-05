@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('title', 'Dashboard')
 @section('content')
-
+ @include('layouts.app')
 
 <section class=" bg-bg">
     <header class="bg-primary shadow-sm bg-white sticky top-0 z-40">
@@ -82,6 +82,7 @@
     </header>
     @yield('dashboard')
     @if(request()->routeIs('user.dashboard'))
+        @include('user.dashboard-content')
         @include('produtos.index')
     @endif
 </section>

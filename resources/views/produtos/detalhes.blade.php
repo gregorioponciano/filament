@@ -3,6 +3,7 @@
 @section('title', 'Detalhes')
 
 @section('dashboard')
+@include('user.dashboard-content')
 <div class="mx-auto max-w-6xl px-4 py-6">
     <div class="grid grid-cols-1 gap-8 md:grid-cols-2">
 

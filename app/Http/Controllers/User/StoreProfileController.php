@@ -31,6 +31,6 @@ class StoreProfileController extends Controller
         
         $user->update($validated);
         
-        return redirect()->back()->with('sucesso', 'Perfil atualizado!');
+        return redirect()->back()->with('success', 'Perfil atualizado!');
     }
 }

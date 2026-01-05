@@ -25,13 +25,14 @@
             @csrf
             {{-- Email --}}
             <div>
-                <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
-                <input type="email" name="email" id="email" value="{{ old('email') }}" placeholder="seu@email.com" class="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-indigo-500 focus:ring focus:ring-indigo-200">
-            </div>
+                <label for="email" class="block text-sm font-medium text-gray-700">Email
+                <input type="email" name="email" id="email" value="{{ old('email') }}" placeholder="seu@email.com" class="peer invalid:border-pink-500 invalid:text-pink-600 focus:border-sky-500 focus:outline focus:outline-sky-500 focus:invalid:border-pink-500 focus:invalid:outline-pink-500 disabled:border-gray-200 disabled:bg-gray-50 disabled:text-gray-500 disabled:shadow-none dark:disabled:border-gray-700 dark:disabled:bg-gray-800/20  mt-1 w-full rounded-lg border border-gray-300 px-4 py-2  ">
+           <p class="invisible peer-invalid:visible ...">Por favor, insira um email válido.</p>
+            </label> </div>
             {{-- Senha --}}
             <div>
                 <label for="password" class="block text-sm font-medium text-gray-700">Senha</label>
-                <input type="password" name="password" placeholder="••••••••" class="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-indigo-500 focus:ring focus:ring-indigo-200">
+                <input type="password" name="password" placeholder="••••••••" class="invalid:border-pink-500 invalid:text-pink-600 focus:border-sky-500 focus:outline focus:outline-sky-500 focus:invalid:border-pink-500 focus:invalid:outline-pink-500 disabled:border-gray-200 disabled:bg-gray-50 disabled:text-gray-500 disabled:shadow-none dark:disabled:border-gray-700 dark:disabled:bg-gray-800/20  mt-1 w-full rounded-lg border border-gray-300 px-4 py-2  ">
             </div>
             {{-- Botão --}}
             <button type="submit" class="w-full rounded-lg bg-indigo-600 py-2 font-semibold text-white hover:bg-hover transition">Entrar</button>
