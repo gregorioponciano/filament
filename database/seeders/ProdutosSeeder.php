@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Categoria;
 use App\Models\Produto;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
 
@@ -13,6 +14,13 @@ class ProdutosSeeder extends Seeder
     {
         // Categorias existentes (SEM mudar lógica)
         $camisetas = Categoria::where('slug', 'camisetas')->first();
+        $user  = User::first();
+
+        if (!$user) {
+            $this->call(UserSeeder::class);
+            $user = User::first();
+        }
+
         $blusas    = Categoria::where('slug', 'blusas')->first();
         $bone      = Categoria::where('slug', 'bone')->first();
         $casacos   = Categoria::where('slug', 'casacos')->first();
@@ -37,6 +45,7 @@ class ProdutosSeeder extends Seeder
                 'preco' => 49.90,
                 'imagem' => 'image/camisa/camisa1.webp',
                 'estoque' => 50,
+                'user_id' => $user->id,
                 'categoria_id' => $camisetas->id,
             ],
             [
@@ -45,6 +54,7 @@ class ProdutosSeeder extends Seeder
                 'preco' => 54.90,
                 'imagem' => 'image/camisa/camisa2.webp',
                 'estoque' => 40,
+                'user_id' => $user->id,
                 'categoria_id' => $camisetas->id,
             ],
             [
@@ -53,6 +63,7 @@ class ProdutosSeeder extends Seeder
                 'preco' => 69.90,
                 'imagem' => 'image/camisa/camisa3.webp',
                 'estoque' => 35,
+                'user_id' => $user->id,
                 'categoria_id' => $camisetas->id,
             ],
             [
@@ -61,6 +72,7 @@ class ProdutosSeeder extends Seeder
                 'preco' => 55.90,
                 'imagem' => 'image/camisa/camisa4.webp',
                 'estoque' => 45,
+                'user_id' => $user->id,
                 'categoria_id' => $camisetas->id,
             ],
 
@@ -71,6 +83,7 @@ class ProdutosSeeder extends Seeder
                 'preco' => 199.90,
                 'imagem' => 'image/blusa/blusa1.webp',
                 'estoque' => 25,
+                'user_id' => $user->id,
                 'categoria_id' => $blusas->id,
             ],
             [
@@ -79,6 +92,7 @@ class ProdutosSeeder extends Seeder
                 'preco' => 179.90,
                 'imagem' => 'image/blusa/blusa2.webp',
                 'estoque' => 30,
+                'user_id' => $user->id,
                 'categoria_id' => $blusas->id,
             ],
 
@@ -89,6 +103,7 @@ class ProdutosSeeder extends Seeder
                 'preco' => 79.90,
                 'imagem' => 'image/bone/bone1.webp',
                 'estoque' => 35,
+                'user_id' => $user->id,
                 'categoria_id' => $bone->id,
             ],
             [
@@ -97,6 +112,7 @@ class ProdutosSeeder extends Seeder
                 'preco' => 69.90,
                 'imagem' => 'image/bone/bone2.webp',
                 'estoque' => 40,
+                'user_id' => $user->id,
                 'categoria_id' => $bone->id,
             ],
 
@@ -107,6 +123,7 @@ class ProdutosSeeder extends Seeder
                 'preco' => 249.90,
                 'imagem' => 'image/casaco/casaco1.webp',
                 'estoque' => 20,
+                'user_id' => $user->id,
                 'categoria_id' => $casacos->id,
             ],
             [
@@ -115,6 +132,7 @@ class ProdutosSeeder extends Seeder
                 'preco' => 329.90,
                 'imagem' => 'image/casaco/casaco2.webp',
                 'estoque' => 15,
+                'user_id' => $user->id,
                 'categoria_id' => $casacos->id,
             ],
 
@@ -125,6 +143,7 @@ class ProdutosSeeder extends Seeder
                 'preco' => 89.90,
                 'imagem' => 'image/shorts/short1.webp',
                 'estoque' => 45,
+                'user_id' => $user->id,
                 'categoria_id' => $shorts->id,
             ],
             [
@@ -133,6 +152,7 @@ class ProdutosSeeder extends Seeder
                 'preco' => 119.90,
                 'imagem' => 'image/shorts/short2.webp',
                 'estoque' => 30,
+                'user_id' => $user->id,
                 'categoria_id' => $shorts->id,
             ],
         ];

@@ -13,6 +13,7 @@ class Produto extends Model
         'preco',
         'imagem',
         'estoque',
+        'user_id',
         'categoria_id',
         
 
