@@ -20,6 +20,8 @@ class ProdutoInfolist
                 TextEntry::make('imagem'),
                 TextEntry::make('estoque')
                     ->numeric(),
+                TextEntry::make('user_id')
+                    ->numeric(),
                 TextEntry::make('categoria_id')
                     ->numeric(),
                 TextEntry::make('created_at')

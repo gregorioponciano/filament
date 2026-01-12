@@ -5,22 +5,28 @@
 @section('content')
 <section class="min-h-screen flex items-center justify-center">
     <div class="w-full max-w-md bg-primary rounded-2xl shadow-lg p-8">
+        
+        <div class="border-b rounded-2xl mb-4">
+            <h3 class="text-2xl text-center text-gray-800">Login</h3>
+        </div>
 
             @if ($mensagem = Session::get('sucesso'))
             <p>{{$mensagem}}</p>
             @endif
-
-        {{-- Erros --}}
+            
+            {{-- Erros --}}
         @if ($errors->any())
             <div class="mb-4 rounded-lg bg-red-100 p-4 text-red-700">
                 <ul class="text-sm list-disc list-inside">
                     @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
+                    <li>{{ $error }}</li>
                     @endforeach
                 </ul>
             </div>
         @endif
-                        {{-- FORMULARIO --}}
+        
+        
+        {{-- FORMULARIO --}}
         <form action="{{ route('store.login') }}" method="POST" class="space-y-4">
             @csrf
             {{-- Email --}}
@@ -38,9 +44,11 @@
             <button type="submit" class="w-full rounded-lg bg-indigo-600 py-2 font-semibold text-white hover:bg-hover transition">Entrar</button>
         </form>
         {{-- Link register --}}
-        <a href="#">Esqueceu a senha?</a>
-       <a href="{{ route('show.register') }}" class="font-semibold text-indigo-600 hover:underline">Criar conta</a>
-
+        <div class="text-center py-4">
+            <a href="#">Esqueceu a senha?</a>
+                   <a href="{{ route('show.register') }}" class="font-semibold text-indigo-600 hover:underline">Criar conta</a>
+        </div>
+ 
     </div>
 </section>
 @endsection

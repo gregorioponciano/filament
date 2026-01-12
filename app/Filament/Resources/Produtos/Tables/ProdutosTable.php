@@ -27,6 +27,9 @@ class ProdutosTable
                 TextColumn::make('estoque')
                     ->numeric()
                     ->sortable(),
+                TextColumn::make('user_id')
+                    ->numeric()
+                    ->sortable(),
                 TextColumn::make('categoria_id')
                     ->numeric()
                     ->sortable(),

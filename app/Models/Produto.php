@@ -22,4 +22,8 @@ class Produto extends Model
     {// procura no banco o relacionamento e mostra qual categoria ex:(  {{ $produto->categoria->nome ?? 'Categoria' }} )
         return $this->belongsTo(Categoria::class);  
     }
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

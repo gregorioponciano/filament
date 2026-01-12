@@ -13,7 +13,7 @@ return new class extends Migration
             $table->string('primary_color')->default('#3294cd'); // azul
             $table->string('secondary_color')->default('#ef8d32');
             $table->string('text_color')->default('#2563eb');
-            $table->string('bg_color')->default('#ffffff');
+            $table->string('bg_color')->default('#ff0f00');
             $table->string('border_color')->default('#000000');
             $table->string('link_color')->default('#4f38f6');
             $table->string('hover_color')->default('#000000');

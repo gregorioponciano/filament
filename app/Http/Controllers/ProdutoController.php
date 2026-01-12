@@ -14,4 +14,18 @@ class ProdutoController extends Controller
         return view('produtos.index', compact('produtos'));
     
     }
+
+    public function searchProdutos(Request $request)
+    {
+        $search = $request->input('search');
+        
+        $produtos = Produto::query()
+            ->when($search, function ($query, $search) {
+                $query->where('nome', 'like', '%' . $search . '%');
+            })
+            ->paginate(3)
+            ->withQueryString();
+
+        return view('produtos.index', compact('produtos'));
+    }
 }

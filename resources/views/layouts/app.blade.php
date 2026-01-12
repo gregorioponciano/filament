@@ -17,7 +17,7 @@
             --primary-color: {{ $siteSetting->primary_color ?? '#3b82f6' }};
             --secondary-color: {{ $siteSetting->secondary_color ?? '#64748b' }};
             --text-color: {{ $siteSetting->text_color ?? '#212529' }};
-            --bg-color: {{ $siteSetting->bg_color ?? '#f9fafb' }};
+            --bg-color: {{ $siteSetting->bg_color ?? '#00ccfc' }};
             --border-color: {{ $siteSetting->border_color ?? '#d1d5db' }};
             --link-color: {{ $siteSetting->link_color ?? '#3b82f6' }};
             --hover-color: {{ $siteSetting->hover_color ?? '#64748b' }};
@@ -25,6 +25,7 @@
             --footer-text-color: {{ $siteSetting->footer_text_color ?? '#212529' }};
             --font-sans: {{ $siteSetting->font_family ?? 'Inter' }}', sans-serif;
         }
+        
     </style>
         @yield('content')
 
