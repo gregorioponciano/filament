@@ -1,7 +1,6 @@
 @extends('layouts.app')
 @section('title', 'Dashboard')
 @section('content')
- @include('layouts.app')
 
 <section class=" bg-bg">
     <header class="bg-primary shadow-sm bg-white sticky top-0 z-40">
@@ -13,10 +12,15 @@
                 </div>
 
                 {{-- Search & Categories --}}
-                <div class="flex flex-1 items-center gap-4 max-w-2xl">
+                <div class="flex flex-1 items-center gap-2 w-full md:max-w-2xl">
                     {{-- Category Dropdown --}}
                     <div class="relative">
-                        <button id="categoryBtn" class="hidden md:flex items-center gap-2 rounded-xl bg-white border border-gray-200 shadow-sm px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-900 transition-all whitespace-nowrap">
+                       <button
+ id="categoryBtn"
+ class="hidden md:flex shrink-0 items-center gap-2 rounded-xl
+ bg-white border border-gray-200 shadow-sm px-4 py-2.5
+ text-sm font-medium text-gray-700 hover:bg-gray-50 transition-all whitespace-nowrap"
+>
                             Categorias
                             <svg class="size-4 text-gray-500" viewBox="0 0 20 20" fill="currentColor">
                                 <path fill-rule="evenodd" d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd"/>
@@ -34,16 +38,35 @@
                         </div>
                     </div>
 
-                    {{-- Search Input --}}
-                    <div class="relative w-full">
-                        <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                            <svg class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
-                                <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 1 1 1.06 1.06l-3.329-3.328A7 7 0 012 9z" clip-rule="evenodd" />
-                            </svg>
-                        </div>
-                        <input type="text" placeholder="Buscar produtos..." class="block w-full rounded-xl border border-gray-200 bg-gray-50 py-2.5 pl-10 pr-3 text-gray-900 shadow-sm placeholder:text-gray-400 focus:bg-white focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 hover:bg-white hover:border-gray-300 transition-all duration-200 sm:text-sm sm:leading-6">
-                    </div>
-                </div>
+<form
+  action="{{ route('search') }}"
+  method="GET"
+  class="flex flex-1 items-center gap-2 w-full"
+  id="searchForm"
+>
+  <input
+    type="search"
+    name="search"
+    value="{{ old('search', $search ?? '') }}"
+    placeholder="Buscar produtos..."
+    class="w-full rounded-xl border border-gray-300 px-4 py-2 text-sm
+ focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition"
+  >
+
+  <button
+    type="submit"
+    class="flex items-center justify-center rounded-xl bg-blue-600
+           px-3 py-2 text-white text-sm hover:bg-blue-700 transition shrink-0"
+  >
+    <span class="hidden sm:inline">Buscar</span>
+    <svg class="h-5 w-5 sm:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+        d="M21 21l-4.35-4.35m1.35-5.65a7 7 0 11-14 0 7 7 0 0114 0z" />
+    </svg>
+  </button>
+</form>
+
+
 
                 {{-- User Dropdown --}}
                 <div class="relative shrink-0">
@@ -81,6 +104,7 @@
         </div>
     </header>
     @yield('dashboard')
+    
     @if(request()->routeIs('user.dashboard'))
         @include('user.dashboard-content')
         @include('produtos.index')

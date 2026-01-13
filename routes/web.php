@@ -8,6 +8,7 @@ use App\Http\Controllers\Auth\StoreRegisterController;
 use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\DetalhesController;
 use App\Http\Controllers\ProdutoController;
+use App\Http\Controllers\SearchController;
 use App\Http\Controllers\User\DestroyProfileController;
 use App\Http\Controllers\User\EnderecoController;
 use App\Http\Controllers\User\UserDashboardController;
@@ -38,6 +39,8 @@ Route::resource('/user/enderecos', EnderecoController::class)->names('enderecos'
 Route::get('/produtos', [ProdutoController::class, 'showProdutos'])->name('show.produtos')->middleware([Authenticate::class, AdminMiddleware::class]);
 Route::get('/produto/{slug}', [DetalhesController::class, 'showDetalhes'])->name('show.detalhes')->middleware([Authenticate::class]);
 Route::get('/categorias/{slug}', [CategoriaController::class, 'showCategorias'])->name('show.categorias')->middleware([Authenticate::class]);
+Route::get('/search', [SearchController::class, 'search'])->name('search')->middleware([Authenticate::class]);
+
 
 
     // Rotas para administradores

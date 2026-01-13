@@ -1,14 +1,15 @@
+@if(isset($produtos) && $produtos->count() > 0)
 <div class="p-6">
   <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
 
     @foreach ($produtos as $produto)
 
-      <div class="m-1 bg-blue-50 p-5 rounded-xl shadow-sm hover:shadow-md transition">
+      <div class="group relative flex flex-col overflow-hidden rounded-xl bg-white border border-gray-100 shadow-sm hover:shadow-md transition-all duration-300">
 
         {{-- IMAGEM COM OLHO --}}
-        <div class="group relative mb-4 overflow-hidden rounded-lg">
+        <div class="relative h-64 overflow-hidden bg-gray-100">
           <img
-            class="h-48 w-full object-cover transition-transform duration-300 group-hover:scale-105"
+            class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
             src="{{ asset($produto->imagem) }}"
             alt="{{ $produto->nome }}"
           >
@@ -28,39 +29,38 @@
           </a>
         </div>
 
-        {{-- CATEGORIA --}}
-        <span class="mb-2 inline-block rounded-full bg-blue-100 px-3 py-1 text-xs font-semibold text-blue-600">
-          {{ $produto->categoria->nome ?? 'Categoria' }}
-        </span>
+        <div class="flex flex-1 flex-col p-5">
+            {{-- CATEGORIA --}}
+            <div class="mb-2">
+                <span class="inline-flex items-center rounded-full bg-blue-50 px-2.5 py-0.5 text-xs font-medium text-blue-700">
+                  {{ $produto->categoria->nome ?? 'Geral' }}
+                </span>
+            </div>
 
-        {{-- NOME --}}
-        <h3 class="text-2xl font-semibold text-gray-800">
-          {{ \Illuminate\Support\Str::limit($produto->nome, 15) }}
-        </h3>
+            {{-- NOME --}}
+            <h3 class="text-lg font-bold text-gray-900 mb-1">
+              {{ \Illuminate\Support\Str::limit($produto->nome, 40) }}
+            </h3>
 
-        {{-- DESCRIÇÃO --}}
-        <p class="text-gray-600">
-          {{ \Illuminate\Support\Str::limit($produto->descricao, 30) }}
-        </p>
+            {{-- DESCRIÇÃO --}}
+            <p class="text-sm text-gray-500 mb-4 flex-1">
+              {{ \Illuminate\Support\Str::limit($produto->descricao, 60) }}
+            </p>
 
-        {{-- PREÇO --}}
-        <p class="mt-2 text-lg font-bold text-green-600">
-          R$ {{ number_format($produto->preco, 2, ',', '.') }}
-        </p>
+            {{-- PREÇO E AÇÕES --}}
+            <div class="flex items-center justify-between mt-auto pt-4 border-t border-gray-100">
+                <p class="text-xl font-bold text-green-600">
+                  R$ {{ number_format($produto->preco, 2, ',', '.') }}
+                </p>
+                
+                <button class="rounded-lg bg-blue-600 p-2 text-white hover:bg-blue-700 transition shadow-sm" title="Adicionar ao Carrinho">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
+                    </svg>
+                </button>
+            </div>
+        </div>
 
-        {{-- BOTÕES --}}
-        <a
-          href="{{ route('show.detalhes', $produto->slug) }}"
-          class="mt-4 block w-full rounded-lg bg-green-500 py-2.5 text-center text-sm font-medium text-white transition hover:bg-slate-800"
-        >
-          Detalhes
-        </a>
-
-        <button
-          class="mt-2 w-full rounded-lg bg-blue-500 py-2.5 text-sm font-medium text-white transition hover:bg-slate-800"
-        >
-          Comprar
-        </button>
 
       </div>
 
@@ -70,6 +70,12 @@
 </div>
 
 <div class="mt-8 flex justify-center">
-  {{ $produtos->links() }}
+  @if(method_exists($produtos, 'links'))
+    {{ $produtos->appends(request()->query())->links() }}
+  @endif
 </div>
 
+
+
+</div>
+@endif
