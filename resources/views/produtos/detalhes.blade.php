@@ -22,9 +22,11 @@
             {{-- Voltar --}}
             <button
                 onclick="window.history.back()"
-                class="flex w-fit items-center gap-1 text-sm text-slate-600 hover:text-blue-600 transition"
+                class="cursor-pointer flex w-fit items-center gap-1 text-sm text-slate-600 hover:text-blue-600 transition"
             >
-                <i class="material-icons text-base">arrow_back</i>
+                <span class="material-symbols-outlined">
+arrow_circle_left
+</span>
                 Voltar
             </button>
 
@@ -58,18 +60,72 @@
                 <input type="hidden" name="image" value="{{ $produto->imagem }}">
 
                 {{-- Quantidade --}}
-                <div class="flex flex-col gap-1">
-                    <label class="text-sm font-medium text-slate-700">
-                        Quantidade
-                    </label>
-                    <input
-                        type="number"
-                        name="qnt"
-                        value="1"
-                        min="1"
-                        class="w-24 rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none"
-                    >
+                <div class="flex items-center gap-2">
+                
+                <!-- Botão menos -->
+                <button
+                    type="button"
+                    onclick="changeQty(-1)"
+                    class="h-10 w-10 rounded-lg border border-gray-300 bg-white
+                        hover:bg-gray-100 active:scale-95 transition text-red-600 text-2xl"
+                >
+                    −
+                </button>
+
+                <!-- Input -->
+                <input
+                    id="qty"
+                    type="number"
+                    min="1"
+                    value="1"
+                    inputmode="numeric"
+                  class="
+                        h-10 w-20
+                        text-center
+                        rounded-lg
+                        border border-gray-300
+                        focus:ring-2 focus:ring-blue-500 focus:outline-none
+                        [appearance:textfield]
+                        [&::-webkit-inner-spin-button]:appearance-none
+                        [&::-webkit-outer-spin-button]:appearance-none
+                        "
+
+                    oninput="validateQty()"
+                />
+
+                <!-- Botão mais -->
+                <button
+                    type="button"
+                    onclick="changeQty(1)"
+                    class="h-10 w-10 rounded-lg border border-gray-300 bg-white text-green-600
+                        hover:bg-gray-100 active:scale-95 transition text-2xl"
+                >
+                    +
+                </button>
+
                 </div>
+
+
+                <script>
+                const qtyInput = document.getElementById('qty')
+
+                function changeQty(amount) {
+                    let current = parseInt(qtyInput.value) || 1
+                    let newValue = current + amount
+
+                    if (newValue < 1) newValue = 1
+
+                    qtyInput.value = newValue
+                }
+
+                function validateQty() {
+                    let value = parseInt(qtyInput.value)
+
+                    if (isNaN(value) || value < 1) {
+                    qtyInput.value = 1
+                    }
+                }
+                </script>
 
                 {{-- Botão --}}
                 <button

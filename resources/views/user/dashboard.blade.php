@@ -3,7 +3,7 @@
 @section('content')
 
 <section class=" bg-bg">
-    <header class="bg-primary shadow-sm bg-white sticky top-0 z-40">
+    <header class="bg-primary shadow-sm sticky top-0 z-40">
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div class="flex h-16 items-center justify-between gap-4">
                 {{-- Logo --}}
@@ -16,11 +16,11 @@
                     {{-- Category Dropdown --}}
                     <div class="relative">
                        <button
- id="categoryBtn"
- class="hidden md:flex shrink-0 items-center gap-2 rounded-xl
- bg-white border border-gray-200 shadow-sm px-4 py-2.5
- text-sm font-medium text-gray-700 hover:bg-gray-50 transition-all whitespace-nowrap"
->
+                        id="categoryBtn"
+                        class="hidden md:flex  items-center gap-2 rounded-xl
+                        bg-white border border-gray-200 shadow-sm px-4 py-2.5
+                        text-sm font-medium text-gray-700 hover:bg-gray-50 transition-all whitespace-nowrap"
+                        >
                             Categorias
                             <svg class="size-4 text-gray-500" viewBox="0 0 20 20" fill="currentColor">
                                 <path fill-rule="evenodd" d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd"/>
@@ -38,38 +38,39 @@
                         </div>
                     </div>
 
-<form
-  action="{{ route('search') }}"
-  method="GET"
-  class="flex flex-1 items-center gap-2 w-full"
-  id="searchForm"
->
-  <input
-    type="search"
-    name="search"
-    value="{{ old('search', $search ?? '') }}"
-    placeholder="Buscar produtos..."
-    class="w-full rounded-xl border border-gray-300 px-4 py-2 text-sm
- focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition"
-  >
+                    <form
+                    @csrf
+                    action="{{ route('search') }}"
+                    method="GET"
+                    class="flex flex-1 items-center gap-2 w-full"
+                    id="searchForm"
+                    >
+                    <input
+                        type="search"
+                        name="search"
+                        value="{{ old('search', $search ?? '') }}"
+                        placeholder="Buscar produtos..."
+                        class="w-full rounded-xl border border-gray-300 px-4 py-2 text-sm
+                    focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition"
+                        required
+                        min="2"
+                    >
 
-  <button
-    type="submit"
-    class="flex items-center justify-center rounded-xl bg-blue-600
-           px-3 py-2 text-white text-sm hover:bg-blue-700 transition shrink-0"
-  >
-    <span class="hidden sm:inline">Buscar</span>
-    <svg class="h-5 w-5 sm:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-        d="M21 21l-4.35-4.35m1.35-5.65a7 7 0 11-14 0 7 7 0 0114 0z" />
-    </svg>
-  </button>
-</form>
+                    <button
+                        type="submit"
+                        class="flex items-center justify-center rounded-xl bg-blue-600
+                            px-3 py-2 text-white text-sm hover:bg-blue-700 transition shrink-0"
+                    >
 
-
-
-                {{-- User Dropdown --}}
-                <div class="relative shrink-0">
+                        <svg class="h-5 w-5 " fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M21 21l-4.35-4.35m1.35-5.65a7 7 0 11-14 0 7 7 0 0114 0z" />
+                        </svg>
+                    </button>
+                    </form>
+                    
+                    {{-- User Dropdown --}}
+                    <div class="relative shrink-0">
                     <button id="userBtn" class="flex items-center gap-2 rounded-full bg-white border border-gray-200 px-3 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 hover:border-gray-300 hover:text-gray-900 transition-all">
                         <svg class="h-5 w-5 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
@@ -98,10 +99,11 @@
                             </form>
                         </div>
                     </div>
-
+                    
                 </div>
             </div>
         </div>
+    </div>
     </header>
     @yield('dashboard')
     
