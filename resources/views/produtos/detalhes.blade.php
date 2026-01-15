@@ -9,11 +9,12 @@
 
         {{-- Imagem --}}
         <div class="flex items-center justify-center">
-            <img
-                src="{{ asset($produto->imagem) }}"
-                alt="{{ $produto->nome }}"
-                class="w-full max-w-md rounded-2xl object-cover shadow-lg"
-            >
+
+                  <img 
+    src="{{ asset('storage/' . $produto->imagem) }}" 
+    alt="{{ $produto->nome }}"
+    class="h-full w-full transition-transform duration-500 group-hover:scale-110  max-w-md rounded-2xl object-cover shadow-lg"
+/>
         </div>
 
         {{-- Conteúdo --}}

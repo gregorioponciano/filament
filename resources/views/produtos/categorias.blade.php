@@ -13,11 +13,11 @@
 
         {{-- IMAGEM COM OLHO --}}
         <div class="relative h-64 overflow-hidden bg-gray-100">
-          <img
-            class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
-            src="{{ asset($produto->imagem) }}"
-            alt="{{ $produto->nome }}"
-          >
+                <img 
+    src="{{ asset('storage/' . $produto->imagem) }}" 
+    alt="{{ $produto->nome }}"
+    class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+/>
 
           {{-- Overlay --}}
           <div class="absolute inset-0 bg-black/40 opacity-0 transition group-hover:opacity-100"></div>

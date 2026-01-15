@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Produtos\Schemas;
 
+use Filament\Infolists\Components\ImageEntry;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Schemas\Schema;
 
@@ -17,7 +18,8 @@ class ProdutoInfolist
                 TextEntry::make('slug'),
                 TextEntry::make('preco')
                     ->numeric(),
-                TextEntry::make('imagem'),
+                ImageEntry::make('imagem')
+                    ->disk('public'),
                 TextEntry::make('estoque')
                     ->numeric(),
                 TextEntry::make('user_id')

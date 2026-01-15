@@ -39,12 +39,12 @@
                     </div>
 
                     <form
-                    @csrf
                     action="{{ route('search') }}"
                     method="GET"
                     class="flex flex-1 items-center gap-2 w-full"
                     id="searchForm"
                     >
+                    @csrf
                     <input
                         type="search"
                         name="search"

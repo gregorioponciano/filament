@@ -35,8 +35,7 @@ class ProdutoForm
                             ->label('Slug')
                             ->required()
                             ->maxLength(255)
-                            ->helperText('Gerado automaticamente')
-                            ->disabled()
+                            ->helperText('Gerado automaticamente')                                   
                             ->dehydrated(),
 
                         Textarea::make('descricao')
@@ -81,7 +80,8 @@ class ProdutoForm
 
                         Select::make('user_id')
                             ->label('Responsável')
-                            ->relationship('role')
+                            ->relationship('user', 'name') // 'user' is the method in Produto model, 'name' is the column
+                            ->preload()
                             ->searchable()
                             ->required(),
 
@@ -94,7 +94,9 @@ class ProdutoForm
                         ->label('Imagem do produto')
                         ->image()
                         ->imageEditor()
+                        ->disk('public')
                         ->directory('produtos')
+                        ->visibility('public')
                         ->required()
                         ->helperText('PNG ou JPG até 2MB'),
                 ]),
