@@ -8,7 +8,7 @@ class Customization extends Model
 {
     protected $fillable = [
         'nome',
-        'image',
+        'imagem',
     ];
 
 
