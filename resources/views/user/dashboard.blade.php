@@ -2,13 +2,20 @@
 @section('title', 'Dashboard')
 @section('content')
 
-<section class=" bg-bg">
+<section class=" bg-bg box-border">
     <header class="bg-primary shadow-sm sticky top-0 z-40">
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div class="flex h-16 items-center justify-between gap-4">
                 {{-- Logo --}}
                 <div id="mobileMenuBtn" class="flex items-center gap-3 shrink-0 cursor-pointer md:cursor-default">
-                    <img src="{{ asset('image/logo.webp') }}" alt="logo" class="w-30 hover:scale-120 transition">
+                    @if($customizations && $customizations->image)
+                        <!-- DEBUG URL: {{ asset('storage/' . $customizations->image) }} -->
+                        <img 
+                            src="{{ asset('storage/' . $customizations->image) }}" 
+                            alt="{{ $customizations->nome }}"
+                            class="w-30 hover:scale-125 transition object-cover rounded"
+                        />
+                    @endif
                 </div>
 
                 {{-- Search & Categories --}}
