@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
 class SiteSetting extends Model
 {
-        protected $fillable = [
+    protected $fillable = [
         'primary_color',
         'secondary_color',
         'text_color',

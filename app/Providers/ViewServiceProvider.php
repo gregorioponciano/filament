@@ -30,7 +30,7 @@ class ViewServiceProvider extends ServiceProvider
 
         View::composer('*', function ($view) {
             $view->with('siteSetting', SiteSetting::first());
-            $view->with('categorias', Categoria::all());
+            $view->with('categorias', Categoria::where('ativo', true)->get());
             $view->with('enderecos', Endereco::all());
             $view->with('customizations', Customization::latest()->first());
         });
@@ -38,7 +38,7 @@ class ViewServiceProvider extends ServiceProvider
         // Correção: Injeta produtos apenas no dashboard do usuário.
         // Isso resolve o erro da página user.dashboard sem quebrar a listagem de categorias.
         View::composer('user.dashboard', function ($view) {
-            $view->with('produtos', Produto::paginate(9));
+            $view->with('produtos', Produto::where('ativo', true)->paginate(9));
         });
     }
 }

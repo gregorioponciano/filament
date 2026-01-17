@@ -3,6 +3,7 @@
 namespace App\Providers\Filament;
 
 use App\Http\Middleware\AdminMiddleware;
+use Filament\Facades\Filament;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -57,5 +58,15 @@ class AdminPanelProvider extends PanelProvider
                 Authenticate::class,
                 AdminMiddleware::class,
             ]);
+    }
+
+    public function boot(): void
+    {
+        Filament::serving(function () {
+            if (auth()->check() && auth()->user()->banned) {
+                auth()->logout();
+                abort(403, 'Usuário Banido');
+            }
+        });
     }
 }

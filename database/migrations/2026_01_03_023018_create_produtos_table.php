@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('slug');
             $table->decimal('preco', 10, 2);
             $table->string('imagem');
+            $table->boolean('ativo')->default(true);
             $table->integer('estoque')->default(0);
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('categoria_id')->constrained('categorias')->onDelete('cascade');

@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Categorias\Schemas;
 
+use Filament\Infolists\Components\IconEntry;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Schemas\Schema;
 
@@ -13,6 +14,8 @@ class CategoriaInfolist
             ->components([
                 TextEntry::make('nome'),
                 TextEntry::make('slug'),
+                IconEntry::make('ativo')
+                    ->boolean(),
                 TextEntry::make('created_at')
                     ->dateTime()
                     ->placeholder('-'),

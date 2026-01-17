@@ -11,7 +11,7 @@
                     <img 
                         src="{{ asset('storage/' . $customizations->imagem) }}" 
                         alt="{{ $customizations->nome }}"
-                        class="w-15 h-auto hover:scale-125 object-cover transition group-hover:scale-110"
+                        class="w-30 h-auto hover:scale-125 object-cover transition group-hover:scale-110"
                     />
                 </div>
 

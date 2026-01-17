@@ -77,7 +77,6 @@ class ProdutoForm
                             ->searchable()
                             ->preload()
                             ->required(),
-
                         Select::make('user_id')
                             ->label('Responsável')
                             ->relationship('user', 'name') // 'user' is the method in Produto model, 'name' is the column
@@ -100,6 +99,9 @@ class ProdutoForm
                         ->required()
                         ->helperText('PNG ou JPG até 2MB'),
                 ]),
+                                Toggle::make('ativo')
+                    ->required()
+                    ->default(true),
         ]);
     }
 }
