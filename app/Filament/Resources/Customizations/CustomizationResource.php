@@ -55,4 +55,8 @@ class CustomizationResource extends Resource
             'edit' => EditCustomization::route('/{record}/edit'),
         ];
     }
+                public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::count();
+    }
 }

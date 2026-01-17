@@ -9,10 +9,10 @@
                 {{-- Logo --}}
                 <div id="mobileMenuBtn" class="flex items-center gap-3 shrink-0 cursor-pointer md:cursor-default">
                     <img 
-                    src="{{ \Illuminate\Support\Facades\Storage::disk('public')->url($customizations->image) }}" 
-                    alt="{{ $customizations->nome }}"
-                    class="w-100  object-cover rounded"
-                />
+                        src="{{ asset('storage/' . $customizations->imagem) }}" 
+                        alt="{{ $customizations->nome }}"
+                        class="w-15 h-auto hover:scale-125 object-cover transition group-hover:scale-110"
+                    />
                 </div>
 
                 {{-- Search & Categories --}}
