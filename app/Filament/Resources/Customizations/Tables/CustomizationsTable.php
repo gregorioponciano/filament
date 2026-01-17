@@ -18,7 +18,9 @@ class CustomizationsTable
             ->columns([
                 TextColumn::make('nome')
                     ->searchable(),
-                ImageColumn::make('image'),
+                ImageColumn::make('imagem')
+                    ->disk('public')
+                    ->searchable(),
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

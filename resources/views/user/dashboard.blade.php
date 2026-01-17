@@ -8,14 +8,11 @@
             <div class="flex h-16 items-center justify-between gap-4">
                 {{-- Logo --}}
                 <div id="mobileMenuBtn" class="flex items-center gap-3 shrink-0 cursor-pointer md:cursor-default">
-                    @if($customizations && $customizations->image)
-                        <!-- DEBUG URL: {{ asset('storage/' . $customizations->image) }} -->
-                        <img 
-                            src="{{ asset('storage/' . $customizations->image) }}" 
-                            alt="{{ $customizations->nome }}"
-                            class="w-30 hover:scale-125 transition object-cover rounded"
-                        />
-                    @endif
+                    <img 
+                    src="{{ \Illuminate\Support\Facades\Storage::disk('public')->url($customizations->image) }}" 
+                    alt="{{ $customizations->nome }}"
+                    class="w-100  object-cover rounded"
+                />
                 </div>
 
                 {{-- Search & Categories --}}

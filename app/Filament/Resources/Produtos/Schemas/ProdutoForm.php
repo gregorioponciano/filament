@@ -95,12 +95,11 @@ class ProdutoForm
                         ->image()
                         ->imageEditor()
                         ->disk('public')
-                        ->directory('produtos')
+                        ->directory('images/produtos')
                         ->visibility('public')
                         ->required()
                         ->helperText('PNG ou JPG até 2MB'),
                 ]),
-
         ]);
     }
 }

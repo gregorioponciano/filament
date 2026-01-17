@@ -15,7 +15,7 @@ class CustomizationSeeder extends Seeder
     {
         Customization::create([
             'nome' => 'logo',
-            'image' => 'images/logo.webp',
+            'imagem' => 'images/logo.webp',
         ]);
     }
 }

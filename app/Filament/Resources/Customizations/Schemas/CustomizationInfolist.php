@@ -13,7 +13,8 @@ class CustomizationInfolist
         return $schema
             ->components([
                 TextEntry::make('nome'),
-                ImageEntry::make('image')
+                ImageEntry::make('imagem')
+                    ->disk('public')
                     ->placeholder('-'),
                 TextEntry::make('created_at')
                     ->dateTime()

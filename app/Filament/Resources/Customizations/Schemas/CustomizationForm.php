@@ -14,8 +14,10 @@ class CustomizationForm
             ->components([
                 TextInput::make('nome')
                     ->required(),
-                FileUpload::make('image')
-                    ->image(),
+                FileUpload::make('imagem')
+                    ->disk('public')
+                    ->directory('images/customizations')
+                    ->visibility('public'),
             ]);
     }
 }

@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('customizations', function (Blueprint $table) {
             $table->id();
             $table->string('nome');
-            $table->string('image')->nullable();
+            $table->string('imagem')->nullable();
             $table->timestamps();
         });
     }
