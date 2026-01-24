@@ -2,8 +2,8 @@
 @section('title', 'Dashboard')
 @section('content')
 
-<section class=" bg-bg box-border">
-    <header class="bg-primary shadow-sm sticky top-0 z-40">
+<section class=" box-border z-0">
+    <header class=" bg-primary shadow-sm sticky top-0 z-40">
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div class="flex h-16 items-center justify-between gap-4">
                 {{-- Logo --}}
@@ -14,6 +14,15 @@
                         class="w-30 h-auto hover:scale-125 object-cover transition group-hover:scale-110"
                     />
                 </div>
+
+<a href="{{ route('show.carrinho') }}"class="bg-primary rounded-full h-12 w-12 flex align-center items-center justify-center text-white fixed bottom-10 right-5 cursor-pointer ">
+    <span class="material-symbols-outlined">
+    shopping_cart
+    <p class="fixed bottom-18 right-3 bg-primary rounded-full h-8 w-8 flex align-center justify-center text-white">{{ $itens->count() }}</p>
+    </span>
+</a>
+
+
 
                 {{-- Search & Categories --}}
                 <div class="flex flex-1 items-center gap-2 w-full md:max-w-2xl">
@@ -30,13 +39,35 @@
                                 <path fill-rule="evenodd" d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd"/>
                             </svg>
                         </button>
-                        <div id="categoryDropdown" class="hidden fixed left-0 top-16 h-[calc(100vh-4rem)] w-64 bg-white shadow-2xl z-50 overflow-y-auto md:absolute md:h-auto md:top-full md:mt-2 md:w-56 md:rounded-xl md:shadow-lg md:ring-1 md:ring-black/5 transition-all duration-300 ease-out origin-top-left -translate-x-full opacity-0 md:translate-x-0 md:opacity-0 md:scale-95 md:-translate-y-2">
+                        <div id="categoryDropdown" class="hidden fixed left-0 top-16 h-[calc(100vh-4rem)] w-64 bg-primary shadow-2xl z-50 overflow-y-auto md:absolute md:h-auto md:top-full md:mt-2 md:w-56 md:rounded-xl md:shadow-lg md:ring-1 md:ring-black/5 transition-all duration-300 ease-out origin-top-left -translate-x-full opacity-0 md:translate-x-0 md:opacity-0 md:scale-95 md:-translate-y-2">
                             <div class="max-h-60 overflow-y-auto py-2">
 
-                                <a href="{{ Route('user.dashboard') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-hover hover:text-text hover:scale-75 transition">Inicio</a>
-                                <hr>
+                                <a href="{{ Route('user.dashboard') }}" class="flex align-items-center px-4  text-xl text-gray-700 hover:bg-hover-primary hover:scale-75 transition">
+                                    <span class="material-symbols-outlined">
+                                    home
+                                    </span>
+                                    Inicio</a>
+                                    <hr>
+                                    <a href="{{ Route('favorites.index') }}" class="flex align-items-center px-4 mt-2   text-gray-700 hover:bg-hover-primary hover:scale-75 transition">
+                                        <span class="material-symbols-outlined">
+                                            favorite
+                                    </span>
+                                    Favoritos</a>
+                             
+                                @php
+                                    // Mapa de ícones: 'slug-da-categoria' => 'nome-do-icone-material'
+                                    $icones = [
+                                        'camisetas' => 'apparel',
+                                        'blusas' => 'checkroom',
+                                        'bone' => 'cottage',
+                                        'casacos' => 'home',
+                                    ];
+                                @endphp
                                 @foreach ($categorias as $categoria)
-                                    <a href="{{ route('show.categorias', $categoria->slug) }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-hover hover:text-text hover:scale-75 transition"> {{ $categoria->nome }}</a>
+                                    <a href="{{ route('show.categorias', $categoria->slug) }}" class="flex items-center gap-2 px-4 py-2 text-gray-700 hover:bg-hover hover:bg-hover-primary hover:scale-75 transition">
+                                        <span class="material-symbols-outlined">{{ $icones[$categoria->slug] ?? $categoria->icone ?? 'category' }}</span>
+                                        {{ $categoria->nome }}
+                                    </a>
                                 @endforeach
                             </div>
                         </div>
@@ -92,14 +123,14 @@
                         </div>
 
                         <div class="py-2">
-                            <a href="{{ route('show.profile') }}" class="block px-4 py-2 text-sm hover:bg-hover hover:text-text">Perfil</a>
-                            <a href="#" class="block px-4 py-2 text-sm hover:bg-hover hover:text-text">Suporte</a>
+                            <a href="{{ route('show.profile') }}" class="block px-4 py-2 text-sm hover:bg-hover-primary hover:scale-75 transition">Perfil</a>
+                            <a href="#" class="block px-4 py-2 text-sm hover:bg-hover-primary hover:scale-75 transition">Suporte</a>
                         </div>
 
                         <div class="border-t px-0 py-1">
                             <form action="{{ route('store.logout') }}" method="POST">
                                 @csrf
-                                <button type="submit" class="w-full text-left px-4 py-2 text-sm font-semibold text-red-600 hover:bg-hover hover:text-text">Sair</button>
+                                <button type="submit" class="w-full text-left px-4 py-2 text-sm font-semibold text-red-600 hover:bg-hover-primary hover:scale-75 transition">Sair</button>
                             </form>
                         </div>
                     </div>

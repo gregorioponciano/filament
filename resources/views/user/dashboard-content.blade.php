@@ -6,12 +6,12 @@
 
       <!-- Slide 1 -->
       <div class="min-w-full px-2">
-        <div class="relative overflow-hidden rounded-2xl bg-gradient-to-r from-orange-500 via-black to-blue-500 p-1 shadow-xl">
+        <div class="relative overflow-hidden rounded-2xl bg-gradient-to-r from-yellow-500 via-black to-blue-500 p-1 shadow-xl">
           <div class="rounded-2xl bg-white p-8 text-center">
             <blockquote class="text-2xl font-semibold italic text-black md:text-3xl">
               Seja Bem Vindo a
               <span class="relative inline-block">
-                <span class="absolute -inset-1 -skew-y-3 bg-orange-500"></span>
+                <span class="absolute -inset-1 -skew-y-3 bg-yellow-500"></span>
                 <span class="relative text-black">Loja</span>
               </span>
             </blockquote>
@@ -21,12 +21,12 @@
 
       <!-- Slide 2 -->
       <div class="min-w-full px-2">
-        <div class="relative overflow-hidden rounded-2xl bg-gradient-to-r from-blue-500 via-black to-orange-500 p-1 shadow-xl">
+        <div class="relative overflow-hidden rounded-2xl bg-gradient-to-r from-blue-500 via-black to-yellow-500 p-1 shadow-xl">
           <div class="rounded-2xl bg-white p-8 text-center">
             <blockquote class="text-2xl font-semibold italic text-black md:text-3xl">
               Promoções
               <span class="relative inline-block">
-                <span class="absolute -inset-1 -skew-y-3 bg-orange-500"></span>
+                <span class="absolute -inset-1 -skew-y-3 bg-yellow-500"></span>
                 <span class="relative text-black">Exclusivas</span>
               </span>
             </blockquote>
@@ -36,12 +36,12 @@
 
       <!-- Slide 3 -->
       <div class="min-w-full px-2">
-        <div class="relative overflow-hidden rounded-2xl bg-gradient-to-r from-green-500 via-black to-orange-500 p-1 shadow-xl">
+        <div class="relative overflow-hidden rounded-2xl bg-gradient-to-r from-green-500 via-black to-yellow-500 p-1 shadow-xl">
           <div class="rounded-2xl bg-white p-8 text-center">
             <blockquote class="text-2xl font-semibold italic text-black md:text-3xl">
               Entrega
               <span class="relative inline-block">
-                <span class="absolute -inset-1 -skew-y-3 bg-orange-500"></span>
+                <span class="absolute -inset-1 -skew-y-3 bg-yellow-500"></span>
                 <span class="relative text-black">Rápida</span>
               </span>
             </blockquote>

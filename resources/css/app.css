@@ -6,15 +6,29 @@
 @source '../**/*.js';
 
 @theme {
-    
-    --color-primary: var(--primary-color);
-    --color-secondary: var(--secondary-color);
-    --color-text: var(--text-color);
-    --color-bg: var(--bg-color);
-    --color-border: var(--border-color);
-    --color-link: var(--link-color);
-    --color-hover: var(--hover-color);
-    --color-footer: var(--footer-color);
-    --color-footer-text: var(--footer-text-color);
-    --font-sans: var(--font-sans);
+                --color-bg: var(--bg-color);
+                --color-primary: var(--primary-color);
+                --color-secondary: var(--secondary-color);
+                --color-card-primary: var(--card-primary);
+                --color-card-secondary: var(--card-secondary);
+                --color-link-primary: var(--link-primary);
+                --color-link-secondary: var(--link-secondary);
+                --color-h1: var(--h1-color);
+                --color-h2: var(--h2-color);
+                --color-h3: var(--h3-color);
+                --color-text-primary: var(--text-primary);
+                --color-text-secondary: var(--text-secondary);
+                --color-text-price: var(--text-price);
+                --color-button-primary: var(--button-primary);
+                --color-button-primary: var(--button-primary);
+                --color-button-secondary: var(--button-secondary);
+                --Color-input-primary: var(--input-primary);
+                --color-input-secondary: var(--input-secondary);
+                --color-hover-primary: var(--hover-primary);
+                --color-hover-secondary: var(--hover-secondary);
+                --color-border-primary: var(--border-primary);
+                --color-border-secondary: var(--border-secondary);
+                --color-footer: var(--footer-color);
+                --color-footer-text: var(--footer-text-color);
+                --font-sans: var(--font-family);
 }

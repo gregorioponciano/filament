@@ -4,6 +4,7 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule; // Adicione esta linha
 
 class StoreProfileController extends Controller
@@ -16,7 +17,7 @@ class StoreProfileController extends Controller
     // CORRETO - Apenas 1 parâmetro:
     public function storeProfile(Request $request)
     {
-        $user = auth()->user(); // Ou $request->user()
+        $user = Auth::user(); // Ou $request->user()
         
         $validated = $request->validate([
             'name' => 'required|string|max:255',

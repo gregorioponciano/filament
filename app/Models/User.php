@@ -45,6 +45,17 @@ class User extends Authenticatable
         return $this->hasMany(Produto::class);
     }
 
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+    public function favorites()
+{
+    return $this->belongsToMany(Produto::class, 'favorites', 'user_id', 'produto_id')
+        ->withTimestamps();
+}
+
+
     /**
      * The attributes that should be hidden for serialization.
      *

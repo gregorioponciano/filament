@@ -59,14 +59,4 @@ class AdminPanelProvider extends PanelProvider
                 AdminMiddleware::class,
             ]);
     }
-
-    public function boot(): void
-    {
-        Filament::serving(function () {
-            if (auth()->check() && auth()->user()->banned) {
-                auth()->logout();
-                abort(403, 'Usuário Banido');
-            }
-        });
-    }
 }

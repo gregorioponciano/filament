@@ -7,27 +7,45 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>@yield('title', 'Layouts')</title>
     @vite(['resources/css/app.css'])
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=arrow_circle_left" />
-</head>
-<body class="bg-bg">
-    
-    <style>
+     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+<style>
+    :root {
 
-        :root{
-            
-            --primary-color: {{ $siteSetting->primary_color ?? '#00ffff' }};
-            --secondary-color: {{ $siteSetting->secondary_color ?? '#647fff' }};
-            --text-color: {{ $siteSetting->text_color ?? '#212529' }};
-            --bg-color: {{ $siteSetting->bg_color ?? '#0cdf00' }};
-            --border-color: {{ $siteSetting->border_color ?? '#d1d5db' }};
-            --link-color: {{ $siteSetting->link_color ?? '#3b82f6' }};
-            --hover-color: {{ $siteSetting->hover_color ?? '#64748b' }};
-            --footer-color: {{ $siteSetting->footer_color ?? '#d1d5db' }};
-            --footer-text-color: {{ $siteSetting->footer_text_color ?? '#212529' }};
-            --font-sans: {{ $siteSetting->font_family ?? 'Inter' }}', sans-serif;
-        }
-        
-    </style>
+                    --bg-color: {{ $siteSetting->bg_color ?? '#F5F3FF' }};
+                    --primary-color: {{ $siteSetting->primary_color ?? '#FACC15' }};
+                    --secondary-color: {{ $siteSetting->secondary_color ?? '#44474c' }};
+                    --card-primary: {{ $siteSetting->card_primary ?? '#212121' }};
+                    --card-secondary: {{ $siteSetting->card_secondary ?? '#C4B5FD' }};
+                    --link-primary: {{ $siteSetting->link_primary ?? '#ffff00' }};
+                    --link-secondary: {{ $siteSetting->link_secondary ?? '#9333EA' }};
+                    --h1-color: {{ $siteSetting->h1_color ?? '#111827' }};
+                    --h2-color: {{ $siteSetting->h2_color ?? '#ffff00' }};
+                    --h3-color: {{ $siteSetting->h3_color ?? '#ffff00' }};
+                    --text-primary: {{ $siteSetting->text_primary ?? '#9e97a6' }};
+                    --text-secondary: {{ $siteSetting->text_secondary ?? '#ffff00' }};
+                    --text-price: {{ $siteSetting->text_price ?? '#0ff000' }};
+                    --button-primary: {{ $siteSetting->button_primary ?? '#FACC15' }};
+                    --button-secondary: {{ $siteSetting->button_secondary ?? '#0ff000' }};
+                    --input-primary: {{ $siteSetting->input_primary ?? '#ffff00' }};
+                    --input-secondary: {{ $siteSetting->input_secondary ?? '#C4B5FD' }};
+                    --hover-primary: {{ $siteSetting->hover_primary ?? '#EAB308' }};
+                    --hover-secondary: {{ $siteSetting->hover_secondary ?? '#0faa00' }};
+                    --border-primary: {{ $siteSetting->border_primary ?? '#E5E7EB' }};
+                    --border-secondary: {{ $siteSetting->border_secondary ?? '#C4B5FD' }};
+                    --footer-color: {{ $siteSetting->footer_color ?? '#2E1065' }};
+                    --footer-text-color: {{ $siteSetting->footer_text_color ?? '#EDE9FE' }};
+                    --font-family: '{{ $siteSetting->font_family ?? 'Inter' }}', sans-serif;
+    }
+    body {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+
+    }
+</style>
+
+</head>
+<body style="background-color: var(--bg-color);">
         @yield('content')
 
 </body>

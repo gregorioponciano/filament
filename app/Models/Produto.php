@@ -7,6 +7,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Support\Facades\Storage;
 
 class Produto extends Model
@@ -42,10 +43,22 @@ class Produto extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function comments(): MorphMany
+    {
+        return $this->morphMany(Comment::class, 'commentable')->latest();
+    }
+
     protected function imageUrl(): Attribute
     {
         return Attribute::make(
             get: fn () => $this->imagem ? Storage::url($this->imagem) : null,
         );
     }
+    // app/Models/Product.php
+
+    public function favoritedBy()
+    {
+    return $this->belongsToMany(User::class, 'favorites', 'produto_id', 'user_id')
+        ->withTimestamps();
+}
 }

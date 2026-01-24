@@ -2,11 +2,13 @@
 
 namespace App\Providers;
 
+use Darryldecode\Cart\Facades\CartFacade as Cart;
 use App\Models\Categoria;
 use App\Models\Customization;
 use App\Models\Endereco;
 use App\Models\Produto;
 use App\Models\SiteSetting;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 use PhpParser\Node\Expr\FuncCall;
@@ -33,6 +35,7 @@ class ViewServiceProvider extends ServiceProvider
             $view->with('categorias', Categoria::where('ativo', true)->get());
             $view->with('enderecos', Endereco::all());
             $view->with('customizations', Customization::latest()->first());
+            $view->with('itens', Auth::check() ? Cart::session(Auth::id())->getContent() : collect([]));
         });
 
         // Correção: Injeta produtos apenas no dashboard do usuário.

@@ -3,6 +3,7 @@
 @section('title', 'Perfil')
 
 @section('dashboard')
+@include('user.dashboard-content')
 <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
 
     {{-- Mensagem de sucesso --}}
@@ -19,7 +20,15 @@
         </div>
     @endif
 
+    {{-- Erros do Perfil (Bag Padrão) --}}
     @if ($errors->any())
+        <div class="mb-6 rounded-lg bg-red-100 border border-red-300 text-red-800 px-4 py-3">
+            Verifique os campos do perfil.
+        </div>
+    @endif
+
+    {{-- Erros de Endereço (Bag 'endereco') --}}
+    @if ($errors->endereco->any())
         <div class="mb-6 rounded-lg bg-red-100 border border-red-300 text-red-800 px-4 py-3">
             Verifique os campos do formulário de endereço.
         </div>
@@ -191,7 +200,10 @@
 
                         <div>
                             <label class="block text-sm font-medium leading-6 text-gray-900 mb-1">Número</label>
-                            <input name="numero" id="numero" required class="border invalid:border-pink-500 focus:border-sky-500  focus:outline-sky-500 w-full rounded-lg border-gray-300 px-4 py-2" value="{{ old('numero') }}" placeholder="123">
+                            <input name="numero" id="numero" required class="border {{ $errors->endereco->has('numero') ? 'border-red-500' : 'border-gray-300' }} invalid:border-pink-500 focus:border-sky-500  focus:outline-sky-500 w-full rounded-lg px-4 py-2" value="{{ old('numero') }}" placeholder="123">
+                            @error('numero', 'endereco')
+                                <span class="text-red-500 text-sm mt-1 block">{{ $message }}</span>
+                            @enderror
                         </div>
 
                         <div>
@@ -382,7 +394,8 @@ form.addEventListener('submit', function(e) {
 });
 
 // Reabrir modal se houver erros de validação (Laravel)
-@if ($errors->any())
+
+@if ($errors->endereco->any())
     modal.classList.remove('hidden');
 @endif
 </script>

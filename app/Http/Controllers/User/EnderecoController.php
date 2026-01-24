@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Endereco;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 
 class EnderecoController extends Controller
 {
@@ -18,7 +19,7 @@ class EnderecoController extends Controller
 
     public function create()
     {
-        return view('enderecos.create');
+        return view('user.profile');
     }
 
     public function store(Request $request)
@@ -37,14 +38,14 @@ class EnderecoController extends Controller
     public function edit($id)
     {
         $endereco = Auth::user()->enderecos()->findOrFail($id);
-        return view('enderecos.edit', compact('endereco'));
+        return view('user.profile', compact('endereco'));
     }
 
     public function update(Request $request, $id)
     {
         $endereco = Auth::user()->enderecos()->findOrFail($id);
 
-        $this->validateEndereco($request);
+        $this->validateEndereco($request, $id);
 
         $endereco->update($request->all());
 
@@ -59,17 +60,18 @@ class EnderecoController extends Controller
         return back()->with('error', 'Endereço removido com sucesso!');
     }
 
-    private function validateEndereco(Request $request)
+    private function validateEndereco(Request $request, $id = null)
     {
-        return $request->validate([
+        return $request->validateWithBag('endereco', [
             'rua' => 'required|string|max:255',
-            'numero' => 'required|string|max:10',
+            'numero' => ['required', 'string', 'max:10', Rule::unique('enderecos', 'numero')->ignore($id)],
             'bairro' => 'required|string|max:255',
             'cidade' => 'required|string|max:255',
             'estado' => 'required|string|max:100',
             'cep' => ['required', 'string', 'regex:/^\d{5}-\d{3}$/']
         ], [
-            'cep.regex' => 'O CEP deve seguir o formato 00000-000.'
+            'cep.regex' => 'O CEP deve seguir o formato 00000-000.',
+            'numero.unique' => 'Este número já está cadastrado.'
         ]);
     }
 }

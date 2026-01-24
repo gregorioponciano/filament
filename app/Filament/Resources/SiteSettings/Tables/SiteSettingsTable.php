@@ -15,19 +15,47 @@ class SiteSettingsTable
     {
         return $table
             ->columns([
+                TextColumn::make('bg_color')
+                    ->searchable(),
                 TextColumn::make('primary_color')
                     ->searchable(),
                 TextColumn::make('secondary_color')
                     ->searchable(),
-                TextColumn::make('text_color')
+                TextColumn::make('card_primary')
                     ->searchable(),
-                TextColumn::make('bg_color')
+                TextColumn::make('card_secondary')
                     ->searchable(),
-                TextColumn::make('border_color')
+                TextColumn::make('link_primary')
                     ->searchable(),
-                TextColumn::make('link_color')
+                TextColumn::make('link_secondary')
                     ->searchable(),
-                TextColumn::make('hover_color')
+                TextColumn::make('h1_color')
+                    ->searchable(),
+                TextColumn::make('h2_color')
+                    ->searchable(),
+                TextColumn::make('h3_color')
+                    ->searchable(),
+                TextColumn::make('text_primary')
+                    ->searchable(),
+                TextColumn::make('text_secondary')
+                    ->searchable(),
+                TextColumn::make('text_price')
+                    ->searchable(),
+                TextColumn::make('button_primary')
+                    ->searchable(),
+                TextColumn::make('button_secondary')
+                    ->searchable(),
+                TextColumn::make('input_primary')
+                    ->searchable(),
+                TextColumn::make('input_secondary')
+                    ->searchable(),
+                TextColumn::make('hover_primary')
+                    ->searchable(),
+                TextColumn::make('hover_secondary')
+                    ->searchable(),
+                TextColumn::make('border_primary')
+                    ->searchable(),
+                TextColumn::make('border_secondary')
                     ->searchable(),
                 TextColumn::make('footer_color')
                     ->searchable(),
