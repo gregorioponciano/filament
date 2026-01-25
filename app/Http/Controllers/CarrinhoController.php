@@ -6,6 +6,7 @@ use App\Models\Produto;
 use Darryldecode\Cart\Facades\CartFacade as Cart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\RateLimiter;
 
 class CarrinhoController extends Controller
 {
@@ -20,6 +21,13 @@ class CarrinhoController extends Controller
             'imagem' => 'nullable',
             'slug' => 'required',
         ]);
+
+        // Evita duplo clique: bloqueia requisições duplicadas para o mesmo produto por 3 segundos
+        $limiterKey = 'cart_add_' . Auth::id() . '_' . $request->id;
+        if (RateLimiter::tooManyAttempts($limiterKey, 1)) {
+            return redirect()->route('show.carrinho');
+        }
+        RateLimiter::hit($limiterKey, 3);
 
         Cart::session(Auth::id())->add(array(
     'id' => $request->id,

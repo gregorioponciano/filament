@@ -5,33 +5,36 @@
 @section('dashboard')
 @include('user.dashboard-content')
 <div class="mx-auto max-w-6xl px-4 py-6">
+        @if ($mensagem = Session::get('aviso'))
+        <div class="mb-6 rounded-2xl border border-green-200 bg-red-500 p-5 text-green-800 shadow-sm">
+            <h3 class="text-lg font-semibold">Error</h3>
+            <p class="mt-1 text-sm">{{ $mensagem }}</p>
+        </div>
+    @endif
     <div class="grid grid-cols-1 gap-8 md:grid-cols-2">
 
         {{-- Imagem --}}
         <div class="flex items-center justify-center">
 
-                  <img 
-    src="{{ asset('storage/' . $produto->imagem) }}" 
-    alt="{{ $produto->nome }}"
-    class="h-full w-full transition-transform duration-500 group-hover:scale-110  max-w-md rounded-2xl object-cover shadow-lg"
+        <img 
+            src="{{ asset('storage/' . $produto->imagem) }}" 
+            alt="{{ $produto->nome }}"
+            class="h-full w-full transition-transform duration-500 group-hover:scale-110  max-w-md rounded-2xl object-cover shadow-lg"
 />
-        </div>
+    </div>
 
         {{-- Conteúdo --}}
         <div class="flex flex-col gap-4 border border-border-primary  rounded-2xl p-4">
 
             {{-- Voltar --}}
-            <button
-                onclick="window.history.back()"
-                class="cursor-pointer flex w-fit items-center gap-1 text-sm text-blue-300 hover:text-blue-400 transition"
+            <a
+                href="{{ url('/user') }}"
+                class="flex items-center text-blue-300  hover:text-blue-400 transition h-12 w-8"
             >
-                <span class="material-symbols-outlined
-
-">
-arrow_circle_left
-</span>
-            </button>
-
+                <span style="font-size: 32px;" class="material-symbols-outlined">
+                    arrow_circle_left
+                </span>
+            </a>
             {{-- Categoria --}}
             <div class="mb-2 flex items-center justify-between">
                 <span class="w-fit rounded-full bg-blue-100 px-3 py-1 text-xs font-semibold text-blue-600">
@@ -69,6 +72,7 @@ arrow_circle_left
                 <input type="hidden" name="nome" value="{{ $produto->nome }}">
                 <input type="hidden" name="preco" value="{{ $produto->preco }}">
                 <input type="hidden" name="imagem" value="{{ $produto->imagem }}">
+                <input type="hidden" name="slug" value="{{ $produto->slug }}">
 
                 {{-- Quantidade --}}
                 <div class="flex items-center gap-2">
@@ -139,8 +143,8 @@ arrow_circle_left
 </div>
 
     {{-- Seção de Comentários --}}
-    <div class="mt-12">
-        <h2 class="text-2xl font-bold text-text-primary mb-6">Comentários</h2>
+    <div class="mt-10 mx-auto max-w-6xl px-4 py-6">
+        <h2 class="text-2xl font-bold text-text-primary mb-6">Comentários {{$produto->comments->count()}}</h2>
 
         {{-- Formulário de Comentário --}}
         @auth

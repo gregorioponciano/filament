@@ -15,48 +15,45 @@
     @endif
 
     @if ($mensagem = Session::get('aviso'))
-        <div class="mb-6 rounded-2xl border border-blue-200 bg-blue-50 p-5 text-blue-800 shadow-sm">
-            <h3 class="text-lg font-semibold">ℹ️ Aviso</h3>
+        <div class="mb-6 rounded-2xl border border-green-200 bg-green-50 p-5 text-green-800 shadow-sm">
+            <h3 class="text-lg font-semibold">Sucesso</h3>
             <p class="mt-1 text-sm">{{ $mensagem }}</p>
         </div>
     @endif
 
     {{-- CARRINHO VAZIO --}}
     @if ($itens->count() === 0)
-        <div class="rounded-2xl border border-orange-200 bg-orange-50 p-8 text-center shadow-sm">
-            <h3 class="text-xl font-semibold text-orange-700">🛒 Seu carrinho está vazio</h3>
-            <p class="mt-2 text-sm text-orange-600">
-                Aproveite nossas promoções e adicione produtos incríveis!
-            </p>
-
-            <a
-                href="{{ url('/user') }}"
-                class="mt-4 inline-block rounded-xl border border-gray-300 px-4 py-2
-                       text-sm font-medium text-gray-700 transition hover:bg-gray-100"
-            >
-                ← Continuar comprando
-            </a>
-        </div>
-    @else
-
-        {{-- CABEÇALHO --}}
-        <div class="mb-8 flex items-center justify-between">
-            <h3 class="text-2xl font-semibold text-gray-800">
+            <h3 class="text-2xl font-semibold text-gray-800 mb-4">
                 Seu carrinho
                 <span class="ml-1 text-sm font-medium text-gray-500">
                     ({{ $itens->count() }} itens)
                 </span>
-                                <span class="ml-1 text-sm font-medium text-gray-500">
+            </h3>
+                <div class="flex flex-col items-center justify-center py-16 px-4 text-center bg-white rounded-xl border border-gray-100 shadow-sm">
+            <span class="material-symbols-outlined text-6xl text-gray-300 mb-4">shopping_cart</span>
+            
+            <h3 class="text-xl font-medium text-gray-900 mb-2">Seu carrinho está vazio</h3>
+            <p class="text-gray-500 max-w-md mx-auto mb-6">Aproveite nossas promoções e adicione produtos incríveis!</p>
+            <a href="{{ route('user.dashboard') }}" class="rounded-lg bg-button-primary px-6 py-2.5 font-medium hover:bg-hover-primary transition">Explorar produtos</a>
+        </div>
+    @else
+
+        {{-- CABEÇALHO --}}
+        <div class="mb-4">
+            <h3 class="text-2xl font-semibold text-gray-800">
+                Seu carrinho
+                <span class="ml-1 text-sm font-medium text-gray-500">
                     ({{ $itens->count() }} itens)
                 </span>
             </h3>
 
             <a
                 href="{{ url('/user') }}"
-                class="rounded-xl border border-gray-300 px-4 py-2
-                       text-sm font-medium text-gray-700 transition hover:bg-gray-100"
+                class="flex items-center gap-1 text-blue-300 hover:text-blue-400 transition h-12 w-8"
             >
-                ← Voltar
+                <span style="font-size: 32px;" class="material-symbols-outlined">
+                    arrow_circle_left
+                </span>
             </a>
         </div>
 
@@ -70,7 +67,7 @@
                         <img
                             src="{{ asset('storage/' . $item->attributes->image) }}"
                             alt="{{ $item->name }}"
-                            class="h-24 w-24 flex-shrink-0 rounded-xl object-cover ring-1 ring-gray-200"
+                            class="h-24 w-24 rounded-xl object-cover ring-1 ring-gray-200"
                         >
                     </a>
 
@@ -159,10 +156,12 @@
                         @foreach ($itens as $item)
                             <tr class="hover:bg-gray-50">
                                 <td class="p-4">
-                                    <img
-                                        src="{{ asset('storage/' . $item->attributes->image) }}"
-                                        class="h-16 w-16 rounded-xl object-cover ring-1 ring-gray-200"
-                                    >
+                                    <a href="{{ route('show.detalhes', $item->attributes->slug) }}">
+                                        <img
+                                            src="{{ asset('storage/' . $item->attributes->image) }}"
+                                            class="h-16 w-16 rounded-xl object-cover ring-1 ring-gray-200"
+                                        >
+                                    </a>
                                 </td>
 
                                 <td class="p-4 font-medium text-gray-800">

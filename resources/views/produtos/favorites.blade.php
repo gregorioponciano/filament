@@ -5,7 +5,7 @@
 @include('user.dashboard-content')
 
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-    <h2 class="text-2xl font-bold text-gray-800 mb-6">Meus Favoritos</h2>
+    <h2 class="text-2xl font-bold text-gray-800 mb-6">Meus Favoritos {{$produtos->count()}}</h2>
 
     @if(isset($produtos) && $produtos->count() > 0)
         @include('produtos.index')

@@ -5,8 +5,27 @@
 @section('dashboard')
 @include('user.dashboard-content')
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-  <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
 
+        {{-- CABEÇALHO --}}
+        <div class="mb-4">
+            <h3 class="text-2xl font-semibold text-gray-800">
+                Categorias
+                <span class="ml-1 text-sm font-medium text-gray-500">
+                    ({{ $produtos->count() }} itens)
+                </span>
+            </h3>
+
+            <a
+                href="{{ url('/user') }}"
+                class="flex items-center gap-1 text-blue-300 hover:text-blue-400 transition h-12 "
+            >
+                <span style="font-size: 32px;" class="material-symbols-outlined">
+                    arrow_circle_left
+                </span>
+            </a>
+        </div>
+
+  <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
     @foreach ($produtos as $produto)
 
       <div class="group relative flex flex-col overflow-hidden rounded-xl bg-white border border-gray-100 shadow-sm hover:shadow-md transition-all duration-300">

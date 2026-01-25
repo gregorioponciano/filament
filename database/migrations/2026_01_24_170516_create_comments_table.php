@@ -16,6 +16,7 @@ Schema::create('comments', function (Blueprint $table) {
     $table->foreignId('user_id')->constrained()->cascadeOnDelete();
     $table->morphs('commentable'); // post, produto, etc
     $table->text('content');
+    $table->string('fingerprint')->nullable()->index();
     $table->timestamps();
 });
     }
