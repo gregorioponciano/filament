@@ -56,6 +56,14 @@ class User extends Authenticatable
 }
 
 
+
+public function commentVotes()
+{
+    return $this->hasMany(CommentVote::class);
+}
+
+
+
     /**
      * The attributes that should be hidden for serialization.
      *

@@ -36,6 +36,8 @@ class ViewServiceProvider extends ServiceProvider
             $view->with('enderecos', Endereco::all());
             $view->with('customizations', Customization::latest()->first());
             $view->with('itens', Auth::check() ? Cart::session(Auth::id())->getContent() : collect([]));
+            $view->with('favorites', Auth::check() ? Auth::user()->favorites : collect([]));
+        
         });
 
         // Correção: Injeta produtos apenas no dashboard do usuário.

@@ -8,6 +8,7 @@ use App\Http\Controllers\Auth\StoreRegisterController;
 use App\Http\Controllers\CarrinhoController;
 use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\CommentVoteController;
 use App\Http\Controllers\DetalhesController;
 use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\ProdutoController;
@@ -28,8 +29,6 @@ Route::post('/login', [StoreLoginController::class, 'storeLogin'])->name('store.
 Route::get('/register', [ShowRegisterController::class, 'showRegister'])->name('show.register');
 Route::post('/register', [StoreRegisterController::class, 'storeRegister'])->name('store.register');
 Route::post('/logout', [LogoutController::class, 'storeLogout'])->name('store.logout');
-
-
 
     // Rotas gerais para usuários autenticados
    
@@ -52,8 +51,13 @@ Route::put('/carrinho/atualizar', [CarrinhoController::class, 'atualizar'])->nam
 
 
 Route::post('/comments', [CommentController::class, 'store'])->name('comments.store')->middleware([Authenticate::class]);
-// Route::delete('/comments/{id}', [CommentController::class, 'destroy'])->name('comments.destroy')->middleware([Authenticate::class]);
+Route::put('/comments/{id}', [CommentController::class, 'update'])->name('comments.update')->middleware([Authenticate::class]);
+Route::delete('/comments/{id}', [CommentController::class, 'destroy'])->name('comments.destroy')->middleware([Authenticate::class]);
 Route::post('/favorites/toggle', [FavoriteController::class, 'toggle'])->name('favorites.toggle')->middleware([Authenticate::class]);
 Route::get('/favorites', [FavoriteController::class, 'index'])->name('favorites.index')->middleware([Authenticate::class]);
 
+
+Route::post(
+    '/comments/{comment}/vote',
+    [CommentVoteController::class, 'vote'])->name('comments.vote')->middleware([Authenticate::class]);
     // Rotas para administradores

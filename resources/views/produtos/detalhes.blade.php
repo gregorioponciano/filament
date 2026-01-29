@@ -142,66 +142,204 @@
     </div>
 </div>
 
-    {{-- Seção de Comentários --}}
-    <div class="mt-10 mx-auto max-w-6xl px-4 py-6">
-        <h2 class="text-2xl font-bold text-text-primary mb-6">Comentários {{$produto->comments->count()}}</h2>
+{{-- Seção de Comentários --}}
+<div class="mt-10 mx-auto max-w-6xl px-4 py-6">
+    <h2 class="mb-6 text-2xl font-bold text-text-primary">
+        Comentários {{ $produto->comments->count() }}
+    </h2>
 
-        {{-- Formulário de Comentário --}}
-        @auth
-            <div class="bg-card-primary rounded-2xl shadow-sm border border-gray-500 p-6 mb-8">
-                <h3 class="text-lg font-semibold text-text-primary mb-4">Deixe seu comentário</h3>
-                <form action="{{ route('comments.store') }}" method="POST">
-                    @csrf
-                    <input type="hidden" name="commentable_type" value="App\Models\Produto">
-                    <input type="hidden" name="commentable_id" value="{{ $produto->id }}">
+    {{-- Formulário de Comentário --}}
+    @auth
+        <div
+            x-data="{ content: '' }"
+            class="mb-8 rounded-2xl border border-gray-500 bg-card-primary p-6 shadow-sm"
+        >
+            <h3 class="mb-4 text-lg font-semibold text-text-primary">
+                Deixe seu comentário
+            </h3>
 
-                    <div class="mb-4">
-                        <textarea 
-                            name="content" 
-                            rows="3" 
-                            class="w-full rounded-xl border-gray-500 bg-gray-50 text-gray-900 shadow-sm focus:border-button-primary focus:ring focus:ring-button-primary focus:ring-opacity-50 p-3"
-                            placeholder="O que você achou deste produto?"
-                            required
-                        ></textarea>
-                    </div>
+            <form action="{{ route('comments.store') }}" method="POST">
+                @csrf
+                <input type="hidden" name="commentable_type" value="App\Models\Produto">
+                <input type="hidden" name="commentable_id" value="{{ $produto->id }}">
 
-                    <div class="flex justify-end">
-                        <button type="submit" class="rounded-lg bg-button-secondary px-6 py-2 text-white transition hover:bg-hover-secondary font-medium">
-                            Enviar Comentário
-                        </button>
-                    </div>
-                </form>
-            </div>
-        @else
-            <div class="bg-blue-50 rounded-xl p-6 mb-8 text-center border border-blue-100">
-                <p class="text-blue-800">
-                    <a href="{{ route('show.login') }}" class="font-bold underline hover:text-blue-900">Faça login</a> para deixar um comentário.
-                </p>
-            </div>
-        @endauth
+                <textarea
+                    name="content"
+                    rows="3"
+                    x-model="content"
+                    placeholder="O que você achou deste produto?"
+                    class="w-full resize-none rounded-xl border border-gray-400 bg-gray-50 p-3 text-gray-900 focus:border-button-primary focus:ring focus:ring-button-primary/40"
+                    required
+                ></textarea>
 
-        {{-- Lista de Comentários --}}
-        <div class="space-y-6">
-            @forelse($produto->comments as $comment)
-                <div class="bg-card-primary rounded-2xl shadow-sm border border-gray-500 p-6">
-                    <div class="flex items-center justify-between mb-4">
-                        <div class="flex items-center gap-3">
-                            <div class="h-10 w-10 rounded-full bg-gray-200 flex items-center justify-center text-gray-600 font-bold text-lg">
-                                {{ substr($comment->user->name ?? 'A', 0, 1) }}
-                            </div>
-                            <div>
-                                <h4 class="font-bold text-text-primary">{{ $comment->user->name ?? 'Usuário' }}</h4>
-                                <span class="text-xs text-text-primary opacity-60">{{ $comment->created_at->diffForHumans() }}</span>
-                            </div>
+                <div class="mt-4 flex justify-end">
+                    <button
+                        type="submit"
+                        :disabled="content.trim().length < 3"
+                        class="rounded-lg bg-button-secondary px-6 py-2 font-medium text-white transition
+                               disabled:cursor-not-allowed disabled:opacity-50
+                               hover:bg-hover-secondary"
+                    >
+                        Enviar Comentário
+                    </button>
+                </div>
+            </form>
+        </div>
+    @else
+        <div class="mb-8 rounded-xl border border-blue-100 bg-blue-50 p-6 text-center">
+            <p class="text-blue-800">
+                <a href="{{ route('show.login') }}" class="font-bold underline hover:text-blue-900">
+                    Faça login
+                </a>
+                para deixar um comentário.
+            </p>
+        </div>
+    @endauth
+
+    {{-- Lista de Comentários --}}
+    <div class="space-y-6">
+        @forelse($produto->comments as $comment)
+            <div
+                x-data="{ edit: false, text: '{{ addslashes($comment->content) }}' }"
+                class="rounded-2xl border border-gray-500 bg-card-primary p-6 shadow-sm"
+            >
+                <div class="mb-4 flex items-start justify-between gap-4">
+                    <div class="flex items-center gap-3">
+                        <div class="flex h-10 w-10 items-center justify-center rounded-full bg-gray-200 font-bold text-gray-600">
+                            {{ substr($comment->user->name ?? 'A', 0, 1) }}
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-text-primary">
+                                {{ $comment->user->name ?? 'Usuário' }}
+                            </h4>
+                            <span class="text-xs text-text-primary/60">
+                                {{ $comment->created_at->diffForHumans() }}
+                            </span>
                         </div>
                     </div>
-                    <p class="text-text-primary opacity-90 leading-relaxed">{{ $comment->content }}</p>
+                    
+                    <div    class="flex items-center justify-end gap-4 w-200">
+                    <form method="POST" action="{{ route('comments.vote', $comment->id) }}">
+                        @csrf
+                        <input type="hidden" name="vote" value="1">
+
+                        <button
+                            type="submit"
+                            class="flex items-center gap-1 transition
+                            {{ $comment->userVote() === 1 ? 'text-blue-600' : 'text-gray-400 hover:text-blue-500' }}"
+                        >
+                            <span class="material-symbols-outlined">thumb_up</span>
+                            <span class="text-sm">{{ $comment->likesCount() }}</span>
+                        </button>
+                    </form>
+                    <form method="POST" action="{{ route('comments.vote', $comment->id) }}">
+                        @csrf
+                        <input type="hidden" name="vote" value="-1">
+
+                        <button
+                            type="submit"
+                            class="flex items-center gap-1 transition
+                            {{ $comment->userVote() === -1 ? 'text-red-600' : 'text-gray-400 hover:text-red-500' }}"
+                        >
+                            <span class="material-symbols-outlined">thumb_down</span>
+                            <span class="text-sm">{{ $comment->dislikesCount() }}</span>
+                        </button>
+                    </form>
+                    </div>
+                    @if(Auth::id() === $comment->user_id)
+                    <div class="flex items-center gap-3">
+                            <button
+                                @click="edit = true"
+                                class="text-gray-400 hover:text-blue-500 transition"
+                                title="Editar"
+                            >
+                                <span class="material-symbols-outlined">edit</span>
+                            </button>
+
+                            <form
+                                action="{{ route('comments.destroy', $comment->id) }}"
+                                method="POST"
+                                onsubmit="return confirm('Deseja excluir este comentário?')"
+                            >
+                                @csrf
+                                @method('DELETE')
+                                <button
+                                    type="submit"
+                                    class="text-gray-400 hover:text-red-500 transition"
+                                    title="Excluir"
+                                >
+                                    <span class="material-symbols-outlined">delete</span>
+                                </button>
+                            </form>
+                        </div>
+                    @endif
                 </div>
-            @empty
-                <p class="text-text-primary opacity-60 text-center py-8 italic">Nenhum comentário ainda. Seja o primeiro!</p>
-            @endforelse
-        </div>
+
+                {{-- Visualização --}}
+                <p
+                    x-show="!edit"
+                    class="leading-relaxed text-text-primary/90"
+                >
+                    {{ $comment->content }}
+                </p>
+
+                {{-- Edição --}}
+                @if(Auth::id() === $comment->user_id)
+                    <form
+                        x-show="edit"
+                        action="{{ route('comments.update', $comment->id) }}"
+                        method="POST"
+                        class="space-y-3"
+                    >
+                        @csrf
+                        @method('PUT')
+
+                        <textarea
+                            name="content"
+                            x-model="text"
+                            rows="3"
+                            class="w-full resize-none rounded-xl border border-gray-400 p-3 focus:ring focus:ring-blue-400/40"
+                            required
+                        ></textarea>
+
+                        <div class="flex justify-end gap-3">
+                            <button
+                                type="button"
+                                @click="edit = false"
+                                class="text-sm text-gray-500 hover:text-gray-700"
+                            >
+                                Cancelar
+                            </button>
+
+                            <button
+                                type="submit"
+                                class="rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-700"
+                            >
+                                Salvar
+                            </button>
+                        </div>
+                    </form>
+                @endif
+            </div>
+        @empty
+            <p class="py-8 text-center italic text-text-primary/60">
+                Nenhum comentário ainda. Seja o primeiro!
+            </p>
+        @endforelse
     </div>
 </div>
+     
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
 
+    @if(isset($produtos) && $produtos->count() > 0)
+        @include('produtos.index')
+    @else
+        <div class="flex flex-col items-center justify-center py-16 px-4 text-center bg-white rounded-xl border border-gray-100 shadow-sm">
+            <span class="material-symbols-outlined text-6xl text-gray-300 mb-4">favorite_border</span>
+            <h3 class="text-xl font-medium text-gray-900 mb-2">Você ainda não tem favoritos</h3>
+            <p class="text-gray-500 max-w-md mx-auto mb-6">Salve os produtos que você mais gosta aqui para encontrá-los facilmente depois.</p>
+            <a href="{{ route('user.dashboard') }}" class="rounded-lg bg-button-primary px-6 py-2.5 font-medium hover:bg-hover-primary transition">Explorar produtos</a>
+        </div>
+    @endif
+</div>
 @endsection

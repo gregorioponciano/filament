@@ -17,14 +17,14 @@ class CommentController extends Controller
         ]);
 
         // 🔐 fingerprint único
-        $fingerprint = sha1(
-            Auth::id() .
-            $request->ip() .
-            $request->userAgent() .
-            $request->content .
-            $request->commentable_id .
-            $request->commentable_type
-        );
+        $fingerprint = sha1(implode('|', [
+            Auth::id(),
+            $request->ip(),
+            $request->userAgent(),
+            $request->commentable_type,
+            $request->commentable_id,
+            $request->content,
+        ]));
 
         // 🚫 evita comentário duplicado em 20s
         $alreadySent = Comment::where('fingerprint', $fingerprint)
@@ -32,20 +32,50 @@ class CommentController extends Controller
             ->exists();
 
         if ($alreadySent) {
-            return back()->with('aviso', 'comentario duplicado aguarde 20 segundos.');
+            return back()->with('aviso', 'Comentário duplicado. Aguarde 20 segundos antes de enviar novamente.');
         }
-   $model = app($request->commentable_type)::findOrFail($request->commentable_id);
+
+        $model = app($request->commentable_type)::findOrFail($request->commentable_id);
 
         $model->comments()->create([
-
             'user_id' => Auth::id(),
             'content' => $request->content,
             'fingerprint' => $fingerprint,
-        ])->commentable()->associate(
-            $request->commentable_type::findOrFail($request->commentable_id)
-        )->save();
+        ]);
 
         return back()->with('sucesso', 'Comentário enviado!');
     }
-}
 
+
+    public function destroy($id)
+    {
+        $comment = Comment::findOrFail($id);
+
+        if ($comment->user_id !== Auth::id()) {
+            abort(403, 'Você não tem permissão para excluir este comentário.');
+        }
+
+        $comment->delete();
+
+        return back()->with('sucesso', 'Comentário excluído com sucesso!');
+    }
+
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'content' => 'required|min:3|max:1000',
+        ]);
+
+        $comment = Comment::findOrFail($id);
+
+        if ($comment->user_id !== Auth::id()) {
+            abort(403, 'Você não tem permissão para editar este comentário.');
+        }
+
+        $comment->content = $request->content;
+        $comment->save();
+
+        return back()->with('sucesso', 'Comentário atualizado com sucesso!');
+    }
+
+}
