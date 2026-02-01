@@ -24,6 +24,9 @@ class FavoriteController extends Controller
     {
         $produtos = Auth::user()
             ->favorites()
+            ->whereHas('categoria', function ($query) {
+                $query->where('ativo', true);
+            })
             ->paginate(9);
 
         return view('produtos.favorites', compact('produtos'));

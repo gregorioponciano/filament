@@ -63,13 +63,10 @@
   </div>
 </div>
 
-<div class="mt-8 flex justify-center">
+<div class="m-8 flex justify-center">
   @if(method_exists($produtos, 'links'))
     {{ $produtos->appends(request()->query())->links() }}
   @endif
 </div>
-
-
-
 
 @endif

@@ -96,5 +96,4 @@
     {{ $produtos->appends(request()->query())->links() }}
   @endif
 </div>
-
 @endsection

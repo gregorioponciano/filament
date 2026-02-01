@@ -20,6 +20,9 @@ class SearchController extends Controller
         // Busca no banco
         $produtos = Produto::query()
             ->where('nome', 'like', "%{$search}%")
+            ->whereHas('categoria', function ($query) {
+                $query->where('ativo', true);
+            })
             ->limit(20)
             ->get();
             

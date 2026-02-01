@@ -142,8 +142,51 @@
     </div>
 </div>
 
+{{-- Seção de Avaliações (Resumo) --}}
+<div class="mx-auto max-w-6xl px-4 py-10">
+    <div class="rounded-3xl bg-white p-8 shadow-sm border border-gray-100">
+        <div class="flex flex-col md:flex-row items-center justify-between gap-8">
+            
+            {{-- Média Geral --}}
+            <div class="flex items-center gap-6">
+                <div class="flex flex-col items-center justify-center rounded-2xl bg-amber-50 px-6 py-4 text-amber-600">
+                    <span class="text-4xl font-bold">{{ number_format($produto->feedbacks->avg('rating') ?? 0, 1) }}</span>
+                    <span class="text-xs font-medium uppercase tracking-wide">de 5</span>
+                </div>
+                <div>
+                    <h2 class="text-2xl font-bold text-gray-900">Avaliações dos Clientes</h2>
+                    <div class="mt-1 flex items-center gap-2">
+                        <div class="flex text-amber-400">
+                            @php $rating = round($produto->feedbacks->avg('rating') ?? 0); @endphp
+                            @for($i=1; $i<=5; $i++)
+                                <span>{{ $i <= $rating ? '★' : '☆' }}</span>
+                            @endfor
+                        </div>
+                        <span class="text-sm text-gray-500">({{ $produto->feedbacks->count() }} avaliações)</span>
+                    </div>
+                </div>
+            </div>
+
+            {{-- Botão de Ação --}}
+            <div class="w-full md:w-auto">
+                @auth
+                    <a href="{{ route('feedback.create', $produto->id) }}" 
+                       class="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-gray-900 px-6 py-3 font-semibold text-white transition hover:bg-gray-800 md:w-auto">
+                        <span class="material-symbols-outlined text-amber-400">star</span>
+                        Avaliar este produto
+                    </a>
+                @else
+                    <a href="{{ route('show.login') }}" class="text-blue-600 hover:underline font-medium">
+                        Faça login para avaliar
+                    </a>
+                @endauth
+            </div>
+        </div>
+    </div>
+</div>
+
 {{-- Seção de Comentários --}}
-<div class="mt-10 mx-auto max-w-6xl px-4 py-6">
+<div class="mx-auto max-w-6xl px-4 py-6">
     <h2 class="mb-6 text-2xl font-bold text-text-primary">
         Comentários {{ $produto->comments->count() }}
     </h2>
@@ -328,11 +371,15 @@
         @endforelse
     </div>
 </div>
-     
+     {{-- Favorites --}}
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
 
-    @if(isset($produtos) && $produtos->count() > 0)
-        @include('produtos.index')
+    @php
+        $favoritos = Auth::check() ? Auth::user()->favorites : collect([]);
+    @endphp
+ <h2 class="text-2xl font-bold text-gray-800 mb-6">Meus Favoritos </h2>
+    @if($favoritos->count() > 0)
+        @include('produtos.index', ['produtos' => $favoritos])
     @else
         <div class="flex flex-col items-center justify-center py-16 px-4 text-center bg-white rounded-xl border border-gray-100 shadow-sm">
             <span class="material-symbols-outlined text-6xl text-gray-300 mb-4">favorite_border</span>
@@ -342,4 +389,5 @@
         </div>
     @endif
 </div>
+
 @endsection

@@ -11,6 +11,8 @@ use App\Http\Controllers\CommentController;
 use App\Http\Controllers\CommentVoteController;
 use App\Http\Controllers\DetalhesController;
 use App\Http\Controllers\FavoriteController;
+use App\Http\Controllers\FeedbackController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProdutoController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\User\DestroyProfileController;
@@ -49,15 +51,21 @@ Route::delete('/carrinho/remover/{id}', [CarrinhoController::class, 'remover'])-
 Route::delete('/carrinho/limpar', [CarrinhoController::class, 'limpar'])->name('carrinho.limpar'); 
 Route::put('/carrinho/atualizar', [CarrinhoController::class, 'atualizar'])->name('carrinho.atualizar'); 
 
+// Rotas de Pedidos
+Route::post('/pedido', [OrderController::class, 'store'])->name('pedido.store')->middleware([Authenticate::class]);
+Route::get('/pedido/{order}', [OrderController::class, 'show'])->name('produtos.orders')->middleware([Authenticate::class]);
+Route::get('/meus-pedidos', [OrderController::class, 'index'])->name('orders.index')->middleware([Authenticate::class]);
 
 Route::post('/comments', [CommentController::class, 'store'])->name('comments.store')->middleware([Authenticate::class]);
 Route::put('/comments/{id}', [CommentController::class, 'update'])->name('comments.update')->middleware([Authenticate::class]);
 Route::delete('/comments/{id}', [CommentController::class, 'destroy'])->name('comments.destroy')->middleware([Authenticate::class]);
+Route::post('/comments/{comment}/vote', [CommentVoteController::class, 'vote'])->name('comments.vote')->middleware([Authenticate::class]);
+
 Route::post('/favorites/toggle', [FavoriteController::class, 'toggle'])->name('favorites.toggle')->middleware([Authenticate::class]);
 Route::get('/favorites', [FavoriteController::class, 'index'])->name('favorites.index')->middleware([Authenticate::class]);
 
+Route::get('/produto/{id}/avaliar', [FeedbackController::class, 'create'])->name('feedback.create')->middleware([Authenticate::class]);
+Route::post('/feedback', [FeedbackController::class, 'store'])->name('feedback.store')->middleware([Authenticate::class]);
 
-Route::post(
-    '/comments/{comment}/vote',
-    [CommentVoteController::class, 'vote'])->name('comments.vote')->middleware([Authenticate::class]);
-    // Rotas para administradores
+
+            // Rotas para administradores

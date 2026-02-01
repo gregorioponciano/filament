@@ -6,6 +6,8 @@ use Darryldecode\Cart\Facades\CartFacade as Cart;
 use App\Models\Categoria;
 use App\Models\Customization;
 use App\Models\Endereco;
+use App\Models\Order;
+use App\Models\OrderItem;
 use App\Models\Produto;
 use App\Models\SiteSetting;
 use Illuminate\Support\Facades\Auth;
@@ -37,13 +39,19 @@ class ViewServiceProvider extends ServiceProvider
             $view->with('customizations', Customization::latest()->first());
             $view->with('itens', Auth::check() ? Cart::session(Auth::id())->getContent() : collect([]));
             $view->with('favorites', Auth::check() ? Auth::user()->favorites : collect([]));
+
+
         
         });
 
         // Correção: Injeta produtos apenas no dashboard do usuário.
         // Isso resolve o erro da página user.dashboard sem quebrar a listagem de categorias.
         View::composer('user.dashboard', function ($view) {
-            $view->with('produtos', Produto::where('ativo', true)->paginate(9));
+            $view->with('produtos', Produto::where('ativo', true)
+                ->whereHas('categoria', function ($query) {
+                    $query->where('ativo', true);
+                })
+                ->paginate(9));
         });
     }
 }

@@ -60,5 +60,12 @@ class Produto extends Model
     {
     return $this->belongsToMany(User::class, 'favorites', 'produto_id', 'user_id')
         ->withTimestamps();
-}
+    }
+
+        // App\Models\Product.php
+    public function feedbacks()
+    {
+        return $this->hasMany(Feedback::class);
+    }
+
 }
