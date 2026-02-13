@@ -19,18 +19,18 @@
         <p>Data: {{ $order->created_at->format('d/m/Y H:i') }}</p>
     </div>
 
-    @if($order->endereco)
+   
         <div class="mb-6 rounded-xl border border-gray-200 bg-gray-50 p-5 shadow-sm">
             <h3 class="mb-2 text-lg font-bold text-gray-800 flex items-center gap-2">
                 <span class="material-symbols-outlined text-gray-500">location_on</span>
                 Endereço de Entrega
             </h3>
             <p class="text-gray-700">
-                {{ $order->endereco->rua }}, {{ $order->endereco->numero }}<br>
-                {{ $order->endereco->bairro }} - {{ $order->endereco->cidade }}/{{ $order->endereco->estado }}
+                {{ $order->rua }}, {{ $order->numero }}<br>
+                {{ $order->bairro }} - {{ $order->cidade }}/{{ $order->estado }}
             </p>
         </div>
-    @endif
+ 
 
     <div class="mt-4">
         @foreach ($order->items as $item)

@@ -63,6 +63,26 @@ public function commentVotes()
 }
 
 
+public function bans()
+{
+    return $this->hasMany(\App\Models\UserBan::class);
+}
+
+public function activeBan()
+{
+    return $this->hasOne(\App\Models\UserBan::class)
+        ->where('active', true)
+        ->where(function ($q) {
+            $q->whereNull('banned_until')
+              ->orWhere('banned_until', '>', now());
+        });
+}
+
+public function isBanned(): bool
+{
+    return $this->activeBan()->exists();
+}
+
 
     /**
      * The attributes that should be hidden for serialization.

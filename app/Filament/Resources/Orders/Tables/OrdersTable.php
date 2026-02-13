@@ -34,6 +34,20 @@ class OrdersTable
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
+                TextColumn::make('rua')
+                    ->searchable(),
+                TextColumn::make('numero')
+                    ->searchable(),
+                TextColumn::make('complemento')
+                    ->searchable(),
+                TextColumn::make('bairro')
+                    ->searchable(),
+                TextColumn::make('cidade')
+                    ->searchable(),
+                TextColumn::make('estado')
+                    ->searchable(),
+                TextColumn::make('cep')
+                    ->searchable(),
             ])
             ->filters([
                 //

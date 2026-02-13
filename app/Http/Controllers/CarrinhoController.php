@@ -29,6 +29,14 @@ class CarrinhoController extends Controller
         }
         RateLimiter::hit($limiterKey, 3);
 
+        // Verificar estoque real no banco antes de adicionar
+        $produto = Produto::find($request->id);
+        $quantidadeSolicitada = abs($request->input('estoque', 1)); // Nota: seu input se chama 'estoque', mas representa a quantidade
+
+        if (!$produto || $produto->estoque < $quantidadeSolicitada) {
+            return redirect()->back()->with('erro', 'Quantidade indisponível! Temos apenas ' . ($produto->estoque ?? 0) . ' em estoque.');
+        }
+
         Cart::session(Auth::id())->add(array(
     'id' => $request->id,
     'name' => $request->nome,
@@ -69,6 +77,14 @@ class CarrinhoController extends Controller
 
     public function atualizar(Request $request)
      {
+        // Verificar estoque real no banco antes de atualizar a quantidade
+        $produto = Produto::find($request->id);
+        $novaQuantidade = abs($request->estoque);
+
+        if (!$produto || $produto->estoque < $novaQuantidade) {
+            return redirect()->back()->with('erro', 'Quantidade indisponível! Temos apenas ' . ($produto->estoque ?? 0) . ' em estoque.');
+        }
+
         Cart::session(Auth::id())->update($request->id, [
             'quantity' => [
                 'relative' => false,

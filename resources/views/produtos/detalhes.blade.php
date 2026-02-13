@@ -3,6 +3,7 @@
 @section('title', 'Detalhes')
 
 @section('dashboard')
+<script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
 @include('user.dashboard-content')
 <div class="mx-auto max-w-6xl px-4 py-6">
         @if ($mensagem = Session::get('aviso'))
@@ -291,13 +292,7 @@
                     </div>
                     @if(Auth::id() === $comment->user_id)
                     <div class="flex items-center gap-3">
-                            <button
-                                @click="edit = true"
-                                class="text-gray-400 hover:text-blue-500 transition"
-                                title="Editar"
-                            >
-                                <span class="material-symbols-outlined">edit</span>
-                            </button>
+
 
                             <form
                                 action="{{ route('comments.destroy', $comment->id) }}"
@@ -317,52 +312,59 @@
                         </div>
                     @endif
                 </div>
+{{-- Visualização / Clique para editar --}}
+<p
+    x-show="!edit"
+    @if(Auth::id() === $comment->user_id)
+        @click="edit = true"
+        class="cursor-pointer leading-relaxed text-text-primary/90 hover:bg-gray-100 rounded-lg p-2 transition"
+        title="Clique para editar"
+    @else
+        class="leading-relaxed text-text-primary/90"
+    @endif
+>
+    {{ $comment->content }}
+</p>
 
-                {{-- Visualização --}}
-                <p
-                    x-show="!edit"
-                    class="leading-relaxed text-text-primary/90"
-                >
-                    {{ $comment->content }}
-                </p>
+{{-- Edição inline --}}
+@if(Auth::id() === $comment->user_id)
+    <form
+        x-show="edit"
+        x-transition
+        action="{{ route('comments.update', $comment->id) }}"
+        method="POST"
+        class="space-y-3"
+    >
+        @csrf
+        @method('PUT')
 
-                {{-- Edição --}}
-                @if(Auth::id() === $comment->user_id)
-                    <form
-                        x-show="edit"
-                        action="{{ route('comments.update', $comment->id) }}"
-                        method="POST"
-                        class="space-y-3"
-                    >
-                        @csrf
-                        @method('PUT')
+        <textarea
+            name="content"
+            x-model="text"
+            rows="3"
+            class="w-full resize-none rounded-xl border border-gray-400 p-3 focus:ring focus:ring-blue-400/40"
+            required
+        ></textarea>
 
-                        <textarea
-                            name="content"
-                            x-model="text"
-                            rows="3"
-                            class="w-full resize-none rounded-xl border border-gray-400 p-3 focus:ring focus:ring-blue-400/40"
-                            required
-                        ></textarea>
+        <div class="flex justify-end gap-3">
+            <button
+                type="button"
+                @click="edit = false"
+                class="text-sm text-gray-500 hover:text-gray-700"
+            >
+                Cancelar
+            </button>
 
-                        <div class="flex justify-end gap-3">
-                            <button
-                                type="button"
-                                @click="edit = false"
-                                class="text-sm text-gray-500 hover:text-gray-700"
-                            >
-                                Cancelar
-                            </button>
+            <button
+                type="submit"
+                class="rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-700"
+            >
+                Salvar
+            </button>
+        </div>
+    </form>
+@endif
 
-                            <button
-                                type="submit"
-                                class="rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-700"
-                            >
-                                Salvar
-                            </button>
-                        </div>
-                    </form>
-                @endif
             </div>
         @empty
             <p class="py-8 text-center italic text-text-primary/60">
@@ -374,8 +376,10 @@
      {{-- Favorites --}}
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
 
-    @php
-        $favoritos = Auth::check() ? Auth::user()->favorites : collect([]);
+  @php
+        $favoritos = Auth::check() ? Auth::user()->favorites()->whereHas('categoria', function ($query) {
+            $query->where('ativo', true);
+        })->get() : collect([]);
     @endphp
  <h2 class="text-2xl font-bold text-gray-800 mb-6">Meus Favoritos </h2>
     @if($favoritos->count() > 0)

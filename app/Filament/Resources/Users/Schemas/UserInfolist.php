@@ -18,8 +18,9 @@ class UserInfolist
                 TextEntry::make('email_verified_at')
                     ->dateTime()
                     ->placeholder('-'),
-                IconEntry::make('banned')
-                    ->boolean(),
+                IconEntry::make('isBanned')
+                    ->boolean()
+                    ->label('Banned'),
                 TextEntry::make('role'),
                 TextEntry::make('created_at')
                     ->dateTime()

@@ -20,7 +20,7 @@ class CustomizationResource extends Resource
 {
     protected static ?string $model = Customization::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::AdjustmentsHorizontal;
 
     protected static ?string $recordTitleAttribute = 'Customization';
 
@@ -55,7 +55,7 @@ class CustomizationResource extends Resource
             'edit' => EditCustomization::route('/{record}/edit'),
         ];
     }
-                public static function getNavigationBadge(): ?string
+    public static function getNavigationBadge(): ?string
     {
         return static::getModel()::count();
     }

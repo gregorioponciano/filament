@@ -11,7 +11,9 @@ class FeedbackController extends Controller
 {
     public function create($id)
     {
-        $produto = Produto::findOrFail($id);
+        $produto = Produto::where('id', $id)->whereHas('categoria', function ($query) {
+            $query->where('ativo', true);
+        })->firstOrFail();
         
         return view('produtos.feedback', compact('produto'));
     }

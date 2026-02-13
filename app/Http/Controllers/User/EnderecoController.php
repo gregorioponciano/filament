@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Endereco;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Validation\Rule;
+
 
 class EnderecoController extends Controller
 {
@@ -64,14 +64,13 @@ class EnderecoController extends Controller
     {
         return $request->validateWithBag('endereco', [
             'rua' => 'required|string|max:255',
-            'numero' => ['required', 'string', 'max:10', Rule::unique('enderecos', 'numero')->ignore($id)],
+            'numero' => 'required', 'string', 'max:10',
             'bairro' => 'required|string|max:255',
             'cidade' => 'required|string|max:255',
             'estado' => 'required|string|max:100',
             'cep' => ['required', 'string', 'regex:/^\d{5}-\d{3}$/']
         ], [
             'cep.regex' => 'O CEP deve seguir o formato 00000-000.',
-            'numero.unique' => 'Este número já está cadastrado.'
         ]);
     }
 }

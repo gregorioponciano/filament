@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->string('rua');
-            $table->string('numero')->unique();
+            $table->string('numero');
             $table->string('complemento')->nullable();
             $table->string('bairro');
             $table->string('cidade');

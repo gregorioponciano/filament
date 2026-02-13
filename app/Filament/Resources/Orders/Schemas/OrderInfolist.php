@@ -25,6 +25,20 @@ class OrderInfolist
                 TextEntry::make('updated_at')
                     ->dateTime()
                     ->placeholder('-'),
+                TextEntry::make('rua')
+                    ->placeholder('-'),
+                TextEntry::make('numero')
+                    ->placeholder('-'),
+                TextEntry::make('complemento')
+                    ->placeholder('-'),
+                TextEntry::make('bairro')
+                    ->placeholder('-'),
+                TextEntry::make('cidade')
+                    ->placeholder('-'),
+                TextEntry::make('estado')
+                    ->placeholder('-'),
+                TextEntry::make('cep')
+                    ->placeholder('-'),
             ]);
     }
 }

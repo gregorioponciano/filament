@@ -13,6 +13,7 @@ use Filament\Forms\Components\{
     Select,
     FileUpload
 };
+use Illuminate\Support\Facades\Auth;
 
 class ProdutoForm
 {
@@ -32,7 +33,7 @@ class ProdutoForm
                             ->columnSpanFull(),
 
                         TextInput::make('slug')
-                            ->label('Slug')
+                            ->label('Slug exemplo(www.seusite.com/slug)')
                             ->required()
                             ->maxLength(255)
                             ->helperText('Gerado automaticamente')                                   
@@ -77,13 +78,15 @@ class ProdutoForm
                             ->searchable()
                             ->preload()
                             ->required(),
+
                         Select::make('user_id')
                             ->label('Responsável')
-                            ->relationship('user', 'name') // 'user' is the method in Produto model, 'name' is the column
-                            ->preload()
+                            ->relationship('user', 'name')
+                            ->disabled()
                             ->searchable()
+                            ->preload()
+                            ->default(fn () => Auth::id())  // 👈 preenche com o usuário logado
                             ->required(),
-
                     ]),
                 ]),
 

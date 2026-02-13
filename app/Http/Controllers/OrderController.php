@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Order;
 use App\Models\OrderItem;
+use App\Models\Produto;
 use Illuminate\Http\Request;
 use Darryldecode\Cart\Facades\CartFacade as Cart;
 use Illuminate\Support\Facades\Auth;
@@ -30,6 +31,14 @@ class OrderController extends Controller
             'endereco_id' => 'required|exists:enderecos,id',
         ]);
 
+        // 1. Verificar se há estoque suficiente para TODOS os itens antes de criar o pedido
+        foreach ($cartItems as $item) {
+            $produto = Produto::find($item->id);
+            if (!$produto || $produto->estoque < $item->quantity) {
+                return back()->with('erro', 'Estoque insuficiente para o produto: ' . $item->name . '. Restam apenas ' . ($produto->estoque ?? 0) . ' unidades.');
+            }
+        }
+
         $order = Order::create([
             'user_id' => $userId,
             'endereco_id' => $request->input('endereco_id'),
@@ -38,6 +47,10 @@ class OrderController extends Controller
         ]);
 
         foreach ($cartItems as $item) {
+            // 2. Baixar o estoque do produto no banco de dados
+            $produto = Produto::find($item->id);
+            $produto->decrement('estoque', $item->quantity);
+
             OrderItem::create([
                 'order_id' => $order->id,
                 'produto_id' => $item->id,

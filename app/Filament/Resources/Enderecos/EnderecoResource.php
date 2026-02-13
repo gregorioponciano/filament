@@ -20,7 +20,7 @@ class EnderecoResource extends Resource
 {
     protected static ?string $model = Endereco::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::MapPin;
 
     protected static ?string $recordTitleAttribute = 'Endereco';
 

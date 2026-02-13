@@ -33,7 +33,7 @@
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm">
                                 <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full {{ $order->status == 'concluido' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800' }}">
-                                    {{ ucfirst($order->status) }}
+                                    {{ ucfirst($order->status) }} {{-- ucfirst deixa a primeira letra maiuscula --}}
                                 </span>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
@@ -56,7 +56,9 @@
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
 
     @php
-        $favoritos = Auth::check() ? Auth::user()->favorites : collect([]);
+        $favoritos = Auth::check() ? Auth::user()->favorites()->whereHas('categoria', function ($query) {
+            $query->where('ativo', true);
+        })->get() : collect([]);
     @endphp
  <h2 class="text-2xl font-bold text-gray-800 mb-6">Meus Favoritos </h2>
     @if($favoritos->count() > 0)

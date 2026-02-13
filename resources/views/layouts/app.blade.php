@@ -11,10 +11,10 @@
 <style>
     :root {
 
-                    --bg-color: {{ $siteSetting->bg_color ?? '#F5F3FF' }};
-                    --primary-color: {{ $siteSetting->primary_color ?? '#FACC15' }};
+                    --bg-color: {{ $siteSetting->bg_color ?? '#C6B9FF' }};
+                    --primary-color: {{ $siteSetting->primary_color ?? '#FFFFFF' }};
                     --secondary-color: {{ $siteSetting->secondary_color ?? '#44474c' }};
-                    --card-primary: {{ $siteSetting->card_primary ?? '#212121' }};
+                    --card-primary: {{ $siteSetting->card_primary ?? '#00ffff' }};
                     --card-secondary: {{ $siteSetting->card_secondary ?? '#C4B5FD' }};
                     --link-primary: {{ $siteSetting->link_primary ?? '#ffff00' }};
                     --link-secondary: {{ $siteSetting->link_secondary ?? '#9333EA' }};
@@ -23,9 +23,9 @@
                     --h3-color: {{ $siteSetting->h3_color ?? '#ffff00' }};
                     --text-primary: {{ $siteSetting->text_primary ?? '#9e97a6' }};
                     --text-secondary: {{ $siteSetting->text_secondary ?? '#ffff00' }};
-                    --text-price: {{ $siteSetting->text_price ?? '#0ff000' }};
-                    --button-primary: {{ $siteSetting->button_primary ?? '#FACC15' }};
-                    --button-secondary: {{ $siteSetting->button_secondary ?? '#0ff000' }};
+                    --text-price: {{ $siteSetting->text_price ?? '#F9C704' }};
+                    --button-primary: {{ $siteSetting->button_primary ?? '#5550FE' }};
+                    --button-secondary: {{ $siteSetting->button_secondary ?? '#5550FE' }};
                     --input-primary: {{ $siteSetting->input_primary ?? '#ffff00' }};
                     --input-secondary: {{ $siteSetting->input_secondary ?? '#C4B5FD' }};
                     --hover-primary: {{ $siteSetting->hover_primary ?? '#EAB308' }};

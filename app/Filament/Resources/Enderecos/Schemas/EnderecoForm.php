@@ -20,6 +20,7 @@ class EnderecoForm
             Section::make('Vínculo')
                 ->schema([
                     Select::make('user_id')
+                        ->disabled()
                         ->label('Usuário')
                         ->relationship('user', 'name')
                         ->searchable()
