@@ -15,13 +15,14 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use UnitEnum;
 
 class EnderecoResource extends Resource
 {
     protected static ?string $model = Endereco::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::MapPin;
-
+    protected static string | UnitEnum | null $navigationGroup = 'Users';
     protected static ?string $recordTitleAttribute = 'Endereco';
 
     public static function form(Schema $schema): Schema

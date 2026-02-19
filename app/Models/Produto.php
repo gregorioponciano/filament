@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class Produto extends Model
@@ -31,6 +32,16 @@ class Produto extends Model
             'ativo' => 'boolean',
             'estoque' => 'integer',
         ];
+    }
+
+    protected static function booted(): void
+    {
+        static::creating(function (Produto $produto) {
+            // Define o user_id para o do usuário autenticado, se não estiver definido.
+            if (!$produto->user_id && Auth::check()) {
+                $produto->user_id = Auth::id();
+            }
+        });
     }
 
     public function categoria(): BelongsTo
@@ -67,5 +78,6 @@ class Produto extends Model
     {
         return $this->hasMany(Feedback::class);
     }
+
 
 }

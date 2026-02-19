@@ -31,9 +31,18 @@ class CarrinhoController extends Controller
 
         // Verificar estoque real no banco antes de adicionar
         $produto = Produto::find($request->id);
-        $quantidadeSolicitada = abs($request->input('estoque', 1)); // Nota: seu input se chama 'estoque', mas representa a quantidade
+        $quantidadeSolicitada = abs($request->input('estoque', 1));
 
-        if (!$produto || $produto->estoque < $quantidadeSolicitada) {
+        $itemNoCarrinho = Cart::session(Auth::id())->get($request->id);
+        $quantidadeJaNoCarrinho = $itemNoCarrinho ? $itemNoCarrinho->quantity : 0;
+
+        $quantidadeTotalDesejada = $quantidadeJaNoCarrinho + $quantidadeSolicitada;
+
+        if (!$produto || $produto->estoque < $quantidadeTotalDesejada) {
+            if ($quantidadeJaNoCarrinho > 0) {
+                $disponivel = $produto ? max(0, $produto->estoque - $quantidadeJaNoCarrinho) : 0;
+                return redirect()->back()->with('erro', 'Quantidade indisponível! Você já tem ' . $quantidadeJaNoCarrinho . ' no carrinho. Restam apenas ' . $disponivel . ' em estoque para este produto.');
+            }
             return redirect()->back()->with('erro', 'Quantidade indisponível! Temos apenas ' . ($produto->estoque ?? 0) . ' em estoque.');
         }
 

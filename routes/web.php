@@ -15,6 +15,8 @@ use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProdutoController;
 use App\Http\Controllers\SearchController;
+use App\Http\Controllers\Suporte\ShowSuportController;
+use App\Http\Controllers\Suporte\StoreSuportController;
 use App\Http\Controllers\User\DestroyProfileController;
 use App\Http\Controllers\User\EnderecoController;
 use App\Http\Controllers\User\UserDashboardController;
@@ -55,6 +57,8 @@ Route::put('/carrinho/atualizar', [CarrinhoController::class, 'atualizar'])->nam
 Route::post('/pedido', [OrderController::class, 'store'])->name('pedido.store')->middleware([Authenticate::class]);
 Route::get('/pedido/{order}', [OrderController::class, 'show'])->name('produtos.orders')->middleware([Authenticate::class]);
 Route::get('/meus-pedidos', [OrderController::class, 'index'])->name('orders.index')->middleware([Authenticate::class]);
+Route::put('/pedido/cancelar/{order}', [OrderController::class, 'cancelar'])->name('orders.cancelar')->middleware([Authenticate::class]);
+
 
 Route::post('/comments', [CommentController::class, 'store'])->name('comments.store')->middleware([Authenticate::class]);
 Route::put('/comments/{id}', [CommentController::class, 'update'])->name('comments.update')->middleware([Authenticate::class]);
@@ -67,5 +71,10 @@ Route::get('/favorites', [FavoriteController::class, 'index'])->name('favorites.
 Route::get('/produto/{id}/avaliar', [FeedbackController::class, 'create'])->name('feedback.create')->middleware([Authenticate::class]);
 Route::post('/feedback', [FeedbackController::class, 'store'])->name('feedback.store')->middleware([Authenticate::class]);
 
+
+Route::get('/suporte', [ShowSuportController::class, 'showSuporte'])->name('show.suporte')->middleware([Authenticate::class]);
+Route::post('/suporte', [StoreSuportController::class, 'storeSuporte'])->name('store.suporte')->middleware([Authenticate::class]);
+Route::get('/suporte/chamados', [ShowSuportController::class, 'showChamados'])->name('suporte.chamados')->middleware([Authenticate::class]);
+Route::get('/suporte/chamados/{suporte}', [ShowSuportController::class, 'showChamadoDetalhes'])->name('suporte.detalhes')->middleware([Authenticate::class]);
 
             // Rotas para administradores

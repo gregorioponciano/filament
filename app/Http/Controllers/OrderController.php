@@ -80,4 +80,12 @@ class OrderController extends Controller
 
         return view('produtos.my_orders', compact('orders'));
     }
+
+    public function cancelar(Order $order)
+    {
+        $order->status = 'cancelado';
+        $order->save();
+
+        return redirect()->route('orders.index')->with('aviso', 'Pedido cancelado!');
+    }
 }

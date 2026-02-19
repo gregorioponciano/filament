@@ -15,13 +15,14 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use UnitEnum;
 
 class CustomizationResource extends Resource
 {
     protected static ?string $model = Customization::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::AdjustmentsHorizontal;
-
+     protected static string | UnitEnum | null $navigationGroup = 'Configurações';
     protected static ?string $recordTitleAttribute = 'Customization';
 
     public static function form(Schema $schema): Schema

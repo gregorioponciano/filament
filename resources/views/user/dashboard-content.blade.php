@@ -6,18 +6,20 @@
 
       <!-- Slide 1 -->
       <div class="min-w-full px-2">
-        <div class="relative overflow-hidden rounded-2xl bg-gradient-to-r from-yellow-500 via-black to-blue-500 p-1 shadow-xl">
-          <div class="rounded-2xl bg-white p-8 text-center">
-            <blockquote class="text-2xl font-semibold italic text-black md:text-3xl">
-              Seja Bem Vindo a
-              <span class="relative inline-block">
-                <span class="absolute -inset-1 -skew-y-3 bg-yellow-500"></span>
-                <span class="relative text-black">Loja</span>
-              </span>
-            </blockquote>
+          <a href="{{ route('user.dashboard') }}">
+          <div class="relative overflow-hidden rounded-2xl bg-gradient-to-r from-yellow-500 via-black to-blue-500 p-1 shadow-xl">
+            <div class="rounded-2xl bg-white p-8 text-center">
+              <blockquote class="text-2xl font-semibold italic text-black md:text-3xl">
+                Seja Bem Vindo a
+                <span class="relative inline-block">
+                  <span class="absolute -inset-1 -skew-y-3 bg-yellow-500"></span>
+                  <span class="relative text-black">Loja</span>
+                </span>
+              </blockquote>
+            </div>
           </div>
+        </a>
         </div>
-      </div>
 
       <!-- Slide 2 -->
       <div class="min-w-full px-2">

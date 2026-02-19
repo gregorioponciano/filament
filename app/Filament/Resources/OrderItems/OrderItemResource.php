@@ -15,13 +15,14 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use UnitEnum;
 
 class OrderItemResource extends Resource
 {
     protected static ?string $model = OrderItem::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::ShoppingCart;
-
+    protected static string | UnitEnum | null $navigationGroup = 'Pedidos';
     protected static ?string $recordTitleAttribute = 'OrderItem';
 
     public static function form(Schema $schema): Schema

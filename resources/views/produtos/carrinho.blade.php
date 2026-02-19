@@ -88,6 +88,11 @@
                             <p class="mt-1 font-bold text-gray-900">
                                 R$ {{ number_format($item->price, 2, ',', '.') }}
                             </p>
+                                                            @if ($item->quantity > 0)
+    <div class="alert alert-info" role="alert">
+         <strong>{{ $item->quantity }}</strong> unidade(s)
+    </div>
+@endif
                         </div>
 
                         {{-- AÇÕES --}}
@@ -154,6 +159,7 @@
                             <th class="p-4"></th>
                             <th class="p-4 text-left">Produto</th>
                             <th class="p-4 text-left">Preço</th>
+                            <th class="p-4 text-left">Estoque</th>
                             <th class="p-4 text-left">Quantidade</th>
                             <th class="p-4"></th>
                         </tr>
@@ -178,6 +184,16 @@
                                 <td class="p-4 font-semibold text-gray-700">
                                     R$ {{ number_format($item->price, 2, ',', '.') }}
                                 </td>
+
+                                <td>
+                                    @if ($item->quantity > 0)
+                                                                    
+    <div class="p-4 font-semibold text-gray-700" role="alert">
+         <strong>{{ $item->quantity }}</strong> unidade(s)
+    </div>
+@endif
+                                </td>
+
 
                                 <td class="p-4">
                                     <form

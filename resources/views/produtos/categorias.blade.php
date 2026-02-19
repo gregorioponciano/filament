@@ -64,9 +64,14 @@
               {{ \Illuminate\Support\Str::limit($produto->descricao, 60) }}
             </p>
             
-            <p class="text-xl font-bold text-text-price">
-              R$ {{ number_format($produto->preco, 2, ',', '.') }}
-            </p>
+            <div class="flex flex-row items-center justify-between gap-4">
+              <p class="text-xl font-bold text-text-price">
+                R$ {{ number_format($produto->preco, 2, ',', '.') }}
+              </p>
+              <p class="">
+                {{$produto->estoque}} unidades
+              </p>
+            </div>
 
             <div class="flex items-center justify-between mt-auto pt-4 border-t border-gray-100">
                 <a href="{{ route('show.detalhes', $produto->slug) }}"class="rounded-lg bg-button-secondary px-4 py-2.5 hover:bg-hover-secondary transition cursor-pointer" title="Adicionar ao Carrinho">Detalhes</a>

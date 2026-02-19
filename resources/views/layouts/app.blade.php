@@ -14,7 +14,7 @@
                     --bg-color: {{ $siteSetting->bg_color ?? '#C6B9FF' }};
                     --primary-color: {{ $siteSetting->primary_color ?? '#FFFFFF' }};
                     --secondary-color: {{ $siteSetting->secondary_color ?? '#44474c' }};
-                    --card-primary: {{ $siteSetting->card_primary ?? '#00ffff' }};
+                    --card-primary: {{ $siteSetting->card_primary ?? '#6a7283' }};
                     --card-secondary: {{ $siteSetting->card_secondary ?? '#C4B5FD' }};
                     --link-primary: {{ $siteSetting->link_primary ?? '#ffff00' }};
                     --link-secondary: {{ $siteSetting->link_secondary ?? '#9333EA' }};
@@ -28,8 +28,8 @@
                     --button-secondary: {{ $siteSetting->button_secondary ?? '#5550FE' }};
                     --input-primary: {{ $siteSetting->input_primary ?? '#ffff00' }};
                     --input-secondary: {{ $siteSetting->input_secondary ?? '#C4B5FD' }};
-                    --hover-primary: {{ $siteSetting->hover_primary ?? '#EAB308' }};
-                    --hover-secondary: {{ $siteSetting->hover_secondary ?? '#0faa00' }};
+                    --hover-primary: {{ $siteSetting->hover_primary ?? '#18a63d' }};
+                    --hover-secondary: {{ $siteSetting->hover_secondary ?? '#EAB308' }};
                     --border-primary: {{ $siteSetting->border_primary ?? '#E5E7EB' }};
                     --border-secondary: {{ $siteSetting->border_secondary ?? '#C4B5FD' }};
                     --footer-color: {{ $siteSetting->footer_color ?? '#2E1065' }};

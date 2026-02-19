@@ -7,11 +7,17 @@
 @include('user.dashboard-content')
 <div class="mx-auto max-w-6xl px-4 py-6">
         @if ($mensagem = Session::get('aviso'))
-        <div class="mb-6 rounded-2xl border border-green-200 bg-red-500 p-5 text-green-800 shadow-sm">
+        <div class="mb-6 rounded-2xl border border-green-200 bg-red-100 p-5 text-red-800 shadow-sm">
             <h3 class="text-lg font-semibold">Error</h3>
             <p class="mt-1 text-sm">{{ $mensagem }}</p>
         </div>
     @endif
+    @if (session('erro'))
+    <div class="mb-6 rounded-2xl border border-green-200 bg-red-100 p-5 text-red-800 shadow-sm" role="alert">
+        {{ session('erro') }}
+    </div>
+@endif
+
     <div class="grid grid-cols-1 gap-8 md:grid-cols-2">
 
         {{-- Imagem --}}
@@ -25,20 +31,24 @@
     </div>
 
         {{-- Conteúdo --}}
-        <div class="flex flex-col gap-4 border border-border-primary  rounded-2xl p-4">
+        <div class="flex flex-col gap-4 border border-border-gray-600 bg-gray-500 rounded-2xl p-4">
 
             {{-- Voltar --}}
-            <a
-                href="{{ url('/user') }}"
-                class="flex items-center text-blue-300  hover:text-blue-400 transition h-12 w-8"
-            >
-                <span style="font-size: 32px;" class="material-symbols-outlined">
-                    arrow_circle_left
-                </span>
-            </a>
+            <div class="flex align-center justify-between">
+                <a href="{{ url('/user') }}"
+                   class="group flex items-center gap-2 rounded-xl border border-gray-200 bg-gray-50 px-3 py-2 text-sm font-semibold text-gray-600 hover:bg-gray-100 hover:text-gray-900 transition">
+                    <span class="material-symbols-outlined text-2xl transition group-hover:-translate-x-0.5">
+                        arrow_circle_left
+                    </span>
+                    Voltar
+                </a>
+                              <p class="">
+                   estoque ({{$produto->estoque}})
+                  </p>
+            </div>
             {{-- Categoria --}}
             <div class="mb-2 flex items-center justify-between">
-                <span class="w-fit rounded-full bg-blue-100 px-3 py-1 text-xs font-semibold text-blue-600">
+                <span class="group flex items-center gap-2 rounded-xl border border-gray-200 bg-gray-50 px-3 py-2 text-sm font-semibold text-blue-600 hover:bg-gray-100  transition">
                     {{ $produto->categoria->nome ?? 'Categoria' }}
                 </span>
                 <form action="{{ route('favorites.toggle') }}" method="POST" class="inline-flex">
@@ -106,7 +116,11 @@
                 >
                     +
                 </button>
-
+                @if ($quantidadeNoCarrinho > 0)
+                    <div class="alert alert-info" role="alert">
+                        <strong>{{ $quantidadeNoCarrinho }}</strong> unidade(s) no carrinho
+                    </div>
+                @endif
                 </div>
 
 
@@ -196,7 +210,7 @@
     @auth
         <div
             x-data="{ content: '' }"
-            class="mb-8 rounded-2xl border border-gray-500 bg-card-primary p-6 shadow-sm"
+            class="mb-8 rounded-2xl border border-gray-500 bg-card-primary p-4 md:p-6 shadow-sm max-w-full overflow-hidden"
         >
             <h3 class="mb-4 text-lg font-semibold text-text-primary">
                 Deixe seu comentário
@@ -212,7 +226,9 @@
                     rows="3"
                     x-model="content"
                     placeholder="O que você achou deste produto?"
-                    class="w-full resize-none rounded-xl border border-gray-400 bg-gray-50 p-3 text-gray-900 focus:border-button-primary focus:ring focus:ring-button-primary/40"
+                    class="w-full resize-none rounded-xl border border-gray-400 bg-gray-50 p-3 text-gray-900
+                           break-words whitespace-pre-wrap
+                           focus:border-button-primary focus:ring focus:ring-button-primary/40"
                     required
                 ></textarea>
 
@@ -241,13 +257,13 @@
     @endauth
 
     {{-- Lista de Comentários --}}
-    <div class="space-y-6">
+    <div class="space-y-6 max-w-full overflow-x-hidden">
         @forelse($produto->comments as $comment)
             <div
                 x-data="{ edit: false, text: '{{ addslashes($comment->content) }}' }"
-                class="rounded-2xl border border-gray-500 bg-card-primary p-6 shadow-sm"
+                class="rounded-2xl border border-gray-500 bg-card-primary p-4 md:p-6 shadow-sm max-w-full overflow-hidden"
             >
-                <div class="mb-4 flex items-start justify-between gap-4">
+                <div class="mb-2 flex  flex-flow-row items-center justify-between gap-4">
                     <div class="flex items-center gap-3">
                         <div class="flex h-10 w-10 items-center justify-center rounded-full bg-gray-200 font-bold text-gray-600">
                             {{ substr($comment->user->name ?? 'A', 0, 1) }}
@@ -256,115 +272,98 @@
                             <h4 class="font-semibold text-text-primary">
                                 {{ $comment->user->name ?? 'Usuário' }}
                             </h4>
-                            <span class="text-xs text-text-primary/60">
+                            <span class="text-xs text-text-primary">
                                 {{ $comment->created_at->diffForHumans() }}
                             </span>
                         </div>
                     </div>
                     
-                    <div    class="flex items-center justify-end gap-4 w-200">
-                    <form method="POST" action="{{ route('comments.vote', $comment->id) }}">
-                        @csrf
-                        <input type="hidden" name="vote" value="1">
+                    {{-- Botões --}}
+                    <div class="flex flex-wrap items-center justify-end gap-3 max-w-full">
+                        <form method="POST" action="{{ route('comments.vote', $comment->id) }}">
+                            @csrf
+                            <input type="hidden" name="vote" value="1">
+                            <button type="submit"
+                                class="flex items-center gap-1 transition
+                                {{ $comment->userVote() === 1 ? 'text-blue-600' : 'text-gray-400 hover:text-blue-500' }}">
+                                <span class="material-symbols-outlined">thumb_up</span>
+                                <span class="text-sm">{{ $comment->likesCount() }}</span>
+                            </button>
+                        </form>
 
-                        <button
-                            type="submit"
-                            class="flex items-center gap-1 transition
-                            {{ $comment->userVote() === 1 ? 'text-blue-600' : 'text-gray-400 hover:text-blue-500' }}"
-                        >
-                            <span class="material-symbols-outlined">thumb_up</span>
-                            <span class="text-sm">{{ $comment->likesCount() }}</span>
-                        </button>
-                    </form>
-                    <form method="POST" action="{{ route('comments.vote', $comment->id) }}">
-                        @csrf
-                        <input type="hidden" name="vote" value="-1">
+                        <form method="POST" action="{{ route('comments.vote', $comment->id) }}">
+                            @csrf
+                            <input type="hidden" name="vote" value="-1">
+                            <button type="submit"
+                                class="flex items-center gap-1 transition
+                                {{ $comment->userVote() === -1 ? 'text-red-600' : 'text-gray-400 hover:text-red-500' }}">
+                                <span class="material-symbols-outlined">thumb_down</span>
+                                <span class="text-sm">{{ $comment->dislikesCount() }}</span>
+                            </button>
+                        </form>
 
-                        <button
-                            type="submit"
-                            class="flex items-center gap-1 transition
-                            {{ $comment->userVote() === -1 ? 'text-red-600' : 'text-gray-400 hover:text-red-500' }}"
-                        >
-                            <span class="material-symbols-outlined">thumb_down</span>
-                            <span class="text-sm">{{ $comment->dislikesCount() }}</span>
-                        </button>
-                    </form>
-                    </div>
-                    @if(Auth::id() === $comment->user_id)
-                    <div class="flex items-center gap-3">
-
-
-                            <form
-                                action="{{ route('comments.destroy', $comment->id) }}"
-                                method="POST"
-                                onsubmit="return confirm('Deseja excluir este comentário?')"
-                            >
+                        @if(Auth::id() === $comment->user_id)
+                            <form action="{{ route('comments.destroy', $comment->id) }}" method="POST"
+                                  onsubmit="return confirm('Deseja excluir este comentário?')">
                                 @csrf
                                 @method('DELETE')
-                                <button
-                                    type="submit"
-                                    class="text-gray-400 hover:text-red-500 transition"
-                                    title="Excluir"
-                                >
+                                <button type="submit" class="text-gray-400 hover:text-red-500 transition" title="Excluir">
                                     <span class="material-symbols-outlined">delete</span>
                                 </button>
                             </form>
-                        </div>
-                    @endif
+                        @endif
+                    </div>
                 </div>
-{{-- Visualização / Clique para editar --}}
-<p
-    x-show="!edit"
-    @if(Auth::id() === $comment->user_id)
-        @click="edit = true"
-        class="cursor-pointer leading-relaxed text-text-primary/90 hover:bg-gray-100 rounded-lg p-2 transition"
-        title="Clique para editar"
-    @else
-        class="leading-relaxed text-text-primary/90"
-    @endif
->
-    {{ $comment->content }}
-</p>
 
-{{-- Edição inline --}}
-@if(Auth::id() === $comment->user_id)
-    <form
-        x-show="edit"
-        x-transition
-        action="{{ route('comments.update', $comment->id) }}"
-        method="POST"
-        class="space-y-3"
-    >
-        @csrf
-        @method('PUT')
+                {{-- Visualização --}}
+                <p
+                    x-show="!edit"
+                    @if(Auth::id() === $comment->user_id)
+                        @click="edit = true"
+                        class="cursor-pointer leading-relaxed text-text-primary/90 hover:border-b p-2 transition
+                               break-words whitespace-pre-wrap max-w-full overflow-hidden"
+                        title="Clique para editar"
+                    @else
+                        class="leading-relaxed text-text-primary/90 break-words whitespace-pre-wrap max-w-full overflow-hidden"
+                    @endif
+                >
+                    {{ $comment->content }}
+                </p>
 
-        <textarea
-            name="content"
-            x-model="text"
-            rows="3"
-            class="w-full resize-none rounded-xl border border-gray-400 p-3 focus:ring focus:ring-blue-400/40"
-            required
-        ></textarea>
+                {{-- Edição inline --}}
+                @if(Auth::id() === $comment->user_id)
+                    <form
+                        x-show="edit"
+                        x-transition
+                        action="{{ route('comments.update', $comment->id) }}"
+                        method="POST"
+                        class="space-y-3"
+                    >
+                        @csrf
+                        @method('PUT')
 
-        <div class="flex justify-end gap-3">
-            <button
-                type="button"
-                @click="edit = false"
-                class="text-sm text-gray-500 hover:text-gray-700"
-            >
-                Cancelar
-            </button>
+                        <textarea
+                            name="content"
+                            x-model="text"
+                            rows="4"
+                            class="w-full resize-none break-words whitespace-pre-wrap rounded-lg border border-gray-300 p-2
+                                   focus:ring-2 focus:ring-blue-500 outline-none"
+                            required
+                        ></textarea>
 
-            <button
-                type="submit"
-                class="rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-700"
-            >
-                Salvar
-            </button>
-        </div>
-    </form>
-@endif
+                        <div class="flex justify-end gap-3">
+                            <button type="button" @click="edit = false"
+                                    class="text-sm text-gray-500 hover:text-gray-700">
+                                Cancelar
+                            </button>
 
+                            <button type="submit"
+                                    class="rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-700">
+                                Salvar
+                            </button>
+                        </div>
+                    </form>
+                @endif
             </div>
         @empty
             <p class="py-8 text-center italic text-text-primary/60">
