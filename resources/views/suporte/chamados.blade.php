@@ -18,11 +18,11 @@
             </div>
         </div>
     @endif
-    <p class="mb-4 text-center w-full  text-gray-600 text-xl font-bold">Acompanhe os seus pedidos de ajuda.</p>
+    <p class="mb-4 text-center mx-auto text-gray-500 text-2xl">Acompanhe os seus pedidos de ajuda.</p>
             {{-- Topo / Navegação --}}
         <div class=" flex flex-row items-center justify-between gap-3 rounded-2xl border border-gray-200 bg-white p-4 shadow-sm sm:flex-row sm:items-center sm:justify-between">
             <a href="{{ route('show.suporte') }}"
-                class="group flex items-center gap-2 rounded-xl border border-gray-200 bg-gray-50 px-3 py-2 text-sm font-semibold text-gray-600 hover:bg-gray-100 hover:text-gray-900 transition">
+                class="group flex items-center gap-2 rounded-xl border border-gray-200 bg-gray-50 px-4 py-2.5 text-sm font-semibold text-gray-600 hover:bg-gray-100 hover:text-gray-900 transition">
                 <span class="material-symbols-outlined text-2xl transition group-hover:-translate-x-0.5">
                     arrow_circle_left
                 </span>

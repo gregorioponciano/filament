@@ -5,21 +5,27 @@
 @source '../**/*.blade.php';
 @source '../**/*.js';
 
-@theme {
-                --color-bg: var(--bg-color);
+@theme { 
+                --color-bg-primary: var(--bg-primary);
+                --color-bg-secondary: var(--bg-secondary);
                 --color-primary: var(--primary-color);
                 --color-secondary: var(--secondary-color);
+                --color-menu-primary: var(--menu-primary); 
+                --color-menu-secondary: var(--menu-secondary);
                 --color-card-primary: var(--card-primary);
                 --color-card-secondary: var(--card-secondary);
                 --color-link-primary: var(--link-primary);
                 --color-link-secondary: var(--link-secondary);
-                --color-h1: var(--h1-color);
-                --color-h2: var(--h2-color);
-                --color-h3: var(--h3-color);
+                --color-h1-primary: var(--h1-primary);
+                --color-h1-secondary: var(--h1-secondary);
+                --color-h2-primary: var(--h2-primary);
+                --color-h2-secondary: var(--h2-secondary);
+                --color-h3-primary: var(--h3-primary);
+                --color-h3-secondary: var(--h3-secondary);
                 --color-text-primary: var(--text-primary);
                 --color-text-secondary: var(--text-secondary);
-                --color-text-price: var(--text-price);
-                --color-button-primary: var(--button-primary);
+                --color-price-primary: var(--price-primary);
+                --color-price-secondary: var(--price-secondary);
                 --color-button-primary: var(--button-primary);
                 --color-button-secondary: var(--button-secondary);
                 --Color-input-primary: var(--input-primary);

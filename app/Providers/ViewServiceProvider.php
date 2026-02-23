@@ -45,13 +45,15 @@ class ViewServiceProvider extends ServiceProvider
         });
 
         // Correção: Injeta produtos apenas no dashboard do usuário.
-        // Isso resolve o erro da página user.dashboard sem quebrar a listagem de categorias.
+                // Isso resolve o erro da página user.dashboard sem quebrar a listagem de categorias.
         View::composer('user.dashboard', function ($view) {
-            $view->with('produtos', Produto::where('ativo', true)
-                ->whereHas('categoria', function ($query) {
-                    $query->where('ativo', true);
-                })
-                ->paginate(9));
+            if (! request()->routeIs('search')) {
+                $view->with('produtos', Produto::where('ativo', true)
+                    ->whereHas('categoria', function ($query) {
+                        $query->where('ativo', true);
+                    })
+                    ->paginate(9));
+            }
         });
     }
 }

@@ -66,7 +66,10 @@ class CarrinhoController extends Controller
     public function showCarrinho()
     {
         $itens = Cart::session(Auth::id())->getContent();
-        return view('produtos.carrinho', compact('itens'));
+        // Busca os produtos no banco baseados nos IDs do carrinho para ter acesso ao estoque atualizado
+        $produtos = Produto::whereIn('id', $itens->pluck('id'))->get();
+        
+        return view('produtos.carrinho', compact('itens', 'produtos'));
     }
 
 
@@ -100,7 +103,8 @@ class CarrinhoController extends Controller
                 'value' => abs($request->estoque),
             ],
         ]);
-              return redirect()->route('show.carrinho')->with('sucesso', 'Produto atualizado ao carrinho!');
+        
+        return redirect()->route('show.carrinho')->with('sucesso', 'Produto atualizado ao carrinho!');
     }
 
 }

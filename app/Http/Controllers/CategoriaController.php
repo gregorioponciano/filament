@@ -11,9 +11,11 @@ class CategoriaController extends Controller
     public function showCategorias($slug)
     {
         $categoria = Categoria::where('slug', $slug)->where('ativo', true)->firstOrFail();
-        $produtos = Produto::where('categoria_id', $categoria->id)->paginate(4);
+        $produtos = Produto::where('categoria_id', $categoria->id)->paginate(9);
+            // Total de produtos na categoria
+    $totalProdutos = $categoria->produtos()->count();
 
 
-        return view('produtos.categorias', compact('produtos', 'categoria'));
+        return view('produtos.categorias', compact('produtos', 'categoria', 'totalProdutos'));
     }
 }

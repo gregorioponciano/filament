@@ -6,10 +6,12 @@
 @include('user.dashboard-content')
 
 <div class="mx-auto max-w-4xl px-4 py-8 sm:px-6 lg:px-8">
+     <p class="mb-4 text-center mx-auto text-gray-500 text-2xl">Detalhes do seu pedidos de ajuda.</p>
+     <p>#{{ $suporte->id }}</p>
      {{-- Topo / Navegação --}}
         <div class=" flex flex-row items-center justify-between gap-3 rounded-2xl border border-gray-200 bg-white p-4 shadow-sm sm:flex-row sm:items-center sm:justify-between mb-4">
             <a href="{{ url('/suporte') }}"
-                class="group flex items-center gap-2 rounded-xl border border-gray-200 bg-gray-50 px-3 py-2 text-sm font-semibold text-gray-600 hover:bg-gray-100 hover:text-gray-900 transition">
+                class="group flex items-center gap-2 rounded-xl border border-gray-200 bg-gray-50 px-4 py-2.5 text-sm font-semibold text-gray-600 hover:bg-gray-100 hover:text-gray-900 transition">
                 <span class="material-symbols-outlined text-2xl transition group-hover:-translate-x-0.5">
                     arrow_circle_left
                 </span>

@@ -1,104 +1,104 @@
 @extends('layouts.app')
 @section('title', 'Dashboard')
 @section('content')
+ 
+<section class="box-border">
+    <header class="bg-white shadow-sm sticky top-0 z-40">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 ">
+            <div class="flex h-16 items-center justify-between gap-4 ">
 
-<section class="box-border z-0">
-<header class="bg-primary shadow-sm sticky top-0 z-40">
-<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-<div class="flex h-16 items-center justify-between gap-4">
+                {{-- Logo --}}
+                <div id="mobileMenuBtn" class="flex items-center gap-3 shrink-0 cursor-pointer md:cursor-default">
+                    <img 
+                        src="{{ asset('storage/' . $customizations->imagem) }}" 
+                        alt="{{ $customizations->nome }}"
+                        class="w-30 h-auto hover:scale-125 object-cover transition group-hover:scale-110"
+                    />
+                </div>
 
-{{-- Logo --}}
-<div id="mobileMenuBtn" class="flex items-center gap-3 shrink-0 cursor-pointer md:cursor-default">
-    <img 
-        src="{{ asset('storage/' . $customizations->imagem) }}" 
-        alt="{{ $customizations->nome }}"
-        class="w-30 h-auto hover:scale-125 object-cover transition group-hover:scale-110"
-    />
-</div>
+                <a href="{{ route('show.carrinho') }}"
+                class="bg-blue-600 rounded-full h-12 w-12 flex items-center justify-center text-white fixed bottom-10 right-5 cursor-pointer hover:bg-blue-700 transition z-50 ">
+                    <span class="material-symbols-outlined">shopping_cart</span>
+                    <p class="fixed bottom-18 right-3 bg-blue-600 rounded-full h-8 w-8 flex items-center justify-center text-white">
+                        {{ $itens->sum('quantity') }}
+                    </p>
+                </a>
 
-<a href="{{ route('show.carrinho') }}"
-   class="bg-secondary rounded-full h-12 w-12 flex items-center justify-center text-white fixed bottom-10 right-5 cursor-pointer hover:bg-blue-700 transition z-50 ">
-    <span class="material-symbols-outlined">shopping_cart</span>
-    <p class="fixed bottom-18 right-3 bg-secondary rounded-full h-8 w-8 flex items-center justify-center text-white">
-        {{ $itens->sum('quantity') }}
-    </p>
-</a>
+                {{-- Search & Categories --}}
+                <div class="flex flex-1 items-center gap-2 w-full md:max-w-2xl">
+                <div class="relative">
 
-{{-- Search & Categories --}}
-<div class="flex flex-1 items-center gap-2 w-full md:max-w-2xl">
-<div class="relative">
+                {{-- BOTÃO DESKTOP --}}
+                <div class="hidden md:flex items-center
+                    transition-all whitespace-nowrap">
 
-{{-- BOTÃO DESKTOP --}}
-<div class="hidden md:flex items-center
-     transition-all whitespace-nowrap">
+                    <a href="{{ Route('user.dashboard') }}"
+                    class="flex items-center px-4 text-xl text-gray-700">
+                        <span class="material-symbols-outlined">home</span>
+                        Inicio
+                    </a>
 
-    <a href="{{ Route('user.dashboard') }}"
-       class="flex items-center px-4 text-xl text-gray-700">
-        <span class="material-symbols-outlined">home</span>
-        Inicio
-    </a>
+                    <button class="active:text-blue-500 h-10">
+                        <svg id="categoryBtn" class="size-6 cursor-pointer h-10" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd"
+                                d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z"
+                                clip-rule="evenodd"/>
+                        </svg>
+                    </button>
+                </div>
 
-    <button class="active:text-blue-500 h-10">
-        <svg id="categoryBtn" class="size-6 cursor-pointer h-10" viewBox="0 0 20 20" fill="currentColor">
-            <path fill-rule="evenodd"
-                  d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z"
-                  clip-rule="evenodd"/>
-        </svg>
-    </button>
-</div>
+            {{-- DROPDOWN --}}
+                <div id="categoryDropdown"
+                class="hidden fixed left-0 top-16 h-[calc(100vh-4rem)] w-64
+                    bg-white shadow-2xl z-50 overflow-y-auto
+                    md:absolute md:h-auto md:top-full md:mt-2 md:w-56
+                    md:rounded-xl md:shadow-lg md:ring-1 md:ring-black/5
+                    transition-all duration-300 ease-out
+                    origin-top-left
+                    -translate-x-full opacity-0
+                    md:translate-x-0 md:opacity-0 md:scale-95 md:-translate-y-2">
 
-{{-- DROPDOWN --}}
-<div id="categoryDropdown"
-     class="hidden fixed left-0 top-16 h-[calc(100vh-4rem)] w-64
-            bg-primary shadow-2xl z-50 overflow-y-auto
-            md:absolute md:h-auto md:top-full md:mt-2 md:w-56
-            md:rounded-xl md:shadow-lg md:ring-1 md:ring-black/5
-            transition-all duration-300 ease-out
-            origin-top-left
-            -translate-x-full opacity-0
-            md:translate-x-0 md:opacity-0 md:scale-95 md:-translate-y-2">
+                <div class="max-h-100 overflow-y-auto py-2">
 
-<div class="max-h-100 overflow-y-auto py-2">
-
-    <hr class="md:hidden mb-3">
-{{-- INÍCIO → SOMENTE MOBILE --}}
-<a href="{{ Route('user.dashboard') }}"
-   class="flex items-center gap-8 px-2 py-2 m-2 rounded-xl text-gray-700
-          hover:bg-hover-primary transition
-          md:hidden">
-    <span class="material-symbols-outlined">home</span>
-    Inicio
-</a>
+                <hr class="md:hidden mb-3">
+                    {{-- INÍCIO → SOMENTE MOBILE --}}
+                <a href="{{ Route('user.dashboard') }}"
+                class="flex items-center gap-8 px-2 py-2 m-2 rounded-xl text-gray-700
+                        hover:bg-hover-primary transition
+                        md:hidden">
+                    <span class="material-symbols-outlined">home</span>
+                    Inicio
+                </a>
 
 
-<a href="{{ Route('favorites.index') }}"
-   class="flex items-center gap-8  px-2 py-2 m-2 rounded-xl text-gray-700 hover:bg-hover-primary transition">
-    <span class="material-symbols-outlined">favorite</span>
-    Favoritos
-</a>
+                <a href="{{ Route('favorites.index') }}"
+                class="flex items-center gap-8  px-2 py-2 m-2 rounded-xl text-gray-700 hover:bg-hover-primary transition">
+                    <span class="material-symbols-outlined">favorite</span>
+                    Favoritos
+                </a>
 
 @php
 $icones = [
     'camisetas' => 'apparel',
-    'blusas' => 'face_5',
-    'bone' => 'face_5',
-    'casacos' => 'face_5',
+    'blusas' => 'apparel',
+    'bone' => 'child_hat',
+    'casacos' => 'apparel',
     'shorts' => 'steps',
 ];
 @endphp
 
-@foreach ($categorias as $categoria)
-<a href="{{ route('show.categorias', $categoria->slug) }}"
-   class="flex items-center gap-8 px-2 py-2 m-2 rounded-xl text-gray-700 hover:bg-hover-primary  transition-200">
-    <span class="material-symbols-outlined">
-        {{ $icones[$categoria->slug] ?? $categoria->icone ?? 'category' }}
-    </span>
-    {{ $categoria->nome }}
-</a>
-@endforeach
-                            </div>
-                        </div>
-                    </div>
+                @foreach ($categorias as $categoria)
+                <a href="{{ route('show.categorias', $categoria->slug) }}"
+                class="flex items-center gap-8 px-2 py-2 m-2 rounded-xl text-gray-700 hover:bg-hover-primary  transition-200">
+                    <span class="material-symbols-outlined">
+                        {{ $icones[$categoria->slug] ?? $categoria->icone ?? 'category' }}
+                    </span>
+                    {{ $categoria->nome }}
+                </a>
+                @endforeach
+                </div>
+            </div>
+        </div>
 
                     <form
                     action="{{ route('search') }}"
@@ -154,7 +154,7 @@ $icones = [
                         <div class="">
                             <a href="{{ route('orders.index') }}" class="flex items-center px-4 py-2 m-2 text-sm hover:bg-hover-primary rounded-xl transition">
                                 <span class="material-symbols-outlined">
-                                hand_package
+                                delivery_truck_speed
                                 </span>
                                 <p>Pedidos</p>
                             </a>
@@ -170,27 +170,27 @@ $icones = [
                                 </span>
                                 Notificações</a>
                             <a href="{{ route('show.suporte') }}" class="flex items-center px-4 py-2 m-2 text-sm hover:bg-hover-primary rounded-xl transition">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M18 18.72a9.094 9.094 0 0 0 3.741-.479 3 3 0 0 0-4.682-2.72m.94 3.198.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0 1 12 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 0 1 6 18.719m12 0a5.971 5.971 0 0 0-.941-3.197m0 0A5.995 5.995 0 0 0 12 12.75a5.995 5.995 0 0 0-5.058 2.772m0 0a3 3 0 0 0-4.681 2.72 8.986 8.986 0 0 0 3.74.477m.94-3.197a5.971 5.971 0 0 0-.94 3.197M15 6.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm6 3a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Zm-13.5 0a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Z" />
-                                </svg>
+                                <span class="material-symbols-outlined">
+                                group
+                                </span>
                                 Suporte</a>
                         </div>
 
-                        <div class="m-2 flex items-center justify-baseline">
-                            <form action="{{ route('store.logout') }}" method="POST">
-                                @csrf
-                                <button class="px-4 py-2 w-50 cursor-pointer  hover:text-hover-primary text-left transition">
-                                    Sair
-                                </button>
+                            <div class="m-2 flex items-center justify-baseline">
+                                <form action="{{ route('store.logout') }}" method="POST">
+                                    @csrf
+                                    <button class="px-4 py-2 w-50 cursor-pointer  hover:text-hover-primary text-left transition">
+                                        Sair
+                                    </button>
 
-                            </form>
+                                </form>
+                            </div>
                         </div>
+                        
                     </div>
-                    
                 </div>
             </div>
         </div>
-    </div>
     </header>
     @yield('dashboard')
     
@@ -201,6 +201,7 @@ $icones = [
 </section>
 
 <script>
+    //menu hamburguer mobile
 document.addEventListener('DOMContentLoaded', () => {
     const openDropdown = (el) => {
         el.classList.remove('hidden');
@@ -285,7 +286,7 @@ document.addEventListener('DOMContentLoaded', () => {
         
     });
 
-    // Busca automática de CEP via API (ViaCEP)
+    // Busca automática de CEP via API (ViaCEP) user/profile --modal
     const cepInput = document.getElementById('cep');
     if (cepInput) {
         cepInput.addEventListener('blur', function() {

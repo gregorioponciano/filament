@@ -4,15 +4,27 @@
 @section('dashboard')
 @include('user.dashboard-content')
 
-<div class="mx-auto max-w-7xl px-4 py-6">
+<div class="mx-auto max-w-7xl px-4 ">
 
-    {{-- ALERTAS --}}
-    @if ($mensagem = Session::get('sucesso'))
-        <div class="mb-6 rounded-2xl border border-green-200 bg-green-50 p-5 text-green-800 shadow-sm">
-            <h3 class="text-lg font-semibold">✅ Parabéns!</h3>
-            <p class="mt-1 text-sm">{{ $mensagem }}</p>
-        </div>
-    @endif
+{{-- ALERTA FLUTUANTE --}}
+@if ($mensagem = Session::get('sucesso'))
+    <div 
+        id="alert-sucesso"
+        class="fixed top-5 right-5 z-50 w-[90%] max-w-sm
+               rounded-2xl border border-green-200 bg-green-50 p-5 
+               text-green-800 shadow-lg
+               transform scale-75 opacity-0
+               transition-all duration-300 ease-out
+        "
+    >
+        <h3 class="text-base font-semibold flex items-center gap-2">
+            <span>✅</span> Parabéns!
+        </h3>
+        <p class="mt-1 text-sm">
+            {{ $mensagem }}
+        </p>
+    </div>
+@endif
 
     @if ($mensagem = Session::get('aviso'))
         <div class="mb-6 rounded-2xl border border-green-200 bg-green-50 p-5 text-green-800 shadow-sm">
@@ -47,22 +59,29 @@
 
         {{-- CABEÇALHO --}}
         <div class="mb-4">
-            <h3 class="text-2xl font-semibold text-gray-800">
-                Seu carrinho
-                <span class="ml-1 text-sm font-medium text-gray-500">
-                    ({{ $itens->count() }} itens)
-                </span>
-            </h3>
 
-            <a
-                href="{{ url('/user') }}"
-                class="flex items-center gap-1 text-blue-300 hover:text-blue-400 transition h-12 w-8"
-            >
-                <span style="font-size: 32px;" class="material-symbols-outlined">
+
+            {{-- Topo / Navegação --}}
+        <div class=" flex flex-row items-center justify-between gap-3 rounded-2xl border border-gray-200 bg-white p-4 shadow-sm sm:flex-row sm:items-center sm:justify-between">
+            <a href="{{ route('user.dashboard') }}"
+                class="group flex items-center gap-2 rounded-xl border border-gray-200 bg-gray-50  px-4 py-2.5 text-sm font-semibold text-gray-600 hover:bg-gray-100 hover:text-gray-900 transition">
+                <span class="material-symbols-outlined text-2xl transition group-hover:-translate-x-0.5">
                     arrow_circle_left
                 </span>
+                Voltar
             </a>
+            <button id="open-ticket-modal-btn" class="inline-flex items-center gap-2 rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                <span class="material-symbols-outlined text-base">add</span>
+                 Novo Cupom
+            </button>
         </div>
+        </div>
+                    <h3 class=" mb-4 text-gray-500 text-2xl">
+                carrinho
+                <span class="ml-1 text-sm font-medium text-gray-500">
+                    {{ $itens->count() }} produtos
+                </span>
+            </h3>
 
         {{-- ================= MOBILE (CARDS) ================= --}}
         <div class="space-y-4 lg:hidden">
@@ -88,11 +107,19 @@
                             <p class="mt-1 font-bold text-gray-900">
                                 R$ {{ number_format($item->price, 2, ',', '.') }}
                             </p>
-                                                            @if ($item->quantity > 0)
-    <div class="alert alert-info" role="alert">
-         <strong>{{ $item->quantity }}</strong> unidade(s)
-    </div>
-@endif
+
+                        {{-- Encontra o produto correspondente na coleção de produtos passada pelo controller --}}
+                            @php 
+                                $produto = $produtos->firstWhere('id', $item->id); 
+                            @endphp
+                            <div class="item-carrinho">
+                                {{-- Exibe o estoque --}}
+                                @if($produto)
+                                    <p class="text-sm text-gray-500">
+                                        Estoque disponível: {{ $produto->estoque }}
+                                    </p>
+                                @endif
+                            </div>
                         </div>
 
                         {{-- AÇÕES --}}
@@ -185,13 +212,21 @@
                                     R$ {{ number_format($item->price, 2, ',', '.') }}
                                 </td>
 
-                                <td>
-                                    @if ($item->quantity > 0)
-                                                                    
-    <div class="p-4 font-semibold text-gray-700" role="alert">
-         <strong>{{ $item->quantity }}</strong> unidade(s)
-    </div>
-@endif
+                                <td class="p-4 font-semibold text-gray-700">
+ {{-- Encontra o produto correspondente na coleção de produtos passada pelo controller --}}
+                            @php 
+                                $produto = $produtos->firstWhere('id', $item->id); 
+                            @endphp
+
+                            <div class="item-carrinho">
+                                
+                                {{-- Exibe o estoque --}}
+                                @if($produto)
+                                    <p class=" text-gray-500">
+                                        {{ $produto->estoque }}
+                                    </p>
+                                @endif
+                            </div>
                                 </td>
 
 

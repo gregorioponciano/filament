@@ -5,10 +5,115 @@
 @section('dashboard')
 @include('user.dashboard-content')
 
-<div class="mx-auto max-w-2xl px-4 py-12">
+<div class="min-h-screen bg-gradient-to-b from-primary_color to-pink-600 ">
     {{-- Cartão Principal --}}
+    @php
+        $url = urlencode(url()->current());
+        $titulo = urlencode('Olha isso que encontrei 😍');
+    @endphp
+
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+{{-- Topo / Navegação --}}
+<div class="mb-6 flex justify-between gap-3 rounded-2xl border border-gray-200 bg-white p-4 shadow-sm sm:flex-row sm:items-center sm:justify-between">
+    <a href="{{ route('show.detalhes', $produto->slug) }}"
+       class="group inline-flex items-center gap-2 rounded-xl border border-gray-200 bg-gray-50 px-3 py-2 text-sm font-semibold text-gray-600 hover:bg-gray-100 hover:text-gray-900 transition">
+        <span class="material-symbols-outlined text-2xl transition-transform group-hover:-translate-x-1">
+            arrow_circle_left
+        </span>
+        Voltar
+    </a>
+
+    {{-- Botão Share --}}
+    <button 
+        type="button"
+        onclick="abrirShareModal()"
+        class="inline-flex items-center gap-2 rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+    >
+        <span class="material-symbols-outlined">share</span>
+        Compartilhar
+    </button>
+</div>
+
+{{-- MODAL --}}
+<div 
+    id="shareModal" 
+    class="fixed inset-0 z-50 hidden items-center justify-center bg-black/50 backdrop-blur-sm"
+>
+    <div class="w-full max-w-sm rounded-2xl bg-white p-6 shadow-2xl">
+        <div class="mb-4 flex items-center justify-between">
+            <h3 class="text-lg font-semibold text-gray-900">Compartilhar</h3>
+            <button onclick="fecharShareModal()" class="rounded-lg p-1 text-gray-500 hover:bg-gray-100">
+                ✕
+            </button>
+        </div>
+
+        <p class="mb-5 text-sm text-gray-500">Escolha onde deseja compartilhar:</p>
+
+        <div class="grid grid-cols-3 gap-4 text-center">
+            {{-- WhatsApp --}}
+            <a 
+                href="https://wa.me/?text={{ $titulo }}%20{{ $url }}"
+                target="_blank"
+                class="group flex flex-col items-center gap-2 rounded-xl p-3 hover:bg-green-50 transition"
+            >
+                <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" class="h-14 w-14 transition group-hover:scale-110" alt="WhatsApp">
+                <span class="text-sm font-medium text-gray-700">WhatsApp</span>
+            </a>
+
+            {{-- Facebook --}}
+            <a 
+                href="https://www.facebook.com/sharer/sharer.php?u={{ $url }}"
+                target="_blank"
+                class="group flex flex-col items-center gap-2 rounded-xl p-3 hover:bg-blue-50 transition"
+            >
+                <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" class="h-14 w-14 transition group-hover:scale-110" alt="Facebook">
+                <span class="text-sm font-medium text-gray-700">Facebook</span>
+            </a>
+
+            {{-- Instagram --}}
+            <button 
+                type="button"
+                onclick="copiarLink()"
+                class="group flex flex-col items-center gap-2 rounded-xl p-3 hover:bg-pink-50 transition"
+            >
+                <img src="https://cdn-icons-png.flaticon.com/512/733/733558.png" class="h-14 w-14 transition group-hover:scale-110" alt="Instagram">
+                <span class="text-sm font-medium text-gray-700">Instagram</span>
+            </button>
+        </div>
+    </div>
+</div>
+
+{{-- JS PURO --}}
+<script>
+function abrirShareModal() {
+    document.getElementById('shareModal').classList.remove('hidden');
+    document.getElementById('shareModal').classList.add('flex');
+}
+
+function fecharShareModal() {
+    document.getElementById('shareModal').classList.add('hidden');
+    document.getElementById('shareModal').classList.remove('flex');
+}
+
+function copiarLink() {
+    navigator.clipboard.writeText("{{ url()->current() }}").then(() => {
+        fecharShareModal();
+
+        const toast = document.createElement('div');
+        toast.innerText = 'Link copiado! Agora é só colar no Instagram 📸';
+        toast.className = 'fixed bottom-6 right-6 z-50 rounded-xl bg-black px-4 py-2 text-white shadow-lg';
+        document.body.appendChild(toast);
+
+        setTimeout(() => toast.remove(), 2500);
+    });
+}
+</script>
+
     <div class="overflow-hidden rounded-3xl bg-white shadow-xl ring-1 ring-gray-900/5">
         
+
+        
+
         {{-- Cabeçalho do Produto --}}
         <div class="bg-gradient-to-r from-gray-900 to-gray-800 px-8 py-10 text-center text-white">
             <h1 class="text-2xl font-bold tracking-tight text-amber-400">Avalie sua experiência</h1>
@@ -16,7 +121,7 @@
             
             <div class="mt-6 flex flex-col items-center">
                 @if($produto->imagem)
-                    <img src="{{ asset('storage/' . $produto->imagem) }}" alt="{{ $produto->nome }}" class="h-24 w-24 rounded-xl object-cover shadow-lg ring-2 ring-amber-500/50">
+                    <img src="{{ asset('storage/' . $produto->imagem) }}" alt="{{ $produto->nome }}" class=" w-100 rounded-xl object-cover shadow-lg ring-2 ring-amber-500/50">
                 @endif
                 <h2 class="mt-4 text-xl font-semibold">{{ $produto->nome }}</h2>
             </div>
@@ -120,6 +225,7 @@
             </div>
         </div>
     </div>
+</div>
 </div>
 
 @endsection

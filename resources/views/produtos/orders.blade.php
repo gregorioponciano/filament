@@ -8,8 +8,8 @@
 <div class="max-w-4xl mx-auto px-4 py-6">
 
     {{-- Topo / Voltar --}}
-    <div class="mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 rounded-2xl border border-gray-200 bg-white p-4 shadow-sm">
-        <div class="flex items-center gap-3">
+    <div class="mb-4 flex flex-row  justify-between align-center rounded-2xl border border-gray-200 bg-white p-4 shadow-sm">
+
             <a href="{{ url('/user') }}"
                class="group flex items-center gap-2 rounded-xl border border-gray-200 bg-gray-50 px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-100 hover:text-gray-900 transition">
                 <span class="material-symbols-outlined text-2xl group-hover:-translate-x-0.5 transition">
@@ -18,11 +18,11 @@
                 Voltar
             </a>
 
-            <a href="{{ route('orders.index') }}"
-               class="text-sm font-semibold text-blue-600 hover:text-blue-700 transition">
-                Meus pedidos
-            </a>
-        </div>
+
+        <a href="{{ route('orders.index') }}"
+           class="text-sm font-semibold text-blue-600 hover:text-blue-700 transition mt-2">
+            Meus pedidos
+        </a>
 
         <span class="rounded-full bg-blue-50 px-4 py-1.5 text-sm font-semibold text-blue-600">
             Pedido #{{ $order->id }}

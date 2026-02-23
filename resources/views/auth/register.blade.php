@@ -4,12 +4,16 @@
 
 @section('content')
 
-<section style="background-image: url('{{ asset('storage/images/fundo.jpg') }}');" class="min-h-screen flex items-center justify-center bg-cover bg-center bg-no-repeat">
-    <div class="w-full max-w-md bg-secondary rounded-2xl shadow-lg p-8">
+<section style="background-image: url('images/fundo.jpg');" class="min-h-screen flex items-center justify-center">
+    <div class="w-full max-w-md bg-primary rounded-2xl border border-border-secondary shadow-lg p-8">
+ <div class="flex items-center justify-center  cursor-pointer md:cursor-default">
+    <img 
+        src="{{ asset('storage/' . $customizations->imagem) }}" 
+        alt="{{ $customizations->nome }}"
+        class="w-50 h-auto hover:scale-125 object-cover transition group-hover:scale-110"
+    />
+</div>
 
-        <div class="border-b rounded-2xl mb-4">
-            <h3 class="text-2xl text-center text-h3">Register</h3>
-        </div>
         {{-- Erros --}}
         @if ($errors->any())
             <div class="mb-4 rounded-lg bg-red-100 p-4 text-red-700">
@@ -41,7 +45,7 @@
             {{-- Botão --}}
             <button  type="submit" class="w-full rounded-lg py-2 font-semibold bg-button-primary hover:bg-hover-primary text-text-primary cursor-pointer">Register</button>
         {{-- Link login --}}
-        <p class=" text-center  ">Já tem uma conta? <a href="{{ route('show.login') }}" class="font-semibold text-link-primary hover:underline">Entrar</a></p>
+        <p class=" text-center  ">Já tem uma conta? <a href="{{ route('show.login') }}" class="font-semibold text-link-secondary hover:underline">Entrar</a></p>
 
     </div>
 </section>

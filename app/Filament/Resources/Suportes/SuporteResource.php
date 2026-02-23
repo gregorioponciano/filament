@@ -15,13 +15,14 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use UnitEnum;
 
 class SuporteResource extends Resource
 {
     protected static ?string $model = Suporte::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
-
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::Users;
+    protected static string | UnitEnum | null $navigationGroup = 'Administração';
     protected static ?string $recordTitleAttribute = 'Suporte';
 
     public static function form(Schema $schema): Schema
@@ -54,5 +55,9 @@ class SuporteResource extends Resource
             'view' => ViewSuporte::route('/{record}'),
             'edit' => EditSuporte::route('/{record}/edit'),
         ];
+    }
+        public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::count();
     }
 }
