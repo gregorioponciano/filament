@@ -13,9 +13,9 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         // Forçar HTTPS no Laravel (quando estiver em ngrok)
-        if (app()->environment('local')) {
-         URL::forceScheme('https');
-    }
+       // if (app()->environment('local')) {
+       //  URL::forceScheme('https');
+   // }
     }
 
     /**

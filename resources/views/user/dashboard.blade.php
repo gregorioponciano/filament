@@ -14,7 +14,7 @@
                         alt="{{ $customizations->nome }}"
                         class="w-30 h-auto hover:scale-125 object-cover transition group-hover:scale-110"
                     />
-                </div>
+                </div> 
 
                 <a href="{{ route('show.carrinho') }}"
                 class="bg-blue-600 rounded-full h-12 w-12 flex items-center justify-center text-white fixed bottom-10 right-5 cursor-pointer hover:bg-blue-700 transition z-50 ">
