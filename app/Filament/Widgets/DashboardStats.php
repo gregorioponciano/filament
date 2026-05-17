@@ -4,6 +4,7 @@ namespace App\Filament\Widgets;
 
 use App\Models\Produto;
 use App\Models\Order;
+use App\Models\PixTransaction;
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;
 
@@ -16,10 +17,14 @@ class DashboardStats extends BaseWidget
         $faturamentoData = $dias->map(fn ($date) =>
             Order::whereDate('created_at', $date)
                 ->where('status', 'concluido')
+                ->orWhere('payment_status', 'paid')
+                ->whereDate('created_at', $date)
                 ->sum('total')
         )->toArray();
 
-        $faturamentoTotal = Order::where('status', 'concluido')->sum('total');
+        $faturamentoTotal = Order::where(function ($q) {
+            $q->where('status', 'concluido')->orWhere('payment_status', 'paid');
+        })->sum('total');
 
         $pedidosData = $dias->map(fn ($date) =>
             Order::whereDate('created_at', $date)->count()
@@ -27,12 +32,21 @@ class DashboardStats extends BaseWidget
 
         $totalPedidos = Order::count();
 
+        $pixData = $dias->map(fn ($date) =>
+            PixTransaction::whereDate('created_at', $date)
+                ->where('status', 'CONCLUIDA')
+                ->count()
+        )->toArray();
+
+        $pixTotal = PixTransaction::where('status', 'CONCLUIDA')->sum('valor');
+        $pixCount = PixTransaction::where('status', 'CONCLUIDA')->count();
+
         $estoqueBaixo = Produto::where('estoque', '<=', 5)->count();
         $totalProdutos = Produto::count();
 
         return [
             Stat::make('Faturamento', 'R$ ' . number_format($faturamentoTotal, 2, ',', '.'))
-                ->description('Últimos 7 dias')
+                ->description('Pedidos concluídos')
                 ->chart($faturamentoData)
                 ->color('success'),
 
@@ -40,6 +54,11 @@ class DashboardStats extends BaseWidget
                 ->description('Total de pedidos')
                 ->chart($pedidosData)
                 ->color('primary'),
+
+            Stat::make('PIX Recebido', 'R$ ' . number_format($pixTotal, 2, ',', '.'))
+                ->description("{$pixCount} transações PIX")
+                ->chart($pixData)
+                ->color('success'),
 
             Stat::make('Estoque Crítico', $estoqueBaixo)
                 ->description('Produtos com estoque baixo')

@@ -4,7 +4,19 @@
 
 @section('dashboard')
 @include('user.dashboard-content')
+
 <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+    <div class="mb-6 flex items-center justify-between gap-3 rounded-2xl border border-gray-200 bg-white p-4 shadow-sm">
+        <a href="{{ url('/user') }}"
+           class="group inline-flex items-center gap-2 rounded-xl border border-gray-200 bg-gray-50 px-3 py-2 text-sm font-semibold text-gray-600 hover:bg-gray-100 hover:text-gray-900 transition">
+            <span class="material-symbols-outlined text-2xl transition-transform group-hover:-translate-x-1">
+                arrow_circle_left
+            </span>
+            Voltar
+        </a>
+        <span class="text-sm font-medium text-gray-400">Configurações</span>
+    </div>
 
     {{-- Mensagem de sucesso --}}
     @if (session('success'))
@@ -67,6 +79,19 @@
                     value="{{ $user->email }}"
                     required
                     class=" border-black border-2 p-2 invalid:border-pink-500 invalid:text-pink-600 focus:border-sky-500 focus:outline focus:outline-sky-500 focus:invalid:border-pink-500 focus:invalid:outline-pink-500 disabled:border-gray-200 disabled:bg-gray-50 disabled:text-gray-500 disabled:shadow-none dark:disabled:border-gray-700 dark:disabled:bg-gray-800/20 "  
+                >
+            </div>
+
+            <div>
+                <label class="block text-sm font-medium leading-6 text-gray-900 mb-1">CPF</label>
+                <input
+                    type="text"
+                    name="cpf"
+                    id="cpf"
+                    value="{{ $user->cpf }}"
+                    maxlength="14"
+                    placeholder="000.000.000-00"
+                    class="border-black border-2 p-2 invalid:border-pink-500 invalid:text-pink-600 focus:border-sky-500 focus:outline focus:outline-sky-500 focus:invalid:border-pink-500 focus:invalid:outline-pink-500 disabled:border-gray-200 disabled:bg-gray-50 disabled:text-gray-500"
                 >
             </div>
 

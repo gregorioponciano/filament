@@ -14,7 +14,6 @@ class OrderController extends Controller
     public function checkout()
     {
         $cartItems = Cart::session(Auth::id())->getContent();
-
         return view('produtos.orders', compact('cartItems'));
     }
 
@@ -31,7 +30,6 @@ class OrderController extends Controller
             'endereco_id' => 'required|exists:enderecos,id',
         ]);
 
-        // 1. Verificar se há estoque suficiente para TODOS os itens antes de criar o pedido
         foreach ($cartItems as $item) {
             $produto = Produto::find($item->id);
             if (!$produto || $produto->estoque < $item->quantity) {
@@ -44,10 +42,11 @@ class OrderController extends Controller
             'endereco_id' => $request->input('endereco_id'),
             'total' => Cart::session($userId)->getTotal(),
             'status' => 'processando',
+            'payment_method' => 'boleto',
+            'payment_status' => 'pending',
         ]);
 
         foreach ($cartItems as $item) {
-            // 2. Baixar o estoque do produto no banco de dados
             $produto = Produto::find($item->id);
             $produto->decrement('estoque', $item->quantity);
 
@@ -69,15 +68,13 @@ class OrderController extends Controller
 
     public function show(Order $order)
     {
-        $order->load('items');
-
+        $order->load('items', 'pixTransaction', 'efiCharge');
         return view('produtos.orders', compact('order'));
     }
 
     public function index()
     {
         $orders = Order::where('user_id', Auth::id())->latest()->get();
-
         return view('produtos.my_orders', compact('orders'));
     }
 

@@ -5,6 +5,20 @@
 @section('dashboard')
 @include('user.dashboard-content')
 
+@if(!$hasPurchased)
+    <div class="mx-auto max-w-2xl px-4 py-20">
+        <div class="rounded-2xl border border-gray-200 bg-white p-12 text-center shadow-sm">
+            <span class="material-symbols-outlined text-6xl text-gray-300 mb-4">lock</span>
+            <h2 class="text-2xl font-bold text-gray-900 mb-2">Compra necessária</h2>
+            <p class="text-gray-500 mb-6">Você só pode avaliar produtos que você comprou.</p>
+            <a href="{{ route('show.detalhes', $produto->slug) }}" 
+               class="inline-flex items-center gap-2 rounded-xl bg-blue-600 px-6 py-3 text-sm font-semibold text-white hover:bg-blue-700 transition">
+                <span class="material-symbols-outlined text-base">arrow_back</span>
+                Voltar ao produto
+            </a>
+        </div>
+    </div>
+@else
 <div class="min-h-screen bg-gradient-to-b from-primary_color to-pink-600 ">
     {{-- Cartão Principal --}}
     @php
@@ -226,6 +240,6 @@ function copiarLink() {
         </div>
     </div>
 </div>
-</div>
+@endif
 
 @endsection

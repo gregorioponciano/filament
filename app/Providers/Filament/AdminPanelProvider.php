@@ -30,6 +30,9 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->login()
+            ->brandLogo(fn () => asset('storage/' . (\App\Models\Customization::value('imagem') ?? 'images/image-loja/logo.png')))
+            ->brandLogoHeight('2.5rem')
+            ->favicon(asset('images/image-loja/logo.png'))
             ->colors([
                 'primary' => Color::Amber,
             ])

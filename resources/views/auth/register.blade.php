@@ -32,6 +32,11 @@
                 <label for="name" class="block text-sm font-medium ">Nome</label>
                 <input type="text" name="name" id="name" value="{{ old('name') }}" placeholder="Seu nome" class="invalid:border-pink-500 invalid:text-pink-600 focus:border-yellow-500 focus:outline focus:outline-yellow-500 focus:invalid:border-pink-500 focus:invalid:outline-pink-500 disabled:border-gray-200 disabled:bg-gray-50 disabled:text-gray-500 disabled:shadow-none dark:disabled:border-gray-700 dark:disabled:bg-gray-800/20  mt-1 w-full rounded-lg border border-gray-300 px-4 py-2  ">
             </div>
+            {{-- CPF --}}
+            <div>
+                <label for="cpf" class="block text-sm font-medium ">CPF</label>
+                <input type="text" name="cpf" id="cpf" value="{{ old('cpf') }}" placeholder="000.000.000-00" maxlength="14" class="invalid:border-pink-500 invalid:text-pink-600 focus:border-yellow-500 focus:outline focus:outline-yellow-500 focus:invalid:border-pink-500 focus:invalid:outline-pink-500 disabled:border-gray-200 disabled:bg-gray-50 disabled:text-gray-500 disabled:shadow-none dark:disabled:border-gray-700 dark:disabled:bg-gray-800/20 mt-1 w-full rounded-lg border border-gray-300 px-4 py-2">
+            </div>
             {{-- Email --}}
             <div>
                 <label for="email" class="block text-sm font-medium ">Email</label>
@@ -49,4 +54,20 @@
 
     </div>
 </section>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const cpfInput = document.getElementById('cpf');
+    if (cpfInput) {
+        cpfInput.addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length > 11) value = value.slice(0, 11);
+            e.target.value = value
+                .replace(/(\d{3})(\d)/, '$1.$2')
+                .replace(/(\d{3})(\d)/, '$1.$2')
+                .replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+        });
+    }
+});
+</script>
 @endsection

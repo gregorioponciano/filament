@@ -17,6 +17,15 @@ class FavoriteController extends Controller
         $user = Auth::user();
         $result = $user->favorites()->toggle($request->produto_id);
 
+        $favorited = count($result['attached']) > 0;
+
+        if ($request->ajax() || $request->wantsJson()) {
+            return response()->json([
+                'success' => true,
+                'favorited' => $favorited,
+            ]);
+        }
+
         return back();
     }
 

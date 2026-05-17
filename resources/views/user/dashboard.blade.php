@@ -1,44 +1,35 @@
 @extends('layouts.app')
 @section('title', 'Dashboard')
 @section('content')
- 
+
 <section class="box-border">
     <header class="bg-white shadow-sm sticky top-0 z-40">
-        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 ">
-            <div class="flex h-16 items-center justify-between gap-4 ">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div class="flex h-16 items-center justify-between gap-4">
 
                 {{-- Logo --}}
                 <div id="mobileMenuBtn" class="flex items-center gap-3 shrink-0 cursor-pointer md:cursor-default">
                     <img 
                         src="{{ asset('storage/' . $customizations->imagem) }}" 
                         alt="{{ $customizations->nome }}"
-                        class="w-30 h-auto hover:scale-125 object-cover transition group-hover:scale-110"
+                        class="w-30 h-auto hover:scale-125 object-cover transition duration-300 group-hover:scale-110"
                     />
                 </div> 
-
-                <a href="{{ route('show.carrinho') }}"
-                class="bg-blue-600 rounded-full h-12 w-12 flex items-center justify-center text-white fixed bottom-10 right-5 cursor-pointer hover:bg-blue-700 transition z-50 ">
-                    <span class="material-symbols-outlined">shopping_cart</span>
-                    <p class="fixed bottom-18 right-3 bg-blue-600 rounded-full h-8 w-8 flex items-center justify-center text-white">
-                        {{ $itens->sum('quantity') }}
-                    </p>
-                </a>
 
                 {{-- Search & Categories --}}
                 <div class="flex flex-1 items-center gap-2 w-full md:max-w-2xl">
                 <div class="relative">
 
                 {{-- BOTÃO DESKTOP --}}
-                <div class="hidden md:flex items-center
-                    transition-all whitespace-nowrap">
+                <div class="hidden md:flex items-center transition-all whitespace-nowrap">
 
                     <a href="{{ Route('user.dashboard') }}"
-                    class="flex items-center px-4 text-xl text-gray-700">
+                    class="flex items-center px-4 text-xl text-gray-700 hover:text-blue-600 transition-colors">
                         <span class="material-symbols-outlined">home</span>
                         Inicio
                     </a>
 
-                    <button class="active:text-blue-500 h-10">
+                    <button class="active:text-blue-500 h-10 transition-colors hover:text-blue-600">
                         <svg id="categoryBtn" class="size-6 cursor-pointer h-10" viewBox="0 0 20 20" fill="currentColor">
                             <path fill-rule="evenodd"
                                 d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z"
@@ -131,6 +122,49 @@ $icones = [
                     </button>
                     </form>
                     
+
+                    {{-- Notification Bell --}}
+                    <div class="hidden md:block relative shrink-0" x-data="notificationBell()">
+                        <button @click="toggle()" class="relative flex items-center justify-center rounded-full bg-white border border-gray-200 h-10 w-10 text-gray-600 hover:bg-gray-50 hover:border-gray-300 transition-all">
+                            <span class="material-symbols-outlined text-lg">notifications</span>
+                            <template x-if="count > 0">
+                                <span x-text="count" class="absolute -top-1 -right-1 flex items-center justify-center h-5 min-w-[20px] rounded-full bg-red-500 text-[10px] font-bold text-white px-1 shadow-sm"></span>
+                            </template>
+                        </button>
+                        <div x-show="open" @click.outside="open = false" x-cloak
+                             x-transition:enter="transition ease-out duration-200"
+                             x-transition:enter-start="opacity-0 scale-95 -translate-y-2"
+                             x-transition:enter-end="opacity-100 scale-100 translate-y-0"
+                             class="absolute right-0 mt-2 w-80 rounded-xl bg-white shadow-lg ring-1 ring-black/5 z-50 overflow-hidden">
+                            <div class="p-3 border-b border-gray-100 flex items-center justify-between">
+                                <span class="text-sm font-semibold text-gray-900">Notificações</span>
+                                <a href="{{ route('notifications.index') }}" class="text-xs font-medium text-blue-600 hover:underline">Ver todas</a>
+                            </div>
+                            <div class="max-h-72 overflow-y-auto">
+                                <template x-if="items.length === 0">
+                                    <div class="p-6 text-center text-sm text-gray-500">Nenhuma notificação</div>
+                                </template>
+                                <template x-for="item in items" :key="item.id">
+                                    <a :href="item.action_url || '#'"
+                                       class="flex items-start gap-3 p-3 hover:bg-gray-50 transition border-b border-gray-50 last:border-0">
+                                        <div class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg"
+                                             :style="`background-color: ${bgColor(item.color)}`">
+                                            <span class="material-symbols-outlined text-base" :style="`color: ${fgColor(item.color)}`" x-text="item.icon"></span>
+                                        </div>
+                                        <div class="flex-1 min-w-0">
+                                            <p class="text-sm font-medium text-gray-900 truncate" x-text="item.title"></p>
+                                            <p class="text-xs text-gray-500 truncate" x-text="item.message || ''"></p>
+                                            <p class="text-[10px] text-gray-400 mt-0.5" x-text="timeAgo(item.created_at)"></p>
+                                        </div>
+                                        <template x-if="!item.read">
+                                            <span class="mt-1 h-2 w-2 shrink-0 rounded-full bg-blue-500"></span>
+                                        </template>
+                                    </a>
+                                </template>
+                            </div>
+                        </div>
+                    </div>
+
                     {{-- User Dropdown --}}
                     <div class="relative shrink-0">
                     <button id="userBtn" class="flex items-center gap-2 rounded-full bg-white border border-gray-200 px-3 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 hover:border-gray-300 hover:text-gray-900 transition-all">
@@ -153,9 +187,7 @@ $icones = [
 
                         <div class="">
                             <a href="{{ route('orders.index') }}" class="flex items-center px-4 py-2 m-2 text-sm hover:bg-hover-primary rounded-xl transition">
-                                <span class="material-symbols-outlined">
-                                delivery_truck_speed
-                                </span>
+                                <span class="material-symbols-outlined">delivery_truck_speed</span>
                                 <p>Pedidos</p>
                             </a>
                             <a href="{{ route('show.profile') }}" class="flex items-center px-4 py-2 m-2 text-sm hover:bg-hover-primary rounded-xl transition">
@@ -164,11 +196,15 @@ $icones = [
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
                                 </svg>
                                 <p>Configurações</p></a>
-                            <a href="#" class="flex items-center px-4 py-2 m-2 text-sm hover:bg-hover-primary rounded-xl transition">
+                            <a href="{{ route('notifications.index') }}" x-data="notificationBell()" class="flex items-center px-4 py-2 m-2 text-sm hover:bg-hover-primary rounded-xl transition relative md:hidden">
                                 <span class="material-symbols-outlined">
                                 notifications
                                 </span>
-                                Notificações</a>
+                                <p>Notificações</p>
+                                <template x-if="count > 0">
+                                    <span x-text="count" class="ml-auto flex items-center justify-center h-5 min-w-[20px] rounded-full bg-red-500 text-[10px] font-bold text-white px-1 shadow-sm"></span>
+                                </template>
+                            </a>
                             <a href="{{ route('show.suporte') }}" class="flex items-center px-4 py-2 m-2 text-sm hover:bg-hover-primary rounded-xl transition">
                                 <span class="material-symbols-outlined">
                                 group
@@ -192,6 +228,18 @@ $icones = [
             </div>
         </div>
     </header>
+
+    {{-- Cart Button --}}
+    <a href="{{ route('show.carrinho') }}"
+       class="bg-blue-600 rounded-full h-14 w-14 flex items-center justify-center text-white fixed bottom-6 right-6 cursor-pointer hover:bg-blue-700 transition-all duration-300 hover:scale-110 hover:shadow-xl z-50 shadow-lg">
+        <span class="material-symbols-outlined text-2xl">shopping_cart</span>
+        @if($itens->sum('quantity') > 0)
+        <span class="absolute -top-1 -right-1 bg-red-500 rounded-full h-6 min-w-[24px] flex items-center justify-center text-white text-xs font-bold px-1 shadow-md">
+            {{ $itens->sum('quantity') }}
+        </span>
+        @endif
+    </a>
+
     @yield('dashboard')
     
     @if(request()->routeIs('user.dashboard'))
@@ -337,6 +385,98 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+
+    // Notification polling
+    const notifInterval = setInterval(() => {
+        fetch('{{ route("notifications.latest") }}')
+            .then(r => r.json())
+            .then(data => {
+                const event = new CustomEvent('notifications-update', { detail: data });
+                window.dispatchEvent(event);
+            })
+            .catch(() => {});
+    }, 15000);
+
+    // Auto-cleanup
+    window.addEventListener('beforeunload', () => clearInterval(notifInterval));
 });
+
+// AJAX favorite toggle
+document.addEventListener('submit', function(e) {
+    const form = e.target.closest('.favorite-form');
+    if (!form) return;
+
+    e.preventDefault();
+
+    const button = form.querySelector('button');
+    const formData = new FormData(form);
+
+    fetch(form.action, {
+        method: 'POST',
+        body: formData,
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest',
+            'Accept': 'application/json',
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.favorited) {
+            button.classList.remove('text-gray-400', 'hover:text-red-600');
+            button.classList.add('text-red-600');
+        } else {
+            button.classList.remove('text-red-600');
+            button.classList.add('text-gray-400', 'hover:text-red-600');
+        }
+    })
+    .catch(() => {
+        location.reload();
+    });
+});
+
+function notificationBell() {
+    return {
+        open: false,
+        count: 0,
+        items: [],
+        init() {
+            this.fetchNotifications();
+            window.addEventListener('notifications-update', (e) => {
+                this.count = e.detail.count;
+                this.items = e.detail.notifications || [];
+            });
+        },
+        toggle() {
+            this.open = !this.open;
+            if (this.open) this.fetchNotifications();
+        },
+        fetchNotifications() {
+            fetch('{{ route("notifications.latest") }}')
+                .then(r => r.json())
+                .then(data => {
+                    this.count = data.count;
+                    this.items = data.notifications || [];
+                })
+                .catch(() => {});
+        },
+        bgColor(color) {
+            const colors = { green: '#dcfce7', blue: '#dbeafe', red: '#fee2e2', yellow: '#fef9c3', purple: '#f3e8ff' };
+            return colors[color] || '#f3f4f6';
+        },
+        fgColor(color) {
+            const colors = { green: '#16a34a', blue: '#2563eb', red: '#dc2626', yellow: '#ca8a04', purple: '#9333ea' };
+            return colors[color] || '#6b7280';
+        },
+        timeAgo(date) {
+            const now = new Date();
+            const d = new Date(date);
+            const diff = Math.floor((now - d) / 1000);
+            if (diff < 60) return 'agora';
+            if (diff < 3600) return Math.floor(diff / 60) + 'min';
+            if (diff < 86400) return Math.floor(diff / 3600) + 'h';
+            return d.toLocaleDateString('pt-BR');
+        }
+    };
+}
 </script>
 @endsection

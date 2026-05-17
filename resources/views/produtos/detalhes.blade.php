@@ -205,7 +205,7 @@
                     {{ $produto->categoria->nome ?? 'Geral' }}
                 </span>
                 
-                <form action="{{ route('favorites.toggle') }}" method="POST" class="inline-flex">
+                <form action="{{ route('favorites.toggle') }}" method="POST" class="favorite-form inline-flex">
                     @csrf
                     <input type="hidden" name="produto_id" value="{{ $produto->id }}">
                     <button type="submit" 
@@ -271,7 +271,7 @@
 
                 {{-- Botão de compra --}}
                 <button type="submit"
-                        class="w-full rounded-lg bg-blue-600 px-4 py-3 text-sm font-semibold text-white transition hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                        class="w-full rounded-lg bg-green-600 px-4 py-3 text-sm font-semibold text-white transition hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2">
                     Comprar agora
                 </button>
             </form>
@@ -306,11 +306,18 @@
             {{-- Botão de avaliar --}}
             <div>
                 @auth
-                    <a href="{{ route('feedback.create', $produto->id) }}" 
-                       class="inline-flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-blue-700">
-                        <span class="material-symbols-outlined text-amber-400">star</span>
-                        Avaliar produto
-                    </a>
+                    @if($hasPurchased)
+                        <a href="{{ route('feedback.create', $produto->id) }}" 
+                           class="inline-flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-blue-700">
+                            <span class="material-symbols-outlined text-amber-400">star</span>
+                            Avaliar produto
+                        </a>
+                    @else
+                        <span class="inline-flex items-center gap-2 rounded-lg bg-gray-200 px-4 py-2.5 text-sm font-semibold text-gray-500 cursor-not-allowed">
+                            <span class="material-symbols-outlined">lock</span>
+                            Compre para avaliar
+                        </span>
+                    @endif
                 @else
                     <a href="{{ route('show.login') }}" class="text-sm font-medium text-blue-600 hover:underline">
                         Faça login para avaliar
@@ -540,17 +547,16 @@
                                         {{-- Ações --}}
                                         <div class="flex gap-1 mt-auto">
                                             <a href="{{ route('show.detalhes', $produto->slug) }}" 
-                                               class="flex-1 bg-yellow-500 hover:bg-yellow-600 text-white text-xs font-medium py-1.5 px-2 rounded text-center transition">
+                                               class="flex-1 bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold py-2 px-3 rounded-lg text-center transition-all duration-200 hover:shadow-md">
                                                 Ver
                                             </a>
-                                            <form action="{{ route('favorites.toggle') }}" method="POST">
+                                            <form action="{{ route('favorites.toggle') }}" method="POST" class="favorite-form">
                                                 @csrf
                                                 <input type="hidden" name="produto_id" value="{{ $produto->id }}">
                                                 <button type="submit"
-                                                        class="bg-red-50 hover:bg-red-100 text-red-600 text-xs font-medium py-1.5 px-2 rounded transition"
-                                                        onclick="return confirm('Remover dos favoritos?')">
-                                                    <span class="material-symbols-outlined text-base">favorite</span>
-                                                </button>
+                                                         class="flex items-center justify-center w-9 h-9 rounded-lg transition-all duration-200 {{ Auth::check() && Auth::user()->favorites->contains('id', $produto->id) ? 'text-red-600 bg-red-50 hover:bg-red-100' : 'text-gray-400 hover:text-red-600 bg-gray-50 hover:bg-red-50' }}">
+                                                     <span class="material-symbols-outlined text-lg">favorite</span>
+                                                 </button>
                                             </form>
                                         </div>
                                     </div>

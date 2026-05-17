@@ -11,17 +11,13 @@
                     Meus Favoritos {{$produtos->count()}}
                 </p>
             </header>
-            {{-- Topo / Navegação --}}
-            <div class=" flex flex-row items-center justify-between gap-3 rounded-2xl border border-gray-200 bg-white p-4 mb-4 shadow-sm sm:flex-row sm:items-center sm:justify-between">
+            <div class="rounded-2xl border border-gray-200 bg-white p-4 mb-4 shadow-sm">
                 <a href="{{ url('/user') }}"
-                    class="group flex items-center gap-2 rounded-xl border border-gray-200 bg-gray-50 px-3 py-2 text-sm font-semibold text-gray-600 hover:bg-gray-100 hover:text-gray-900 transition">
+                    class="group inline-flex items-center gap-2 rounded-xl border border-gray-200 bg-gray-50 px-3 py-2 text-sm font-semibold text-gray-600 hover:bg-gray-100 hover:text-gray-900 transition">
                     <span class="material-symbols-outlined text-2xl transition group-hover:-translate-x-0.5">
                         arrow_circle_left
                     </span>
                     Voltar
-                </a>
-                <a href="#" class="inline-flex items-center gap-2 rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
-                    ...
                 </a>
             </div>
         </div>

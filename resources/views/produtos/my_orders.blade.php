@@ -12,18 +12,13 @@
         </p>
     </header>
     
-    {{-- Topo / Navegação --}}
-    <div class="flex flex-row items-center justify-between gap-3 rounded-2xl border border-gray-200 bg-white p-4 mb-4 shadow-sm sm:flex-row sm:items-center sm:justify-between">
+    <div class="rounded-2xl border border-gray-200 bg-white p-4 mb-4 shadow-sm">
         <a href="{{ url('/user') }}"
-            class="group flex items-center gap-2 rounded-xl border border-gray-200 bg-gray-50 px-3 py-2 text-sm font-semibold text-gray-600 hover:bg-gray-100 hover:text-gray-900 transition">
+            class="group inline-flex items-center gap-2 rounded-xl border border-gray-200 bg-gray-50 px-3 py-2 text-sm font-semibold text-gray-600 hover:bg-gray-100 hover:text-gray-900 transition">
             <span class="material-symbols-outlined text-2xl transition group-hover:-translate-x-0.5">
                 arrow_circle_left
             </span>
             Voltar
-        </a>
-        <a href="#"
-           class="inline-flex items-center gap-2 rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">         
-            ...
         </a>
     </div>
     
@@ -40,6 +35,9 @@
                         </th>
                         <th class="hidden px-3 py-2 text-left text-xs font-medium uppercase tracking-wider text-gray-500 md:table-cell sm:px-6 sm:py-3">
                             Total
+                        </th>
+                        <th class="hidden px-3 py-2 text-left text-xs font-medium uppercase tracking-wider text-gray-500 sm:table-cell sm:px-6 sm:py-3">
+                            Pagamento
                         </th>
                         <th class="px-3 py-2 text-left text-xs font-medium uppercase tracking-wider text-gray-500 sm:px-6 sm:py-3">
                             Status
@@ -65,11 +63,46 @@
                                 R$ {{ number_format($order->total, 2, ',', '.') }}
                             </td>
 
-                            <td class="px-3 py-2 text-xs sm:px-6 sm:py-4 sm:text-sm">
-                                <span class="inline-flex rounded-full px-2 text-xs font-semibold leading-5 
-                                    {{ $order->status == 'concluido' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800' }}">
-                                    {{ ucfirst($order->status) }}
+                            <td class="hidden px-3 py-2 text-xs sm:table-cell sm:px-6 sm:py-4 sm:text-sm">
+                                <span class="inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-xs font-medium
+                                    {{ $order->payment_method === 'pix' ? 'bg-green-50 text-green-700' : ($order->payment_method === 'boleto' ? 'bg-blue-50 text-blue-700' : 'bg-purple-50 text-purple-700') }}">
+                                    @if($order->payment_method === 'pix')
+                                        PIX
+                                    @elseif($order->payment_method === 'boleto')
+                                        Boleto
+                                    @else
+                                        Cartão
+                                    @endif
                                 </span>
+                            </td>
+
+                            <td class="px-3 py-2 text-xs sm:px-6 sm:py-4 sm:text-sm">
+                                @php
+                                    $statusClasses = [
+                                        'pago' => 'bg-green-100 text-green-800',
+                                        'concluido' => 'bg-green-100 text-green-800',
+                                        'processando' => 'bg-yellow-100 text-yellow-800',
+                                        'pendente' => 'bg-yellow-100 text-yellow-800',
+                                        'cancelado' => 'bg-red-100 text-red-800',
+                                    ];
+                                    $statusLabels = [
+                                        'pago' => 'Pago',
+                                        'concluido' => 'Concluído',
+                                        'processando' => 'Processando',
+                                        'pendente' => 'Pendente',
+                                        'cancelado' => 'Cancelado',
+                                    ];
+                                    $class = $statusClasses[$order->status] ?? 'bg-gray-100 text-gray-800';
+                                    $label = $statusLabels[$order->status] ?? ucfirst($order->status);
+                                @endphp
+                                <span class="inline-flex rounded-full px-2 text-xs font-semibold leading-5 {{ $class }}">
+                                    {{ $label }}
+                                </span>
+                                @if($order->payment_status === 'failed' && $order->status !== 'cancelado')
+                                    <span class="inline-flex rounded-full px-2 text-xs font-semibold leading-5 bg-red-100 text-red-800 ml-1">
+                                        Recusado
+                                    </span>
+                                @endif
                             </td>
 
                             <td class="px-3 py-2 text-right text-xs font-medium sm:px-6 sm:py-4 sm:text-sm">
@@ -163,10 +196,20 @@
                                         @endif
                                     </div>
                                     
-                                    {{-- Botão de ação --}}
-                                    <button class="mt-3 w-full bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium py-2 px-3 rounded-lg transition-colors">
-                                        Ver detalhes
-                                    </button>
+                                    <div class="mt-3 flex items-center gap-2">
+                                        <a href="{{ route('show.detalhes', $produto->slug) }}" 
+                                           class="flex-1 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold py-2.5 px-4 rounded-lg text-center transition-all duration-200 hover:shadow-md">
+                                            Ver detalhes
+                                        </a>
+                                        <form action="{{ route('favorites.toggle') }}" method="POST" class="favorite-form inline-flex">
+                                            @csrf
+                                            <input type="hidden" name="produto_id" value="{{ $produto->id }}">
+                                            <button type="submit"
+                                                    class="flex items-center justify-center w-10 h-10 rounded-lg transition-colors {{ Auth::check() && Auth::user()->favorites->contains('id', $produto->id) ? 'text-red-600 bg-red-50 hover:bg-red-100' : 'text-gray-400 hover:text-red-600 bg-gray-50 hover:bg-red-50' }}">
+                                                <span class="material-symbols-outlined text-xl">favorite</span>
+                                            </button>
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
                         </div>

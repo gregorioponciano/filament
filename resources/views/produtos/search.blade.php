@@ -49,7 +49,7 @@
                                 {{ $produto->categoria->nome ?? 'Geral' }}
                             </span>
                             
-                            <form action="{{ route('favorites.toggle') }}" method="POST" class="inline-flex">
+                            <form action="{{ route('favorites.toggle') }}" method="POST" class="favorite-form inline-flex">
                                 @csrf
                                 <input type="hidden" name="produto_id" value="{{ $produto->id }}">
                                 <button type="submit" class="cursor-pointer transition-colors {{ Auth::check() && Auth::user()->favorites->contains('id', $produto->id) ? 'text-red-600' : 'text-gray-400 hover:text-red-600' }}">
@@ -80,7 +80,7 @@
 
                         {{-- AÇÕES --}}
                         <div class="flex items-center justify-between mt-auto pt-4 border-t border-gray-100 gap-3">
-                            <a href="{{ route('show.detalhes', $produto->slug) }}" class="flex-1 rounded-lg bg-yellow-500 px-3 py-2 text-center text-sm font-medium text-white hover:bg-yellow-600 transition">
+                            <a href="{{ route('show.detalhes', $produto->slug) }}" class="flex-1 rounded-lg bg-blue-600 px-4 py-2.5 text-center text-sm font-semibold text-white hover:bg-blue-700 transition-all duration-200 hover:shadow-md">
                                 Detalhes
                             </a>
                             <form action="{{ route('site.addcarrinho') }}" method="POST" class="flex-1">
@@ -91,7 +91,7 @@
                                 <input type="hidden" name="estoque" value="1">
                                 <input type="hidden" name="imagem" value="{{ $produto->imagem }}">
                                 <input type="hidden" name="slug" value="{{ $produto->slug }}">
-                                <button type="submit" class="w-full rounded-lg bg-blue-600 px-3 py-2 text-center text-sm font-medium text-white hover:bg-blue-700 transition">
+                                <button type="submit" class="w-full rounded-lg bg-green-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-green-700 transition-all duration-200 hover:shadow-md active:scale-95">
                                     Comprar
                                 </button>
                             </form>

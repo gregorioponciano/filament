@@ -6,7 +6,6 @@ use App\Models\Produto;
 use App\Filament\Resources\Produtos\ProdutoResource;
 use Filament\Actions\Action as ActionsAction;
 use Filament\Tables;
-use Filament\Tables\Actions\Action;
 use Filament\Tables\Table;
 use Filament\Widgets\TableWidget as BaseWidget;
 

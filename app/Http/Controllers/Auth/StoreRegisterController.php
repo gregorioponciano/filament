@@ -15,12 +15,16 @@ public function storeRegister(Request $request)
     $credenciais = $request->validate([
         'name' => 'required|string|max:255',
         'email' => 'required|email|unique:users,email',
+        'cpf' => 'nullable|string|max:14|unique:users,cpf',
+        'phone' => 'nullable|string|max:20',
         'password' => 'required|min:8',
     ]);
 
     $user = User::create([
         'name' => $credenciais['name'],
         'email' => $credenciais['email'],
+        'cpf' => $credenciais['cpf'] ?? null,
+        'phone' => $credenciais['phone'] ?? null,
         'password' => Hash::make($credenciais['password']),
         'role' => 'user',
     ]);

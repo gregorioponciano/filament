@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Categoria;
+use App\Models\Order;
 use App\Models\Produto;
 use Darryldecode\Cart\Facades\CartFacade as Cart;
 use Illuminate\Http\Request;
@@ -25,6 +26,15 @@ class DetalhesController extends Controller
             }
         }
 
-        return view('produtos.detalhes', compact('produto', 'categorias', 'quantidadeNoCarrinho'));
+        $hasPurchased = Auth::check()
+            ? Order::where('user_id', Auth::id())
+                ->whereIn('status', ['pago', 'concluido'])
+                ->whereHas('items', function ($q) use ($produto) {
+                    $q->where('produto_id', $produto->id);
+                })
+                ->exists()
+            : false;
+
+        return view('produtos.detalhes', compact('produto', 'categorias', 'quantidadeNoCarrinho', 'hasPurchased'));
     }
 }
